@@ -152,6 +152,17 @@ async def root():
 async def health_check():
     return {"status": "healthy", "service": "business-intelligence-api"}
 
+# Quick seed endpoint for debugging
+@app.post("/seed-db")
+async def seed_database(db: Session = Depends(get_db)):
+    """Quick endpoint to seed the database for testing."""
+    try:
+        # Call the existing seed function
+        seed()
+        return {"message": "Database seeded successfully", "status": "success"}
+    except Exception as e:
+        return {"message": f"Failed to seed database: {str(e)}", "status": "error"}
+
 # Areas list
 @app.get("/areas", response_model=APIResponse)
 async def list_areas(db: Session = Depends(get_db)):
