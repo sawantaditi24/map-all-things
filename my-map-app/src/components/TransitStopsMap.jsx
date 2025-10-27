@@ -100,7 +100,6 @@ export default function TransitStopsMap() {
 
   const handleReset = () => {
     setSearch('');
-    setSelectedName(null);
   };
 
   return (
