@@ -9,7 +9,6 @@ import TransitStopsMap from '../components/TransitStopsMap';
 import TransitSavingsInfo from '../components/TransitSavingsInfo';
 import SportsVenuesMap from '../components/SportsVenuesMap';
 import AIUniversitiesMap from '../components/AIUniversitiesMap';
-import EntertainmentVenuesMap from '../components/EntertainmentVenuesMap';
 import BusinessIntegration from './BusinessIntegration';
 
 const Tooltip = ({ text }) => (

@@ -74,7 +74,7 @@ export default function TransitStopsMap() {
   const [data, setData] = useState([]);
   const [zoom, setZoom] = useState(4);
   const [search, setSearch] = useState('');
-  const [selectedName, setSelectedName] = useState(null);
+  const [selectedName] = useState(null);
 
   useEffect(() => {
     fetch('/TransitStops_1_2_3_mile_sAll.json')

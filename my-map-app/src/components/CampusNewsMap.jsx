@@ -42,7 +42,7 @@ const Legend = () => {
 export default function CampusNewsMap() {
   const [schools, setSchools] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [zoomLevel, setZoomLevel] = useState(defaultZoom);
+  const [zoomLevel] = useState(defaultZoom);
 
   useEffect(() => {
     fetch("/schools_lat_long.json")

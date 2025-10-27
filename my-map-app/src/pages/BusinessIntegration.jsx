@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Star, Users, Building, Car } from 'lucide-react';
+import { Search, Star, Users, Building, Car } from 'lucide-react';
 import AdvancedFiltersContent from '../bi/AdvancedFiltersContent';
 import SportsVenuesMap from '../components/SportsVenuesMap';
 

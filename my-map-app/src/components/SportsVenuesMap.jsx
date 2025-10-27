@@ -36,39 +36,7 @@ const getCategory = (sport) => {
   return "Other";
 };
 
-// Legend component inside the MapContainer
-const LegendControl = () => {
-  const map = useMap();
-
-  useEffect(() => {
-    const legend = L.control({ position: "bottomright" });
-
-    legend.onAdd = function () {
-      const div = L.DomUtil.create("div", "info legend");
-      div.style.background = "white";
-      div.style.padding = "10px";
-      div.style.borderRadius = "8px";
-      div.style.boxShadow = "0 0 6px rgba(0,0,0,0.3)";
-      div.innerHTML += `<b>Olympic Sport Categories</b><br/>`;
-      for (const [category, style] of Object.entries(markerStyles)) {
-        div.innerHTML += `
-          <div style="display: flex; align-items: center; margin-bottom: 6px;">
-            <div style="width: 14px; height: 14px; background: ${style.color}; margin-right: 8px; border: 1px solid #333; border-radius: 50%;"></div>
-            ${category}
-          </div>
-        `;
-      }
-      return div;
-    };
-
-    legend.addTo(map);
-    return () => {
-      legend.remove();
-    };
-  }, [map]);
-
-  return null;
-};
+// Legend component removed - using EnhancedLegendControl instead
 
 // Business Intelligence Helper Functions
 const getBusinessScoreColor = (score) => {
