@@ -1,0 +1,125 @@
+// src/components/CampusNewsFeed.jsx
+import React, { useEffect, useState, useMemo } from 'react';
+import {
+  MapContainer,
+  TileLayer,
+  CircleMarker,
+  Popup,
+  Tooltip,
+  useMap,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import schoolData from '../data/schools_lat_long.json';  // adjust path if you placed it somewhere else
+
+const defaultCenter = [39.5, -98.35];
+
+function SetViewOnChange({ center, zoom }) {
+  const map = useMap();
+  useEffect(() => {
+    if (center) map.setView(center, zoom);
+  }, [center, zoom, map]);
+  return null;
+}
+
+function ZoomTracker({ setZoomLevel }) {
+  useMapEvents({ zoomend: e => setZoomLevel(e.target.getZoom()) });
+  return null;
+}
+
+function LegendControl() {
+  const map = useMap();
+  useEffect(() => {
+    const legend = L.control({ position: 'topright' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div', 'info legend');
+      div.style.background = 'white';
+      div.style.padding = '8px';
+      div.style.borderRadius = '4px';
+      div.innerHTML = `
+        <span style="display:inline-block;
+                     width:12px; height:12px;
+                     background:red; border-radius:50%;
+                     margin-right:6px;"></span>
+        University Location
+      `;
+      return div;
+    };
+    legend.addTo(map);
+    return () => map.removeControl(legend);
+  }, [map]);
+  return null;
+}
+
+export default function CampusNewsFeed() {
+  const [zoomLevel, setZoomLevel] = useState(4);
+  const [search, setSearch] = useState('');
+
+  // sanitize & trim names once
+  const locations = useMemo(
+    () => schoolData.map(u => ({ ...u, name: u.Raw_University.trim() })),
+    []
+  );
+
+  // filter by search box
+  const filtered = useMemo(
+    () =>
+      locations.filter(loc =>
+        loc.name.toLowerCase().includes(search.toLowerCase())
+      ),
+    [locations, search]
+  );
+
+  return (
+    <div className="bg-white rounded-2xl shadow-md p-4">
+      <div className="mb-4 text-right">
+        <input
+          type="text"
+          placeholder="🔍 Filter university"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="border rounded-md px-3 py-2 text-sm w-64"
+        />
+      </div>
+
+      <MapContainer
+        center={defaultCenter}
+        zoom={4}
+        style={{ height: '70vh', width: '100%' }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+
+        <SetViewOnChange center={defaultCenter} zoom={4} />
+        <ZoomTracker setZoomLevel={setZoomLevel} />
+        <LegendControl />
+
+        {filtered.map((uni, i) => {
+          const lat = parseFloat(uni.LATITUDE);
+          const lon = parseFloat(uni.LONGITUDE);
+          if (isNaN(lat) || isNaN(lon)) return null;
+          return (
+            <CircleMarker
+              key={i}
+              center={[lat, lon]}
+              radius={8}
+              fillColor="red"
+              color="white"
+              weight={1}
+              fillOpacity={0.7}
+            >
+              <Tooltip permanent={zoomLevel >= 12}>{uni.name}</Tooltip>
+              <Popup>
+                <strong>{uni.name}</strong><br />
+                Under OCR Investigation
+              </Popup>
+            </CircleMarker>
+          );
+        })}
+      </MapContainer>
+    </div>
+  );
+}

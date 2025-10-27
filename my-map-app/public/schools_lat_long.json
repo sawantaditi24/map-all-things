@@ -1,0 +1,356 @@
+[
+  {
+    "SN": 1,
+    "Raw_University": "Boston University  ",
+    "LONGITUDE": -71.107942,
+    "LATITUDE": 42.351118
+  },
+  {
+    "SN": 2,
+    "Raw_University": "Brown University  ",
+    "LONGITUDE": -71.40385,
+    "LATITUDE": 41.82617
+  },
+  {
+    "SN": 3,
+    "Raw_University": "Chapman University  ",
+    "LONGITUDE": -117.852518,
+    "LATITUDE": 33.79302
+  },
+  {
+    "SN": 4,
+    "Raw_University": "Columbia University  ",
+    "LONGITUDE": -73.961885,
+    "LATITUDE": 40.808286
+  },
+  {
+    "SN": 5,
+    "Raw_University": "Cornell University  ",
+    "LONGITUDE": -76.483084,
+    "LATITUDE": 42.4472
+  },
+  {
+    "SN": 6,
+    "Raw_University": "Drexel University  ",
+    "LONGITUDE": -75.190051,
+    "LATITUDE": 39.955217
+  },
+  {
+    "SN": 7,
+    "Raw_University": "George Mason University  ",
+    "LONGITUDE": -77.307063,
+    "LATITUDE": 38.83195
+  },
+  {
+    "SN": 8,
+    "Raw_University": "Harvard University  ",
+    "LONGITUDE": -71.118313,
+    "LATITUDE": 42.374471
+  },
+  {
+    "SN": 9,
+    "Raw_University": "Johns Hopkins University  ",
+    "LONGITUDE": -76.621595,
+    "LATITUDE": 39.328977
+  },
+  {
+    "SN": 10,
+    "Raw_University": "Lehigh University  ",
+    "LONGITUDE": -75.380236,
+    "LATITUDE": 40.606822
+  },
+  {
+    "SN": 11,
+    "Raw_University": "Northwestern University  ",
+    "LONGITUDE": -87.679858,
+    "LATITUDE": 42.050356
+  },
+  {
+    "SN": 12,
+    "Raw_University": "Princeton University  ",
+    "LONGITUDE": -74.659365,
+    "LATITUDE": 40.348732
+  },
+  {
+    "SN": 13,
+    "Raw_University": "Rutgers University-Newark  ",
+    "LONGITUDE": -74.175809,
+    "LATITUDE": 40.739122
+  },
+  {
+    "SN": 14,
+    "Raw_University": "Stanford University  ",
+    "LONGITUDE": -122.167359,
+    "LATITUDE": 37.429434
+  },
+  {
+    "SN": 15,
+    "Raw_University": "Temple University  ",
+    "LONGITUDE": -75.156859,
+    "LATITUDE": 39.980546
+  },
+  {
+    "SN": 16,
+    "Raw_University": "The New School  ",
+    "LONGITUDE": -73.997114,
+    "LATITUDE": 40.735508
+  },
+  {
+    "SN": 17,
+    "Raw_University": "Tufts University  ",
+    "LONGITUDE": -71.118293,
+    "LATITUDE": 42.40855
+  },
+  {
+    "SN": 18,
+    "Raw_University": "Tulane University  ",
+    "LONGITUDE": -90.122144,
+    "LATITUDE": 29.940069
+  },
+  {
+    "SN": 19,
+    "Raw_University": "University of Cincinnati  ",
+    "LONGITUDE": -84.51428,
+    "LATITUDE": 39.131159
+  },
+  {
+    "SN": 20,
+    "Raw_University": "University of South Florida  ",
+    "LONGITUDE": -82.413232,
+    "LATITUDE": 28.061458
+  },
+  {
+    "SN": 21,
+    "Raw_University": "University of Southern California  ",
+    "LONGITUDE": -118.284169,
+    "LATITUDE": 34.021281
+  },
+  {
+    "SN": 22,
+    "Raw_University": "University of Virginia  ",
+    "LONGITUDE": -78.503428,
+    "LATITUDE": 38.035665
+  },
+  {
+    "SN": 23,
+    "Raw_University": "Yale University  ",
+    "LONGITUDE": -72.926688,
+    "LATITUDE": 41.311158
+  },
+  {
+    "SN": 24,
+    "Raw_University": "Arizona State University  ",
+    "LONGITUDE": -111.924487,
+    "LATITUDE": 33.463517
+  },
+  {
+    "SN": 25,
+    "Raw_University": "California State University, Sacramento  ",
+    "LONGITUDE": -121.4241,
+    "LATITUDE": 38.561
+  },
+  {
+    "SN": 26,
+    "Raw_University": "Eastern Washington University  ",
+    "LONGITUDE": -117.5806,
+    "LATITUDE": 47.4918
+  },
+  {
+    "SN": 27,
+    "Raw_University": "Emerson College  ",
+    "LONGITUDE": -71.0656,
+    "LATITUDE": 42.3522
+  },
+  {
+    "SN": 28,
+    "Raw_University": "Illinois Wesleyan University  ",
+    "LONGITUDE": -88.993,
+    "LATITUDE": 40.4887
+  },
+  {
+    "SN": 29,
+    "Raw_University": "Indiana University, Bloomington  ",
+    "LONGITUDE": -86.526559,
+    "LATITUDE": 39.16609
+  },
+  {
+    "SN": 30,
+    "Raw_University": "Lafayette College  ",
+    "LONGITUDE": -75.2101,
+    "LATITUDE": 40.6984
+  },
+  {
+    "SN": 31,
+    "Raw_University": "Middlebury College  ",
+    "LONGITUDE": -73.1766,
+    "LATITUDE": 44.0084
+  },
+  {
+    "SN": 32,
+    "Raw_University": "Muhlenberg College  ",
+    "LONGITUDE": -75.5073,
+    "LATITUDE": 40.5943
+  },
+  {
+    "SN": 33,
+    "Raw_University": "Ohio State University  ",
+    "LONGITUDE": -83.007525,
+    "LATITUDE": 39.999803
+  },
+  {
+    "SN": 34,
+    "Raw_University": "Pacific Lutheran University  ",
+    "LONGITUDE": -122.4443,
+    "LATITUDE": 47.1415
+  },
+  {
+    "SN": 35,
+    "Raw_University": "Pomona College  ",
+    "LONGITUDE": -117.7135,
+    "LATITUDE": 34.0983
+  },
+  {
+    "SN": 36,
+    "Raw_University": "Portland State University  ",
+    "LONGITUDE": -122.6845,
+    "LATITUDE": 45.5118
+  },
+  {
+    "SN": 37,
+    "Raw_University": "Rutgers University  ",
+    "LONGITUDE": -74.446251,
+    "LATITUDE": 40.498769
+  },
+  {
+    "SN": 38,
+    "Raw_University": "Santa Monica College  ",
+    "LONGITUDE": -118.4695,
+    "LATITUDE": 34.017
+  },
+  {
+    "SN": 39,
+    "Raw_University": "Sarah Lawrence College  ",
+    "LONGITUDE": -73.8591,
+    "LATITUDE": 40.9426
+  },
+  {
+    "SN": 40,
+    "Raw_University": "State University of New York Binghamton  ",
+    "LONGITUDE": -75.969,
+    "LATITUDE": 42.088
+  },
+  {
+    "SN": 41,
+    "Raw_University": "State University of New York Rockland  ",
+    "LONGITUDE": -74.1023,
+    "LATITUDE": 41.1237
+  },
+  {
+    "SN": 42,
+    "Raw_University": "State University of New York, Purchase  ",
+    "LONGITUDE": -73.7047,
+    "LATITUDE": 41.049
+  },
+  {
+    "SN": 43,
+    "Raw_University": "Swarthmore College  ",
+    "LONGITUDE": -75.3536,
+    "LATITUDE": 39.905
+  },
+  {
+    "SN": 44,
+    "Raw_University": "Union College  ",
+    "LONGITUDE": -73.9289,
+    "LATITUDE": 42.8206
+  },
+  {
+    "SN": 45,
+    "Raw_University": "University of California Davis  ",
+    "LONGITUDE": -121.749567,
+    "LATITUDE": 38.539667
+  },
+  {
+    "SN": 46,
+    "Raw_University": "University of California San Diego  ",
+    "LONGITUDE": -117.235866,
+    "LATITUDE": 32.877749
+  },
+  {
+    "SN": 47,
+    "Raw_University": "University of California Santa Barbara  ",
+    "LONGITUDE": -119.846426,
+    "LATITUDE": 34.416297
+  },
+  {
+    "SN": 48,
+    "Raw_University": "University of California, Berkeley  ",
+    "LONGITUDE": -122.260463,
+    "LATITUDE": 37.871918
+  },
+  {
+    "SN": 49,
+    "Raw_University": "University of Hawaii at Manoa  ",
+    "LONGITUDE": -157.817,
+    "LATITUDE": 21.2975
+  },
+  {
+    "SN": 50,
+    "Raw_University": "University of Massachusetts Amherst  ",
+    "LONGITUDE": -72.526728,
+    "LATITUDE": 42.385999
+  },
+  {
+    "SN": 51,
+    "Raw_University": "University of Michigan  ",
+    "LONGITUDE": -83.73481,
+    "LATITUDE": 42.278374
+  },
+  {
+    "SN": 52,
+    "Raw_University": "University of Minnesota, Twin Cities  ",
+    "LONGITUDE": -93.235464,
+    "LATITUDE": 44.972851
+  },
+  {
+    "SN": 53,
+    "Raw_University": "University of North Carolina  ",
+    "LONGITUDE": -79.050969,
+    "LATITUDE": 35.911769
+  },
+  {
+    "SN": 54,
+    "Raw_University": "University of Tampa  ",
+    "LONGITUDE": -82.4647,
+    "LATITUDE": 27.9475
+  },
+  {
+    "SN": 55,
+    "Raw_University": "University of Tennessee  ",
+    "LONGITUDE": -83.925852,
+    "LATITUDE": 35.952082
+  },
+  {
+    "SN": 56,
+    "Raw_University": "University of Washington-Seattle  ",
+    "LONGITUDE": -122.30514,
+    "LATITUDE": 47.65538
+  },
+  {
+    "SN": 57,
+    "Raw_University": "University of Wisconsin, Madison  ",
+    "LONGITUDE": -89.404098,
+    "LATITUDE": 43.075409
+  },
+  {
+    "SN": 58,
+    "Raw_University": "Wellesley College  ",
+    "LONGITUDE": -71.3064,
+    "LATITUDE": 42.2936
+  },
+  {
+    "SN": 59,
+    "Raw_University": "Whitman College  ",
+    "LONGITUDE": -118.3306,
+    "LATITUDE": 46.0715
+  }
+]

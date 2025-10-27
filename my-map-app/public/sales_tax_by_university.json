@@ -1,0 +1,1136 @@
+[
+  {
+    "University": "Adelphi University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "American University",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Arizona State University \u2013 Tempe",
+    "STUSPS": "AZ",
+    "NAME": "Arizona",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "Auburn University",
+    "STUSPS": "AL",
+    "NAME": "Alabama",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "Baylor University",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "Binghamton University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Boston College",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Boston University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Brandeis University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Brigham Young University",
+    "STUSPS": "UT",
+    "NAME": "Utah",
+    "State Sales Tax in %": 7.32
+  },
+  {
+    "University": "Brown University",
+    "STUSPS": "RI",
+    "NAME": "Rhode Island",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "California Institute of Technology",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "California State University, Fullerton",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "California State University, Long Beach",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Carnegie Mellon University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Case Western Reserve University",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "Catholic University of America",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Chapman University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Clark University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Clarkson University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Clemson University",
+    "STUSPS": "SC",
+    "NAME": "South Carolina",
+    "State Sales Tax in %": 7.5
+  },
+  {
+    "University": "College of William and Mary",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "Colorado School of Mines",
+    "STUSPS": "CO",
+    "NAME": "Colorado",
+    "State Sales Tax in %": 7.86
+  },
+  {
+    "University": "Colorado State University",
+    "STUSPS": "CO",
+    "NAME": "Colorado",
+    "State Sales Tax in %": 7.86
+  },
+  {
+    "University": "Columbia University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Cornell University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Creighton University",
+    "STUSPS": "NE",
+    "NAME": "Nebraska",
+    "State Sales Tax in %": 6.97
+  },
+  {
+    "University": "CUNY-City College",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Dartmouth College",
+    "STUSPS": "NH",
+    "NAME": "New Hampshire",
+    "State Sales Tax in %": 0.0
+  },
+  {
+    "University": "DePaul University",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "Drake University",
+    "STUSPS": "IA",
+    "NAME": "Iowa",
+    "State Sales Tax in %": 6.94
+  },
+  {
+    "University": "Drexel University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Duke University",
+    "STUSPS": "NC",
+    "NAME": "North Carolina",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Duquesne University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Elon University",
+    "STUSPS": "NC",
+    "NAME": "North Carolina",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Emory University",
+    "STUSPS": "GA",
+    "NAME": "Georgia",
+    "State Sales Tax in %": 7.42
+  },
+  {
+    "University": "Fairfield University",
+    "STUSPS": "CT",
+    "NAME": "Connecticut",
+    "State Sales Tax in %": 6.35
+  },
+  {
+    "University": "Florida International University",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "Florida State University",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "Fordham University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Gallaudet University",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "George Mason University",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "George Washington University",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Georgetown University",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Georgia Institute of Technology",
+    "STUSPS": "GA",
+    "NAME": "Georgia",
+    "State Sales Tax in %": 7.42
+  },
+  {
+    "University": "Gonzaga University",
+    "STUSPS": "WA",
+    "NAME": "Washington",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "Harvard University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Hofstra University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Howard University",
+    "STUSPS": "DC",
+    "NAME": "District of Columbia",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Illinois Institute of Technology",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "Illinois State University",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "Indiana University-Bloomington",
+    "STUSPS": "IN",
+    "NAME": "Indiana",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Iowa State University of Science and Technology",
+    "STUSPS": "IA",
+    "NAME": "Iowa",
+    "State Sales Tax in %": 6.94
+  },
+  {
+    "University": "James Madison University",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "Johns Hopkins University",
+    "STUSPS": "MD",
+    "NAME": "Maryland",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Kansas State University",
+    "STUSPS": "KS",
+    "NAME": "Kansas",
+    "State Sales Tax in %": 8.77
+  },
+  {
+    "University": "Lehigh University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Louisiana State University-Baton Rouge",
+    "STUSPS": "LA",
+    "NAME": "Louisiana",
+    "State Sales Tax in %": 10.12
+  },
+  {
+    "University": "Loyola Marymount University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Loyola University Chicago",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "Marquette University",
+    "STUSPS": "WI",
+    "NAME": "Wisconsin",
+    "State Sales Tax in %": 5.7
+  },
+  {
+    "University": "Massachusetts Institute of Technology",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Mercer University",
+    "STUSPS": "GA",
+    "NAME": "Georgia",
+    "State Sales Tax in %": 7.42
+  },
+  {
+    "University": "Miami University-Oxford",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "Michigan State University",
+    "STUSPS": "MI",
+    "NAME": "Michigan",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Michigan Technological University",
+    "STUSPS": "MI",
+    "NAME": "Michigan",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "Mississippi State University",
+    "STUSPS": "MS",
+    "NAME": "Mississippi",
+    "State Sales Tax in %": 7.06
+  },
+  {
+    "University": "Missouri University of Science & Technology",
+    "STUSPS": "MO",
+    "NAME": "Missouri",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "New Jersey Institute of Technology",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "New York University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "North Carolina State University",
+    "STUSPS": "NC",
+    "NAME": "North Carolina",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Northeastern University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Northwestern University",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "Ohio State University-Columbus",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "Ohio University",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "Oklahoma State University",
+    "STUSPS": "OK",
+    "NAME": "Oklahoma",
+    "State Sales Tax in %": 9.0
+  },
+  {
+    "University": "Oregon State University",
+    "STUSPS": "OR",
+    "NAME": "Oregon",
+    "State Sales Tax in %": 0.0
+  },
+  {
+    "University": "Pennsylvania State University-University Park",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Pepperdine University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "NYU Tandon School of Engineering",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Princeton University",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Purdue University",
+    "STUSPS": "IN",
+    "NAME": "Indiana",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Quinnipiac University",
+    "STUSPS": "CT",
+    "NAME": "Connecticut",
+    "State Sales Tax in %": 6.35
+  },
+  {
+    "University": "Rensselaer Polytechnic Institute",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Rice University",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "Rochester Institute of Technology",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Rutgers University-Camden",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Rutgers University-New Brunswick",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Rutgers University-Newark",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Saint Louis University",
+    "STUSPS": "MO",
+    "NAME": "Missouri",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "Samford University",
+    "STUSPS": "AL",
+    "NAME": "Alabama",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "San Diego State University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Santa Clara University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Seattle University",
+    "STUSPS": "WA",
+    "NAME": "Washington",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "Seton Hall University",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Simmons University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "South Carolina State University",
+    "STUSPS": "SC",
+    "NAME": "South Carolina",
+    "State Sales Tax in %": 7.5
+  },
+  {
+    "University": "Southern Methodist University (SMU)",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "St. John Fisher College",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "St. John's University (NY)",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Stanford University",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "Stevens Institute of Technology",
+    "STUSPS": "NJ",
+    "NAME": "New Jersey",
+    "State Sales Tax in %": 6.6
+  },
+  {
+    "University": "Stony Brook University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "SUNY College of Environmental Science and Forestry",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Syracuse University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Temple University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Texas A&M University-College Station",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "Texas Christian University",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "The New School",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "Thomas Jefferson University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Tufts University",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Tulane University",
+    "STUSPS": "LA",
+    "NAME": "Louisiana",
+    "State Sales Tax in %": 10.12
+  },
+  {
+    "University": "University at Albany",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "University of Alabama",
+    "STUSPS": "AL",
+    "NAME": "Alabama",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "University of Alabama-Birmingham",
+    "STUSPS": "AL",
+    "NAME": "Alabama",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "University of Arizona",
+    "STUSPS": "AZ",
+    "NAME": "Arizona",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "University of Arkansas",
+    "STUSPS": "AR",
+    "NAME": "Arkansas",
+    "State Sales Tax in %": 9.46
+  },
+  {
+    "University": "University at Buffalo (SUNY)",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "University of California-Berkeley",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Davis",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Irvine",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Los Angeles",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Merced",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Riverside",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-San Diego",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Santa Barbara",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of California-Santa Cruz",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of Central Florida",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "University of Chicago",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "University of Cincinnati",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "University of Colorado-Boulder",
+    "STUSPS": "CO",
+    "NAME": "Colorado",
+    "State Sales Tax in %": 7.86
+  },
+  {
+    "University": "University of Connecticut",
+    "STUSPS": "CT",
+    "NAME": "Connecticut",
+    "State Sales Tax in %": 6.35
+  },
+  {
+    "University": "University of Dayton",
+    "STUSPS": "OH",
+    "NAME": "Ohio",
+    "State Sales Tax in %": 7.23
+  },
+  {
+    "University": "University of Delaware",
+    "STUSPS": "DE",
+    "NAME": "Delaware",
+    "State Sales Tax in %": 0.0
+  },
+  {
+    "University": "University of Denver",
+    "STUSPS": "CO",
+    "NAME": "Colorado",
+    "State Sales Tax in %": 7.86
+  },
+  {
+    "University": "University of Florida",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "University of Georgia",
+    "STUSPS": "GA",
+    "NAME": "Georgia",
+    "State Sales Tax in %": 7.42
+  },
+  {
+    "University": "University of Houston",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "University of Illinois-Chicago",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "University of Illinois-Urbana-Champaign",
+    "STUSPS": "IL",
+    "NAME": "Illinois",
+    "State Sales Tax in %": 8.89
+  },
+  {
+    "University": "University of Iowa",
+    "STUSPS": "IA",
+    "NAME": "Iowa",
+    "State Sales Tax in %": 6.94
+  },
+  {
+    "University": "University of Kansas",
+    "STUSPS": "KS",
+    "NAME": "Kansas",
+    "State Sales Tax in %": 8.77
+  },
+  {
+    "University": "University of Kentucky",
+    "STUSPS": "KY",
+    "NAME": "Kentucky",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "University of La Verne",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of Maryland-Baltimore County",
+    "STUSPS": "MD",
+    "NAME": "Maryland",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "University of Maryland-College Park",
+    "STUSPS": "MD",
+    "NAME": "Maryland",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "University of Massachusetts-Amherst",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "University of Miami",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "University of Michigan-Ann Arbor",
+    "STUSPS": "MI",
+    "NAME": "Michigan",
+    "State Sales Tax in %": 6.0
+  },
+  {
+    "University": "University of Minnesota",
+    "STUSPS": "MN",
+    "NAME": "Minnesota",
+    "State Sales Tax in %": 8.12
+  },
+  {
+    "University": "University of Mississippi",
+    "STUSPS": "MS",
+    "NAME": "Mississippi",
+    "State Sales Tax in %": 7.06
+  },
+  {
+    "University": "University of Missouri-Columbia",
+    "STUSPS": "MO",
+    "NAME": "Missouri",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "University of Nebraska-Lincoln",
+    "STUSPS": "NE",
+    "NAME": "Nebraska",
+    "State Sales Tax in %": 6.97
+  },
+  {
+    "University": "University of New Hampshire",
+    "STUSPS": "NH",
+    "NAME": "New Hampshire",
+    "State Sales Tax in %": 0.0
+  },
+  {
+    "University": "University of North Carolina-Chapel Hill",
+    "STUSPS": "NC",
+    "NAME": "North Carolina",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "University of Notre Dame",
+    "STUSPS": "IN",
+    "NAME": "Indiana",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "University of Oklahoma",
+    "STUSPS": "OK",
+    "NAME": "Oklahoma",
+    "State Sales Tax in %": 9.0
+  },
+  {
+    "University": "University of Oregon",
+    "STUSPS": "OR",
+    "NAME": "Oregon",
+    "State Sales Tax in %": 0.0
+  },
+  {
+    "University": "University of Pennsylvania",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "University of Pittsburgh",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "University of Rhode Island",
+    "STUSPS": "RI",
+    "NAME": "Rhode Island",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "University of Rochester",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  },
+  {
+    "University": "University of San Diego",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of San Francisco",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of South Carolina",
+    "STUSPS": "SC",
+    "NAME": "South Carolina",
+    "State Sales Tax in %": 7.5
+  },
+  {
+    "University": "University of South Florida",
+    "STUSPS": "FL",
+    "NAME": "Florida",
+    "State Sales Tax in %": 6.95
+  },
+  {
+    "University": "University of Southern California",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of St. Joseph",
+    "STUSPS": "CT",
+    "NAME": "Connecticut",
+    "State Sales Tax in %": 6.35
+  },
+  {
+    "University": "University of St. Thomas",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "University of Tennessee-Knoxville",
+    "STUSPS": "TN",
+    "NAME": "Tennessee",
+    "State Sales Tax in %": 9.56
+  },
+  {
+    "University": "University of Texas-Austin",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "University of Texas-Dallas",
+    "STUSPS": "TX",
+    "NAME": "Texas",
+    "State Sales Tax in %": 8.2
+  },
+  {
+    "University": "University of the Pacific",
+    "STUSPS": "CA",
+    "NAME": "California",
+    "State Sales Tax in %": 8.8
+  },
+  {
+    "University": "University of Tulsa",
+    "STUSPS": "OK",
+    "NAME": "Oklahoma",
+    "State Sales Tax in %": 9.0
+  },
+  {
+    "University": "University of Utah",
+    "STUSPS": "UT",
+    "NAME": "Utah",
+    "State Sales Tax in %": 7.32
+  },
+  {
+    "University": "University of Vermont",
+    "STUSPS": "VT",
+    "NAME": "Vermont",
+    "State Sales Tax in %": 6.37
+  },
+  {
+    "University": "University of Virginia",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "University of Washington",
+    "STUSPS": "WA",
+    "NAME": "Washington",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "University of Wisconsin-Madison",
+    "STUSPS": "WI",
+    "NAME": "Wisconsin",
+    "State Sales Tax in %": 5.7
+  },
+  {
+    "University": "Vanderbilt University",
+    "STUSPS": "TN",
+    "NAME": "Tennessee",
+    "State Sales Tax in %": 9.56
+  },
+  {
+    "University": "Villanova University",
+    "STUSPS": "PA",
+    "NAME": "Pennsylvania",
+    "State Sales Tax in %": 6.34
+  },
+  {
+    "University": "Virginia Commonwealth University",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "Virginia Polytechnic Institute and State University",
+    "STUSPS": "VA",
+    "NAME": "Virginia",
+    "State Sales Tax in %": 5.77
+  },
+  {
+    "University": "Wake Forest University",
+    "STUSPS": "NC",
+    "NAME": "North Carolina",
+    "State Sales Tax in %": 7.0
+  },
+  {
+    "University": "Washington State University",
+    "STUSPS": "WA",
+    "NAME": "Washington",
+    "State Sales Tax in %": 9.43
+  },
+  {
+    "University": "Washington University in St. Louis",
+    "STUSPS": "MO",
+    "NAME": "Missouri",
+    "State Sales Tax in %": 8.41
+  },
+  {
+    "University": "Worcester Polytechnic Institute",
+    "STUSPS": "MA",
+    "NAME": "Massachusetts",
+    "State Sales Tax in %": 6.25
+  },
+  {
+    "University": "Yale University",
+    "STUSPS": "CT",
+    "NAME": "Connecticut",
+    "State Sales Tax in %": 6.35
+  },
+  {
+    "University": "Yeshiva University",
+    "STUSPS": "NY",
+    "NAME": "New York",
+    "State Sales Tax in %": 8.53
+  }
+]

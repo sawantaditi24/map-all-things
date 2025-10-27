@@ -1,0 +1,1703 @@
+[
+  {
+    "university": "Adelphi University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Adelphi University",
+    "longitude": -73.653321,
+    "latitude": 40.721439,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "American University",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "American University",
+    "longitude": -77.088875,
+    "latitude": 38.936005,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Arizona State University \u2013 Tempe",
+    "state_abbr": "AZ",
+    "state_name": "Arizona",
+    "university_full": "Arizona State University \u2013 Tempe",
+    "longitude": -111.924487,
+    "latitude": 33.463517,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "Auburn University",
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "university_full": "Auburn University",
+    "longitude": -85.488258,
+    "latitude": 32.599378,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "Baylor University",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "Baylor University",
+    "longitude": -97.121041,
+    "latitude": 31.546872,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "Binghamton University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Binghamton University",
+    "longitude": -75.966889,
+    "latitude": 42.087868,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Boston College",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Boston College",
+    "longitude": -71.169242,
+    "latitude": 42.336213,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Boston University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Boston University",
+    "longitude": -71.107942,
+    "latitude": 42.351118,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Brandeis University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Brandeis University",
+    "longitude": -71.260155,
+    "latitude": 42.365727,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Brigham Young University",
+    "state_abbr": "UT",
+    "state_name": "Utah",
+    "university_full": "Brigham Young University",
+    "longitude": -111.649281,
+    "latitude": 40.250851,
+    "state_sales_tax_percent": 7.32
+  },
+  {
+    "university": "Brown University",
+    "state_abbr": "RI",
+    "state_name": "Rhode Island",
+    "university_full": "Brown University",
+    "longitude": -71.40385,
+    "latitude": 41.82617,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "California Institute of Technology",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "California Institute of Technology",
+    "longitude": -118.125878,
+    "latitude": 34.137349,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "California State University, Fullerton",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "California State University, Fullerton",
+    "longitude": -117.885446,
+    "latitude": 33.881506,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "California State University, Long Beach",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "California State University, Long Beach",
+    "longitude": -118.11204,
+    "latitude": 33.782818,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Carnegie Mellon University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Carnegie Mellon University",
+    "longitude": -79.941993,
+    "latitude": 40.44357,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Case Western Reserve University",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "Case Western Reserve University",
+    "longitude": -81.609596,
+    "latitude": 41.507419,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "Catholic University of America",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "Catholic University of America",
+    "longitude": -76.997909,
+    "latitude": 38.933651,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Chapman University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "Chapman University",
+    "longitude": -117.852518,
+    "latitude": 33.79302,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Clark University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Clark University",
+    "longitude": -71.823356,
+    "latitude": 42.249987,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Clarkson University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Clarkson University",
+    "longitude": -74.999359,
+    "latitude": 44.662716,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Clemson University",
+    "state_abbr": "SC",
+    "state_name": "South Carolina",
+    "university_full": "Clemson University",
+    "longitude": -82.835114,
+    "latitude": 34.679381,
+    "state_sales_tax_percent": 7.5
+  },
+  {
+    "university": "College of William and Mary",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "College of William and Mary",
+    "longitude": -76.708214,
+    "latitude": 37.269489,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "Colorado School of Mines",
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "university_full": "Colorado School of Mines",
+    "longitude": -105.223364,
+    "latitude": 39.751443,
+    "state_sales_tax_percent": 7.86
+  },
+  {
+    "university": "Colorado State University",
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "university_full": "Colorado State University",
+    "longitude": -104.989255,
+    "latitude": 39.745405,
+    "state_sales_tax_percent": 7.86
+  },
+  {
+    "university": "Columbia University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Columbia University",
+    "longitude": -73.961885,
+    "latitude": 40.808286,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Cornell University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Cornell University",
+    "longitude": -76.483084,
+    "latitude": 42.4472,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Creighton University",
+    "state_abbr": "NE",
+    "state_name": "Nebraska",
+    "university_full": "Creighton University",
+    "longitude": -95.947811,
+    "latitude": 41.265361,
+    "state_sales_tax_percent": 6.97
+  },
+  {
+    "university": "CUNY-City College",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "CUNY-City College",
+    "longitude": -73.987856,
+    "latitude": 40.695483,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Dartmouth College",
+    "state_abbr": "NH",
+    "state_name": "New Hampshire",
+    "university_full": "Dartmouth College",
+    "longitude": -72.289949,
+    "latitude": 43.704115,
+    "state_sales_tax_percent": 0.0
+  },
+  {
+    "university": "DePaul University",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "DePaul University",
+    "longitude": -87.62724,
+    "latitude": 41.877618,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "Drake University",
+    "state_abbr": "IA",
+    "state_name": "Iowa",
+    "university_full": "Drake University",
+    "longitude": -93.652163,
+    "latitude": 41.60129,
+    "state_sales_tax_percent": 6.94
+  },
+  {
+    "university": "Drexel University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Drexel University",
+    "longitude": -75.190051,
+    "latitude": 39.955217,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Duke University",
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "university_full": "Duke University",
+    "longitude": -78.937624,
+    "latitude": 36.001135,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Duquesne University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Duquesne University",
+    "longitude": -79.993123,
+    "latitude": 40.43589,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Elon University",
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "university_full": "Elon University",
+    "longitude": -79.50344,
+    "latitude": 36.104148,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Emory University",
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "university_full": "Emory University",
+    "longitude": -84.325512,
+    "latitude": 33.790183,
+    "state_sales_tax_percent": 7.42
+  },
+  {
+    "university": "Fairfield University",
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "university_full": "Fairfield University",
+    "longitude": -73.255903,
+    "latitude": 41.157673,
+    "state_sales_tax_percent": 6.35
+  },
+  {
+    "university": "Florida International University",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "Florida International University",
+    "longitude": -80.373928,
+    "latitude": 25.75732,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "Florida State University",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "Florida State University",
+    "longitude": -84.295064,
+    "latitude": 30.443147,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "Fordham University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Fordham University",
+    "longitude": -73.882705,
+    "latitude": 40.859354,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Gallaudet University",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "Gallaudet University",
+    "longitude": -76.993675,
+    "latitude": 38.907371,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "George Mason University",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "George Mason University",
+    "longitude": -77.307063,
+    "latitude": 38.83195,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "George Washington University",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "George Washington University",
+    "longitude": -77.048363,
+    "latitude": 38.89923,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Georgetown University",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "Georgetown University",
+    "longitude": -77.073463,
+    "latitude": 38.908809,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Georgia Institute of Technology",
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "university_full": "Georgia Institute of Technology",
+    "longitude": -84.394832,
+    "latitude": 33.77242,
+    "state_sales_tax_percent": 7.42
+  },
+  {
+    "university": "Gonzaga University",
+    "state_abbr": "WA",
+    "state_name": "Washington",
+    "university_full": "Gonzaga University",
+    "longitude": -117.400625,
+    "latitude": 47.666531,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "Harvard University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Harvard University",
+    "longitude": -71.118313,
+    "latitude": 42.374471,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Hofstra University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Hofstra University",
+    "longitude": -73.60078,
+    "latitude": 40.715959,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Howard University",
+    "state_abbr": "DC",
+    "state_name": "District of Columbia",
+    "university_full": "Howard University",
+    "longitude": -77.018966,
+    "latitude": 38.922392,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Illinois Institute of Technology",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "Illinois Institute of Technology",
+    "longitude": -87.627321,
+    "latitude": 41.8313,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "Illinois State University",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "Illinois State University",
+    "longitude": -88.990058,
+    "latitude": 40.509403,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "Indiana University-Bloomington",
+    "state_abbr": "IN",
+    "state_name": "Indiana",
+    "university_full": "Indiana University-Bloomington",
+    "longitude": -86.526559,
+    "latitude": 39.16609,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Iowa State University of Science and Technology",
+    "state_abbr": "IA",
+    "state_name": "Iowa",
+    "university_full": "Iowa State University of Science and Technology",
+    "longitude": -93.648504,
+    "latitude": 42.026212,
+    "state_sales_tax_percent": 6.94
+  },
+  {
+    "university": "James Madison University",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "James Madison University",
+    "longitude": -78.870484,
+    "latitude": 38.436311,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "Johns Hopkins University",
+    "state_abbr": "MD",
+    "state_name": "Maryland",
+    "university_full": "Johns Hopkins University",
+    "longitude": -76.621595,
+    "latitude": 39.328977,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Kansas State University",
+    "state_abbr": "KS",
+    "state_name": "Kansas",
+    "university_full": "Kansas State University",
+    "longitude": -96.581077,
+    "latitude": 39.188648,
+    "state_sales_tax_percent": 8.77
+  },
+  {
+    "university": "Lehigh University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Lehigh University",
+    "longitude": -75.380236,
+    "latitude": 40.606822,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Louisiana State University-Baton Rouge",
+    "state_abbr": "LA",
+    "state_name": "Louisiana",
+    "university_full": "Louisiana State University-Baton Rouge",
+    "longitude": -93.70561,
+    "latitude": 32.428465,
+    "state_sales_tax_percent": 10.12
+  },
+  {
+    "university": "Loyola Marymount University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "Loyola Marymount University",
+    "longitude": -118.415744,
+    "latitude": 33.97085,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Loyola University Chicago",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "Loyola University Chicago",
+    "longitude": -87.656872,
+    "latitude": 42.000765,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "Marquette University",
+    "state_abbr": "WI",
+    "state_name": "Wisconsin",
+    "university_full": "Marquette University",
+    "longitude": -87.927961,
+    "latitude": 43.03903,
+    "state_sales_tax_percent": 5.7
+  },
+  {
+    "university": "Massachusetts Institute of Technology",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Massachusetts Institute of Technology",
+    "longitude": -71.093226,
+    "latitude": 42.359243,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Mercer University",
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "university_full": "Mercer University",
+    "longitude": -83.649392,
+    "latitude": 32.829134,
+    "state_sales_tax_percent": 7.42
+  },
+  {
+    "university": "Miami University-Oxford",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "Miami University-Oxford",
+    "longitude": -84.732954,
+    "latitude": 39.507757,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "Michigan State University",
+    "state_abbr": "MI",
+    "state_name": "Michigan",
+    "university_full": "Michigan State University",
+    "longitude": -84.476111,
+    "latitude": 42.73212,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Michigan Technological University",
+    "state_abbr": "MI",
+    "state_name": "Michigan",
+    "university_full": "Michigan Technological University",
+    "longitude": -88.548092,
+    "latitude": 47.11866,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "Mississippi State University",
+    "state_abbr": "MS",
+    "state_name": "Mississippi",
+    "university_full": "Mississippi State University",
+    "longitude": -88.790139,
+    "latitude": 33.454852,
+    "state_sales_tax_percent": 7.06
+  },
+  {
+    "university": "Missouri University of Science & Technology",
+    "state_abbr": "MO",
+    "state_name": "Missouri",
+    "university_full": "Missouri University of Science & Technology",
+    "longitude": -91.775583,
+    "latitude": 37.953426,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "New Jersey Institute of Technology",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "New Jersey Institute of Technology",
+    "longitude": -74.177113,
+    "latitude": 40.741997,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "New York University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "New York University",
+    "longitude": -73.997264,
+    "latitude": 40.729452,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "North Carolina State University",
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "university_full": "North Carolina State University",
+    "longitude": -78.674517,
+    "latitude": 35.785111,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Northeastern University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Northeastern University",
+    "longitude": -71.088782,
+    "latitude": 42.339992,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Northwestern University",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "Northwestern University",
+    "longitude": -87.679858,
+    "latitude": 42.050356,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "Ohio State University-Columbus",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "Ohio State University-Columbus",
+    "longitude": -83.007525,
+    "latitude": 39.999803,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "Ohio University",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "Ohio University",
+    "longitude": -82.100985,
+    "latitude": 39.326798,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "Oklahoma State University",
+    "state_abbr": "OK",
+    "state_name": "Oklahoma",
+    "university_full": "Oklahoma State University",
+    "longitude": -97.069743,
+    "latitude": 36.123085,
+    "state_sales_tax_percent": 9.0
+  },
+  {
+    "university": "Oregon State University",
+    "state_abbr": "OR",
+    "state_name": "Oregon",
+    "university_full": "Oregon State University",
+    "longitude": -123.274723,
+    "latitude": 44.56395,
+    "state_sales_tax_percent": 0.0
+  },
+  {
+    "university": "Pennsylvania State University-University Park",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Pennsylvania State University-University Park",
+    "longitude": -77.862848,
+    "latitude": 40.7965,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Pepperdine University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "Pepperdine University",
+    "longitude": -118.707077,
+    "latitude": 34.037786,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "NYU Tandon School of Engineering",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "NYU Tandon School of Engineering",
+    "longitude": -73.997264,
+    "latitude": 40.729452,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Princeton University",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Princeton University",
+    "longitude": -74.659365,
+    "latitude": 40.348732,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Purdue University",
+    "state_abbr": "IN",
+    "state_name": "Indiana",
+    "university_full": "Purdue University",
+    "longitude": -86.914435,
+    "latitude": 40.428206,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Quinnipiac University",
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "university_full": "Quinnipiac University",
+    "longitude": -72.894117,
+    "latitude": 41.418915,
+    "state_sales_tax_percent": 6.35
+  },
+  {
+    "university": "Rensselaer Polytechnic Institute",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Rensselaer Polytechnic Institute",
+    "longitude": -73.676646,
+    "latitude": 42.729978,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Rice University",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "Rice University",
+    "longitude": -95.402035,
+    "latitude": 29.717897,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "Rochester Institute of Technology",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Rochester Institute of Technology",
+    "longitude": -77.67386,
+    "latitude": 43.084188,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Rutgers University-Camden",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Rutgers University-Camden",
+    "longitude": -75.12224,
+    "latitude": 39.948064,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Rutgers University-New Brunswick",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Rutgers University-New Brunswick",
+    "longitude": -74.446251,
+    "latitude": 40.498769,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Rutgers University-Newark",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Rutgers University-Newark",
+    "longitude": -74.175809,
+    "latitude": 40.739122,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Saint Louis University",
+    "state_abbr": "MO",
+    "state_name": "Missouri",
+    "university_full": "Saint Louis University",
+    "longitude": -90.2351,
+    "latitude": 38.636801,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "Samford University",
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "university_full": "Samford University",
+    "longitude": -86.791799,
+    "latitude": 33.464128,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "San Diego State University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "San Diego State University",
+    "longitude": -117.071228,
+    "latitude": 32.77525,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Santa Clara University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "Santa Clara University",
+    "longitude": -121.93784,
+    "latitude": 37.348362,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Seattle University",
+    "state_abbr": "WA",
+    "state_name": "Washington",
+    "university_full": "Seattle University",
+    "longitude": -122.318851,
+    "latitude": 47.608859,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "Seton Hall University",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Seton Hall University",
+    "longitude": -74.246027,
+    "latitude": 40.742336,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Simmons University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Simmons University",
+    "longitude": -71.099967,
+    "latitude": 42.3393,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "South Carolina State University",
+    "state_abbr": "SC",
+    "state_name": "South Carolina",
+    "university_full": "South Carolina State University",
+    "longitude": -80.848722,
+    "latitude": 33.497968,
+    "state_sales_tax_percent": 7.5
+  },
+  {
+    "university": "Southern Methodist University (SMU)",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "Southern Methodist University (SMU)",
+    "longitude": -96.783365,
+    "latitude": 32.843612,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "St. John Fisher College",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "St. John Fisher College",
+    "longitude": -77.513056,
+    "latitude": 43.116259,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "St. John's University (NY)",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "St. John's University (NY)",
+    "longitude": -73.796104,
+    "latitude": 40.722523,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Stanford University",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "Stanford University",
+    "longitude": -122.167359,
+    "latitude": 37.429434,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "Stevens Institute of Technology",
+    "state_abbr": "NJ",
+    "state_name": "New Jersey",
+    "university_full": "Stevens Institute of Technology",
+    "longitude": -74.025334,
+    "latitude": 40.744776,
+    "state_sales_tax_percent": 6.6
+  },
+  {
+    "university": "Stony Brook University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Stony Brook University",
+    "longitude": -73.12046,
+    "latitude": 40.91476,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "SUNY College of Environmental Science and Forestry",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "SUNY College of Environmental Science and Forestry",
+    "longitude": -76.138724,
+    "latitude": 43.034765,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Syracuse University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Syracuse University",
+    "longitude": -76.133989,
+    "latitude": 43.036644,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Temple University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Temple University",
+    "longitude": -75.156859,
+    "latitude": 39.980546,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Texas A&M University-College Station",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "Texas A&M University-College Station",
+    "longitude": -96.336475,
+    "latitude": 30.618726,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "Texas Christian University",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "Texas Christian University",
+    "longitude": -97.364758,
+    "latitude": 32.70961,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "The New School",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "The New School",
+    "longitude": -73.997114,
+    "latitude": 40.735508,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "Thomas Jefferson University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Thomas Jefferson University",
+    "longitude": -75.158266,
+    "latitude": 39.948274,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Tufts University",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Tufts University",
+    "longitude": -71.118293,
+    "latitude": 42.40855,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Tulane University",
+    "state_abbr": "LA",
+    "state_name": "Louisiana",
+    "university_full": "Tulane University",
+    "longitude": -90.122144,
+    "latitude": 29.940069,
+    "state_sales_tax_percent": 10.12
+  },
+  {
+    "university": "University at Albany",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "University at Albany",
+    "longitude": -73.824662,
+    "latitude": 42.685489,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "University of Alabama",
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "university_full": "University of Alabama",
+    "longitude": -87.529594,
+    "latitude": 33.207015,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "University of Alabama-Birmingham",
+    "state_abbr": "AL",
+    "state_name": "Alabama",
+    "university_full": "University of Alabama-Birmingham",
+    "longitude": -86.799345,
+    "latitude": 33.505697,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "University of Arizona",
+    "state_abbr": "AZ",
+    "state_name": "Arizona",
+    "university_full": "University of Arizona",
+    "longitude": -110.950815,
+    "latitude": 32.232672,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "University of Arkansas",
+    "state_abbr": "AR",
+    "state_name": "Arkansas",
+    "university_full": "University of Arkansas",
+    "longitude": -94.176981,
+    "latitude": 36.070009,
+    "state_sales_tax_percent": 9.46
+  },
+  {
+    "university": "University at Buffalo (SUNY)",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "University at Buffalo (SUNY)",
+    "longitude": -78.789458,
+    "latitude": 43.000942,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "University of California-Berkeley",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Berkeley",
+    "longitude": -122.260463,
+    "latitude": 37.871918,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Davis",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Davis",
+    "longitude": -121.749567,
+    "latitude": 38.539667,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Irvine",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Irvine",
+    "longitude": -117.841248,
+    "latitude": 33.648434,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Los Angeles",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Los Angeles",
+    "longitude": -118.442179,
+    "latitude": 34.07178,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Merced",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Merced",
+    "longitude": -120.424944,
+    "latitude": 37.366237,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Riverside",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Riverside",
+    "longitude": -117.32741,
+    "latitude": 33.97246,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-San Diego",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-San Diego",
+    "longitude": -117.235866,
+    "latitude": 32.877749,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Santa Barbara",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Santa Barbara",
+    "longitude": -119.846426,
+    "latitude": 34.416297,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of California-Santa Cruz",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of California-Santa Cruz",
+    "longitude": -122.058801,
+    "latitude": 36.995584,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of Central Florida",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "University of Central Florida",
+    "longitude": -81.200889,
+    "latitude": 28.602159,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "University of Chicago",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "University of Chicago",
+    "longitude": -87.599539,
+    "latitude": 41.787994,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "University of Cincinnati",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "University of Cincinnati",
+    "longitude": -84.51428,
+    "latitude": 39.131159,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "University of Colorado-Boulder",
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "university_full": "University of Colorado-Boulder",
+    "longitude": -105.270823,
+    "latitude": 40.008781,
+    "state_sales_tax_percent": 7.86
+  },
+  {
+    "university": "University of Connecticut",
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "university_full": "University of Connecticut",
+    "longitude": -72.249948,
+    "latitude": 41.809098,
+    "state_sales_tax_percent": 6.35
+  },
+  {
+    "university": "University of Dayton",
+    "state_abbr": "OH",
+    "state_name": "Ohio",
+    "university_full": "University of Dayton",
+    "longitude": -84.176113,
+    "latitude": 39.739547,
+    "state_sales_tax_percent": 7.23
+  },
+  {
+    "university": "University of Delaware",
+    "state_abbr": "DE",
+    "state_name": "Delaware",
+    "university_full": "University of Delaware",
+    "longitude": -75.752822,
+    "latitude": 39.679577,
+    "state_sales_tax_percent": 0.0
+  },
+  {
+    "university": "University of Denver",
+    "state_abbr": "CO",
+    "state_name": "Colorado",
+    "university_full": "University of Denver",
+    "longitude": -104.963259,
+    "latitude": 39.678005,
+    "state_sales_tax_percent": 7.86
+  },
+  {
+    "university": "University of Florida",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "University of Florida",
+    "longitude": -82.347911,
+    "latitude": 29.64629,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "University of Georgia",
+    "state_abbr": "GA",
+    "state_name": "Georgia",
+    "university_full": "University of Georgia",
+    "longitude": -83.374039,
+    "latitude": 33.956262,
+    "state_sales_tax_percent": 7.42
+  },
+  {
+    "university": "University of Houston",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "University of Houston",
+    "longitude": -95.343537,
+    "latitude": 29.720393,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "University of Illinois-Chicago",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "University of Illinois-Chicago",
+    "longitude": -87.650503,
+    "latitude": 41.871837,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "University of Illinois-Urbana-Champaign",
+    "state_abbr": "IL",
+    "state_name": "Illinois",
+    "university_full": "University of Illinois-Urbana-Champaign",
+    "longitude": -88.229114,
+    "latitude": 40.104718,
+    "state_sales_tax_percent": 8.89
+  },
+  {
+    "university": "University of Iowa",
+    "state_abbr": "IA",
+    "state_name": "Iowa",
+    "university_full": "University of Iowa",
+    "longitude": -91.536425,
+    "latitude": 41.661935,
+    "state_sales_tax_percent": 6.94
+  },
+  {
+    "university": "University of Kansas",
+    "state_abbr": "KS",
+    "state_name": "Kansas",
+    "university_full": "University of Kansas",
+    "longitude": -95.247567,
+    "latitude": 38.958549,
+    "state_sales_tax_percent": 8.77
+  },
+  {
+    "university": "University of Kentucky",
+    "state_abbr": "KY",
+    "state_name": "Kentucky",
+    "university_full": "University of Kentucky",
+    "longitude": -84.504747,
+    "latitude": 38.038911,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "University of La Verne",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of La Verne",
+    "longitude": -117.773262,
+    "latitude": 34.100855,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of Maryland-Baltimore County",
+    "state_abbr": "MD",
+    "state_name": "Maryland",
+    "university_full": "University of Maryland-Baltimore County",
+    "longitude": -76.711607,
+    "latitude": 39.256686,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "University of Maryland-College Park",
+    "state_abbr": "MD",
+    "state_name": "Maryland",
+    "university_full": "University of Maryland-College Park",
+    "longitude": -76.944721,
+    "latitude": 38.988178,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "University of Massachusetts-Amherst",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "University of Massachusetts-Amherst",
+    "longitude": -72.526728,
+    "latitude": 42.385999,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "University of Miami",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "University of Miami",
+    "longitude": -80.278662,
+    "latitude": 25.72126,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "University of Michigan-Ann Arbor",
+    "state_abbr": "MI",
+    "state_name": "Michigan",
+    "university_full": "University of Michigan-Ann Arbor",
+    "longitude": -83.73481,
+    "latitude": 42.278374,
+    "state_sales_tax_percent": 6.0
+  },
+  {
+    "university": "University of Minnesota",
+    "state_abbr": "MN",
+    "state_name": "Minnesota",
+    "university_full": "University of Minnesota",
+    "longitude": -93.235464,
+    "latitude": 44.972851,
+    "state_sales_tax_percent": 8.12
+  },
+  {
+    "university": "University of Mississippi",
+    "state_abbr": "MS",
+    "state_name": "Mississippi",
+    "university_full": "University of Mississippi",
+    "longitude": -89.537434,
+    "latitude": 34.365529,
+    "state_sales_tax_percent": 7.06
+  },
+  {
+    "university": "University of Missouri-Columbia",
+    "state_abbr": "MO",
+    "state_name": "Missouri",
+    "university_full": "University of Missouri-Columbia",
+    "longitude": -92.328843,
+    "latitude": 38.94531,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "University of Nebraska-Lincoln",
+    "state_abbr": "NE",
+    "state_name": "Nebraska",
+    "university_full": "University of Nebraska-Lincoln",
+    "longitude": -96.700508,
+    "latitude": 40.817598,
+    "state_sales_tax_percent": 6.97
+  },
+  {
+    "university": "University of New Hampshire",
+    "state_abbr": "NH",
+    "state_name": "New Hampshire",
+    "university_full": "University of New Hampshire",
+    "longitude": -70.932465,
+    "latitude": 43.135934,
+    "state_sales_tax_percent": 0.0
+  },
+  {
+    "university": "University of North Carolina-Chapel Hill",
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "university_full": "University of North Carolina-Chapel Hill",
+    "longitude": -79.050969,
+    "latitude": 35.911769,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "University of Notre Dame",
+    "state_abbr": "IN",
+    "state_name": "Indiana",
+    "university_full": "University of Notre Dame",
+    "longitude": -86.238959,
+    "latitude": 41.703058,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "University of Oklahoma",
+    "state_abbr": "OK",
+    "state_name": "Oklahoma",
+    "university_full": "University of Oklahoma",
+    "longitude": -97.444211,
+    "latitude": 35.209407,
+    "state_sales_tax_percent": 9.0
+  },
+  {
+    "university": "University of Oregon",
+    "state_abbr": "OR",
+    "state_name": "Oregon",
+    "university_full": "University of Oregon",
+    "longitude": -123.075792,
+    "latitude": 44.045146,
+    "state_sales_tax_percent": 0.0
+  },
+  {
+    "university": "University of Pennsylvania",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "University of Pennsylvania",
+    "longitude": -75.19391,
+    "latitude": 39.950929,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "University of Pittsburgh",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "University of Pittsburgh",
+    "longitude": -79.953254,
+    "latitude": 40.444388,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "University of Rhode Island",
+    "state_abbr": "RI",
+    "state_name": "Rhode Island",
+    "university_full": "University of Rhode Island",
+    "longitude": -71.527356,
+    "latitude": 41.484691,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "University of Rochester",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "University of Rochester",
+    "longitude": -77.631202,
+    "latitude": 43.126397,
+    "state_sales_tax_percent": 8.53
+  },
+  {
+    "university": "University of San Diego",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of San Diego",
+    "longitude": -117.192073,
+    "latitude": 32.770816,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of San Francisco",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of San Francisco",
+    "longitude": -122.450477,
+    "latitude": 37.776618,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of South Carolina",
+    "state_abbr": "SC",
+    "state_name": "South Carolina",
+    "university_full": "University of South Carolina",
+    "longitude": -81.026935,
+    "latitude": 33.996788,
+    "state_sales_tax_percent": 7.5
+  },
+  {
+    "university": "University of South Florida",
+    "state_abbr": "FL",
+    "state_name": "Florida",
+    "university_full": "University of South Florida",
+    "longitude": -82.413232,
+    "latitude": 28.061458,
+    "state_sales_tax_percent": 6.95
+  },
+  {
+    "university": "University of Southern California",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of Southern California",
+    "longitude": -118.284169,
+    "latitude": 34.021281,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of St. Joseph",
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "university_full": "University of St. Joseph",
+    "longitude": -72.72965,
+    "latitude": 41.781041,
+    "state_sales_tax_percent": 6.35
+  },
+  {
+    "university": "University of St. Thomas",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "University of St. Thomas",
+    "longitude": -95.393102,
+    "latitude": 29.736438,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "University of Tennessee-Knoxville",
+    "state_abbr": "TN",
+    "state_name": "Tennessee",
+    "university_full": "University of Tennessee-Knoxville",
+    "longitude": -83.925852,
+    "latitude": 35.952082,
+    "state_sales_tax_percent": 9.56
+  },
+  {
+    "university": "University of Texas-Austin",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "University of Texas-Austin",
+    "longitude": -97.738273,
+    "latitude": 30.282825,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "University of Texas-Dallas",
+    "state_abbr": "TX",
+    "state_name": "Texas",
+    "university_full": "University of Texas-Dallas",
+    "longitude": -96.749702,
+    "latitude": 32.984673,
+    "state_sales_tax_percent": 8.2
+  },
+  {
+    "university": "University of the Pacific",
+    "state_abbr": "CA",
+    "state_name": "California",
+    "university_full": "University of the Pacific",
+    "longitude": -121.312301,
+    "latitude": 37.981424,
+    "state_sales_tax_percent": 8.8
+  },
+  {
+    "university": "University of Tulsa",
+    "state_abbr": "OK",
+    "state_name": "Oklahoma",
+    "university_full": "University of Tulsa",
+    "longitude": -95.945941,
+    "latitude": 36.152324,
+    "state_sales_tax_percent": 9.0
+  },
+  {
+    "university": "University of Utah",
+    "state_abbr": "UT",
+    "state_name": "Utah",
+    "university_full": "University of Utah",
+    "longitude": -111.846044,
+    "latitude": 40.762484,
+    "state_sales_tax_percent": 7.32
+  },
+  {
+    "university": "University of Vermont",
+    "state_abbr": "VT",
+    "state_name": "Vermont",
+    "university_full": "University of Vermont",
+    "longitude": -73.196646,
+    "latitude": 44.477325,
+    "state_sales_tax_percent": 6.37
+  },
+  {
+    "university": "University of Virginia",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "University of Virginia",
+    "longitude": -78.503428,
+    "latitude": 38.035665,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "University of Washington",
+    "state_abbr": "WA",
+    "state_name": "Washington",
+    "university_full": "University of Washington",
+    "longitude": -122.30514,
+    "latitude": 47.65538,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "University of Wisconsin-Madison",
+    "state_abbr": "WI",
+    "state_name": "Wisconsin",
+    "university_full": "University of Wisconsin-Madison",
+    "longitude": -89.404098,
+    "latitude": 43.075409,
+    "state_sales_tax_percent": 5.7
+  },
+  {
+    "university": "Vanderbilt University",
+    "state_abbr": "TN",
+    "state_name": "Tennessee",
+    "university_full": "Vanderbilt University",
+    "longitude": -86.803369,
+    "latitude": 36.14659,
+    "state_sales_tax_percent": 9.56
+  },
+  {
+    "university": "Villanova University",
+    "state_abbr": "PA",
+    "state_name": "Pennsylvania",
+    "university_full": "Villanova University",
+    "longitude": -75.340502,
+    "latitude": 40.036463,
+    "state_sales_tax_percent": 6.34
+  },
+  {
+    "university": "Virginia Commonwealth University",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "Virginia Commonwealth University",
+    "longitude": -77.452697,
+    "latitude": 37.54962,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "Virginia Polytechnic Institute and State University",
+    "state_abbr": "VA",
+    "state_name": "Virginia",
+    "university_full": "Virginia Polytechnic Institute and State University",
+    "longitude": -80.423675,
+    "latitude": 37.229012,
+    "state_sales_tax_percent": 5.77
+  },
+  {
+    "university": "Wake Forest University",
+    "state_abbr": "NC",
+    "state_name": "North Carolina",
+    "university_full": "Wake Forest University",
+    "longitude": -80.277446,
+    "latitude": 36.133609,
+    "state_sales_tax_percent": 7.0
+  },
+  {
+    "university": "Washington State University",
+    "state_abbr": "WA",
+    "state_name": "Washington",
+    "university_full": "Washington State University",
+    "longitude": -117.158168,
+    "latitude": 46.730448,
+    "state_sales_tax_percent": 9.43
+  },
+  {
+    "university": "Washington University in St. Louis",
+    "state_abbr": "MO",
+    "state_name": "Missouri",
+    "university_full": "Washington University in St. Louis",
+    "longitude": -90.310604,
+    "latitude": 38.647929,
+    "state_sales_tax_percent": 8.41
+  },
+  {
+    "university": "Worcester Polytechnic Institute",
+    "state_abbr": "MA",
+    "state_name": "Massachusetts",
+    "university_full": "Worcester Polytechnic Institute",
+    "longitude": -71.808339,
+    "latitude": 42.274853,
+    "state_sales_tax_percent": 6.25
+  },
+  {
+    "university": "Yale University",
+    "state_abbr": "CT",
+    "state_name": "Connecticut",
+    "university_full": "Yale University",
+    "longitude": -72.926688,
+    "latitude": 41.311158,
+    "state_sales_tax_percent": 6.35
+  },
+  {
+    "university": "Yeshiva University",
+    "state_abbr": "NY",
+    "state_name": "New York",
+    "university_full": "Yeshiva University",
+    "longitude": -73.929873,
+    "latitude": 40.850605,
+    "state_sales_tax_percent": 8.53
+  }
+]

@@ -1,0 +1,100 @@
+.custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Circle */
+  .shape-circle {
+    background: #0074D9;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Square */
+  .shape-square {
+    background: #FF4136;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Triangle */
+  .shape-triangle {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid #2ECC40;
+  }
+  
+  /* Diamond */
+  .shape-diamond {
+    width: 14px;
+    height: 14px;
+    background: #FF851B;
+    transform: rotate(45deg);
+  }
+  
+  /* Pentagon (using clip-path) */
+  .shape-pentagon {
+    background: #B10DC9;
+    width: 18px;
+    height: 18px;
+    clip-path: polygon(50% 0%, 95% 35%, 77% 90%, 23% 90%, 5% 35%);
+  }
+  
+  /* Hexagon (using clip-path) */
+  .shape-hexagon {
+    background: #FFDC00;
+    width: 18px;
+    height: 18px;
+    clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+  }
+  
+  /* Star (using clip-path) */
+  .shape-star {
+    background: #7FDBFF;
+    width: 18px;
+    height: 18px;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+  }
+  
+  /* Octagon (using clip-path) */
+  .shape-octagon {
+    background: #AAAAAA;
+    width: 18px;
+    height: 18px;
+    clip-path: polygon(
+      30% 0%,
+      70% 0%,
+      100% 30%,
+      100% 70%,
+      70% 100%,
+      30% 100%,
+      0% 70%,
+      0% 30%
+    );
+  }
+  
+  /* Default shape if none matches */
+  .shape-default {
+    background: gray;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+  }
+  

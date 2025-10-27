@@ -1,0 +1,230 @@
+[
+  {
+    "Sport": "3x3 Basketball",
+    "Location": "Sepulveda Basin Recreation Area, Los Angeles, CA",
+    "Latitude": 34.1744,
+    "Longitude": -118.4795
+  },
+  {
+    "Sport": "Archery",
+    "Location": "Stadium, Carson, CA (Dignity Health Sports Park)",
+    "Latitude": 33.8583,
+    "Longitude": -118.2614
+  },
+  {
+    "Sport": "Artistic Gymnastics",
+    "Location": "Arena, Downtown Los Angeles, CA (Crypto.com Arena)",
+    "Latitude": 34.043,
+    "Longitude": -118.2673
+  },
+  {
+    "Sport": "Artistic Swimming",
+    "Location": "Convention Center Lot, Long Beach, CA",
+    "Latitude": 33.7986,
+    "Longitude": -118.188
+  },
+  {
+    "Sport": "Athletics",
+    "Location": "LA Memorial Coliseum, Los Angeles, CA",
+    "Latitude": 34.0141,
+    "Longitude": -118.2879
+  },
+  {
+    "Sport": "Athletics",
+    "Location": "Venice Beach, Los Angeles, CA",
+    "Latitude": 33.985,
+    "Longitude": -118.4695
+  },
+  {
+    "Sport": "Badminton",
+    "Location": "USC Sports Center, Los Angeles, CA",
+    "Latitude": 34.0211,
+    "Longitude": -118.2857
+  },
+  {
+    "Sport": "Baseball",
+    "Location": "Dodger Stadium, Los Angeles, CA",
+    "Latitude": 34.0739,
+    "Longitude": -118.24
+  },
+  {
+    "Sport": "Basketball",
+    "Location": "Arena, Inglewood, CA (Kia Forum/YouTube Theater)",
+    "Latitude": 33.9581,
+    "Longitude": -118.3412
+  },
+  {
+    "Sport": "Beach Volleyball",
+    "Location": "Alamitos Beach, Long Beach, CA",
+    "Latitude": 33.7645,
+    "Longitude": -118.174
+  },
+  {
+    "Sport": "BMX Freestyle",
+    "Location": "Sepulveda Basin Recreation Area, Los Angeles, CA",
+    "Latitude": 34.1744,
+    "Longitude": -118.4795
+  },
+  {
+    "Sport": "BMX Racing",
+    "Location": "Sepulveda Basin Recreation Area, Los Angeles, CA",
+    "Latitude": 34.1744,
+    "Longitude": -118.4795
+  },
+  {
+    "Sport": "Boxing",
+    "Location": "Arena, Downtown Los Angeles, CA",
+    "Latitude": 34.043,
+    "Longitude": -118.2673
+  },
+  {
+    "Sport": "Boxing",
+    "Location": "Peacock Theater, Downtown Los Angeles, CA",
+    "Latitude": 34.0455,
+    "Longitude": -118.2669
+  },
+  {
+    "Sport": "Canoe Sprint",
+    "Location": "Marine Stadium, Long Beach, CA",
+    "Latitude": 33.7552,
+    "Longitude": -118.1297
+  },
+  {
+    "Sport": "Coastal Rowing",
+    "Location": "Waterfront, Long Beach, CA",
+    "Latitude": 33.7655,
+    "Longitude": -118.1915
+  },
+  {
+    "Sport": "Cricket",
+    "Location": "Fairgrounds, Pomona, CA (Fairplex)",
+    "Latitude": 34.0806,
+    "Longitude": -117.7678
+  },
+  {
+    "Sport": "Cycling Road",
+    "Location": "Venice Beach, Los Angeles, CA",
+    "Latitude": 33.985,
+    "Longitude": -118.4695
+  },
+  {
+    "Sport": "Cycling Track",
+    "Location": "Velodrome, Carson, CA (VELO Sports Center)",
+    "Latitude": 33.8585,
+    "Longitude": -118.2617
+  },
+  {
+    "Sport": "Diving",
+    "Location": "1932 Pool in Exposition Park, Los Angeles, CA",
+    "Latitude": 34.0155,
+    "Longitude": -118.2883
+  },
+  {
+    "Sport": "Equestrian",
+    "Location": "Santa Anita Park, Arcadia, CA",
+    "Latitude": 34.1396,
+    "Longitude": -118.0455
+  },
+  {
+    "Sport": "Fencing",
+    "Location": "Convention Center, Downtown Los Angeles, CA",
+    "Latitude": 34.0407,
+    "Longitude": -118.269
+  },
+  {
+    "Sport": "Flag Football",
+    "Location": "Stadium in Exposition Park, Los Angeles, CA",
+    "Latitude": 34.0142,
+    "Longitude": -118.2878
+  },
+  {
+    "Sport": "Football (Soccer)",
+    "Location": "Rose Bowl Stadium, Pasadena, CA",
+    "Latitude": 34.1613,
+    "Longitude": -118.1677
+  },
+  {
+    "Sport": "Golf",
+    "Location": "Riviera Country Club, Los Angeles, CA",
+    "Latitude": 34.0502,
+    "Longitude": -118.5117
+  },
+  {
+    "Sport": "Handball",
+    "Location": "Arena, Long Beach, CA (Long Beach Arena)",
+    "Latitude": 33.7681,
+    "Longitude": -118.1892
+  },
+  {
+    "Sport": "Hockey",
+    "Location": "Fields, Carson, CA",
+    "Latitude": 33.858,
+    "Longitude": -118.261
+  },
+  {
+    "Sport": "Judo",
+    "Location": "Convention Center, Downtown Los Angeles, CA",
+    "Latitude": 34.0407,
+    "Longitude": -118.269
+  },
+  {
+    "Sport": "Lacrosse Sixes",
+    "Location": "Stadium in Exposition Park, Los Angeles, CA",
+    "Latitude": 34.0142,
+    "Longitude": -118.2878
+  },
+  {
+    "Sport": "Modern Pentathlon",
+    "Location": "Sepulveda Basin Recreation Area, Los Angeles, CA",
+    "Latitude": 34.1744,
+    "Longitude": -118.4795
+  },
+  {
+    "Sport": "Open Water Swimming",
+    "Location": "Waterfront, Long Beach, CA",
+    "Latitude": 33.7655,
+    "Longitude": -118.1915
+  },
+  {
+    "Sport": "Rhythmic Gymnastics",
+    "Location": "USC Sports Center, Los Angeles, CA",
+    "Latitude": 34.0211,
+    "Longitude": -118.2857
+  },
+  {
+    "Sport": "Rowing",
+    "Location": "Marine Stadium, Long Beach, CA",
+    "Latitude": 33.7552,
+    "Longitude": -118.1297
+  },
+  {
+    "Sport": "Rugby Sevens",
+    "Location": "Stadium, Carson, CA (Dignity Health Sports Park)",
+    "Latitude": 33.8583,
+    "Longitude": -118.2614
+  },
+  {
+    "Sport": "Sailing",
+    "Location": "Belmont Shore, Long Beach, CA",
+    "Latitude": 33.7592,
+    "Longitude": -118.1292
+  },
+  {
+    "Sport": "Shooting",
+    "Location": "Convention Center, Long Beach, CA",
+    "Latitude": 33.768,
+    "Longitude": -118.1892
+  },
+  {
+    "Sport": "Shooting (Shotgun)",
+    "Location": "Shotgun Center, South El Monte, CA",
+    "Latitude": 34.05,
+    "Longitude": -118.0367
+  },
+  {
+    "Sport": "Skateboarding",
+    "Location": "Sepulveda Basin Recreation Area, Los Angeles, CA",
+    "Latitude": 34.1744,
+    "Longitude": -118.4795
+  }
+]

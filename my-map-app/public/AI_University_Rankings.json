@@ -1,0 +1,210 @@
+[
+  {
+    "Rank":1,
+    "University":"Carnegie Mellon University",
+    "Actual Rank":1,
+    "LONGITUDE":-79.941993,
+    "LATITUDE":40.44357,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/carnegie-mellon-university-211440"
+  },
+  {
+    "Rank":2,
+    "University":"Massachusetts Institute of\u00c2\u00a0Technology",
+    "Actual Rank":2,
+    "LONGITUDE":-71.093226,
+    "LATITUDE":42.359243,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/massachusetts-institute-of-technology-166683"
+  },
+  {
+    "Rank":3,
+    "University":"Stanford\u00a0University",
+    "Actual Rank":3,
+    "LONGITUDE":-122.167359,
+    "LATITUDE":37.429434,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/stanford-university-243744"
+  },
+  {
+    "Rank":4,
+    "University":"University of\u00a0California-Berkeley",
+    "Actual Rank":4,
+    "LONGITUDE":-122.260463,
+    "LATITUDE":37.871918,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-california-berkeley-110635"
+  },
+  {
+    "Rank":5,
+    "University":"University of\u00a0Illinois-Urbana-Champaign",
+    "Actual Rank":5,
+    "LONGITUDE":-88.229114,
+    "LATITUDE":40.104718,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-illinois-at-urbana-champaign-145637"
+  },
+  {
+    "Rank":6,
+    "University":"Georgia Institute of Technology",
+    "Actual Rank":6,
+    "LONGITUDE":-84.394832,
+    "LATITUDE":33.77242,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/georgia-institute-of-technology-139755"
+  },
+  {
+    "Rank":7,
+    "University":"Cornell\u00a0University",
+    "Actual Rank":7,
+    "LONGITUDE":-76.483084,
+    "LATITUDE":42.4472,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/cornell-university-190415"
+  },
+  {
+    "Rank":8,
+    "University":"University of\u00a0Washington",
+    "Actual Rank":8,
+    "LONGITUDE":-122.30514,
+    "LATITUDE":47.65538,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-washington-seattle-campus-236948"
+  },
+  {
+    "Rank":9,
+    "University":"University of Michigan-Ann\u00a0Arbor",
+    "Actual Rank":9,
+    "LONGITUDE":-83.73481,
+    "LATITUDE":42.278374,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-michigan-ann-arbor-170976"
+  },
+  {
+    "Rank":10,
+    "University":"University of\u00a0Texas-Austin",
+    "Actual Rank":10,
+    "LONGITUDE":-97.738273,
+    "LATITUDE":30.282825,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/the-university-of-texas-at-austin-228778"
+  },
+  {
+    "Rank":11,
+    "University":"University of California-San\u00a0Diego",
+    "Actual Rank":11,
+    "LONGITUDE":-117.235866,
+    "LATITUDE":32.877749,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-california-san-diego-110680"
+  },
+  {
+    "Rank":12,
+    "University":"University of Maryland-College\u00a0Park",
+    "Actual Rank":12,
+    "LONGITUDE":-76.944721,
+    "LATITUDE":38.988178,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-maryland-college-park-163286"
+  },
+  {
+    "Rank":14,
+    "University":"University of\u00a0Massachusetts-Amherst",
+    "Actual Rank":13,
+    "LONGITUDE":-72.526728,
+    "LATITUDE":42.385999,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-massachusetts-amherst-166629"
+  },
+  {
+    "Rank":13,
+    "University":"University of California-Los\u00a0Angeles",
+    "Actual Rank":13,
+    "LONGITUDE":-118.4398,
+    "LATITUDE":34.0700,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-california-los-angeles-110662"
+  },
+  {
+    "Rank":15,
+    "University":"California Institute of\u00a0Technology",
+    "Actual Rank":15,
+    "LONGITUDE":-118.125878,
+    "LATITUDE":34.137349,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/california-institute-of-technology-110404"
+  },
+  {
+    "Rank":16,
+    "University":"Princeton\u00a0University",
+    "Actual Rank":16,
+    "LONGITUDE":-74.659365,
+    "LATITUDE":40.348732,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/princeton-university-186131"
+  },
+  {
+    "Rank":17,
+    "University":"University of Pennsylvania",
+    "Actual Rank":16,
+    "LONGITUDE":-75.19391,
+    "LATITUDE":39.950929,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-pennsylvania-215062"
+  },
+  {
+    "Rank":18,
+    "University":"Columbia\u00a0University",
+    "Actual Rank":18,
+    "LONGITUDE":-73.961885,
+    "LATITUDE":40.808286,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/columbia-university-190150"
+  },
+  {
+    "Rank":19,
+    "University":"New York\u00a0University",
+    "Actual Rank":19,
+    "LONGITUDE":-73.997264,
+    "LATITUDE":40.729452,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/new-york-university-193900"
+  },
+  {
+    "Rank":20,
+    "University":"Johns Hopkins\u00a0University",
+    "Actual Rank":20,
+    "LONGITUDE":-76.621595,
+    "LATITUDE":39.328977,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/johns-hopkins-university-162928"
+  },
+  {
+    "Rank":21,
+    "University":"Harvard\u00a0University",
+    "Actual Rank":21,
+    "LONGITUDE":-71.118313,
+    "LATITUDE":42.374471,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/harvard-university-166027"
+  },
+  {
+    "Rank":22,
+    "University":"University of Southern\u00a0California",
+    "Actual Rank":21,
+    "LONGITUDE":-118.284169,
+    "LATITUDE":34.021281,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-southern-california-123961"
+  },
+  {
+    "Rank":23,
+    "University":"Purdue University-West\u00a0Lafayette",
+    "Actual Rank":23,
+    "LONGITUDE":-86.914435,
+    "LATITUDE":40.428206,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/purdue-university-main-campus-243780"
+  },
+  {
+    "Rank":24,
+    "University":"Arizona State\u00a0University-Tempe",
+    "Actual Rank":24,
+    "LONGITUDE":-111.924487,
+    "LATITUDE":33.463517,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/arizona-state-university-104151"
+  },
+  {
+    "Rank":25,
+    "University":"University of\u00a0Wisconsin-Madison",
+    "Actual Rank":24,
+    "LONGITUDE":-89.404098,
+    "LATITUDE":43.075409,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-wisconsin-madison-240444"
+  },
+  {
+    "Rank":26,
+    "University":"University of North Carolina-Chapel\u00a0Hill",
+    "Actual Rank":26,
+    "LONGITUDE":-79.050969,
+    "LATITUDE":35.911769,
+    "Weblink":"https:\/\/www.usnews.com\/best-graduate-schools\/top-science-schools\/university-of-north-carolina-chapel-hill-199120"
+  }
+]
