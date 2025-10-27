@@ -1,0 +1,8 @@
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Mapbox Configuration
+NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_access_token_here
+
+# Environment
+NODE_ENV=development

@@ -1,0 +1,62 @@
+/* Custom Mapbox Styles */
+
+/* Enhanced Popup Styling */
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #fce7f3 !important;
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: #fce7f3 !important;
+}
+
+/* Gradient Marker Animations */
+.gradient-marker {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(236, 72, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+  }
+}
+
+/* Heat Map Layer Styling */
+.heatmap-layer {
+  mix-blend-mode: multiply;
+}
+
+/* Custom Map Controls */
+.map-controls {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+/* Enhanced Marker Hover Effects - Using box-shadow instead of transform */
+.gradient-marker {
+  position: relative !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Remove problematic transform-based hover effects */
+.gradient-marker:hover {
+  /* Hover effects are now handled via JavaScript to avoid positioning issues */
+}
+
+/* Radius Circle Styling */
+.radius-circle {
+  fill: none;
+  stroke: #ec4899;
+  stroke-width: 2;
+  stroke-opacity: 0.3;
+  fill-opacity: 0.1;
+}
