@@ -172,7 +172,7 @@ async def list_areas(db: Session = Depends(get_db)):
             "id": a.id,
             "name": a.name,
             "city": a.city,
-            "state": a.state,
+            "county": a.county,
             "latitude": a.latitude,
             "longitude": a.longitude,
         }
