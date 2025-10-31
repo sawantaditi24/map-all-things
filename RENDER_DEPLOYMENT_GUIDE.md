@@ -135,13 +135,27 @@ https://socal-business-intelligence-backend.onrender.com
 
 (Replace with your actual service name)
 
-### 8. Update Frontend Environment Variables
+### 8. Update Frontend Environment Variables on Netlify
 
-Update your Netlify frontend environment variables:
+**Important**: After your backend is deployed on Render, you need to update your Netlify frontend to point to it:
 
-```
-REACT_APP_API_URL=https://your-backend-url.onrender.com
-```
+1. Go to your Netlify dashboard
+2. Select your frontend site
+3. Go to **Site settings** → **Environment variables**
+4. Find or add the variable:
+   - **Key**: `REACT_APP_API_URL`
+   - **Value**: `https://your-backend-service-name.onrender.com`
+     - Replace `your-backend-service-name` with your actual Render service name
+     - Example: `https://socal-business-intelligence-backend.onrender.com`
+5. Click **Save**
+6. **Redeploy** your Netlify site:
+   - Go to **Deploys** tab
+   - Click **Trigger deploy** → **Deploy site**
+   - Or push a new commit to trigger auto-deploy
+
+**Note**: The frontend code already uses this environment variable:
+- In `BusinessIntegration.jsx`: `const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';`
+- After updating Netlify env vars and redeploying, your frontend will use the Render backend URL
 
 ## Troubleshooting
 
