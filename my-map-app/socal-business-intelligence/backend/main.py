@@ -46,17 +46,25 @@ app = FastAPI(
 )
 
 # CORS middleware
+# Specific origins for development and production
+cors_origins = [
+    "http://localhost:3000",
+    "http://localhost:3002",
+    "http://localhost:3005",
+    "https://socal-business-intelligence.netlify.app",
+    "https://mapallthings.com",
+]
+
+# Add custom origins from environment variable if set
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "")
+if ALLOWED_ORIGINS:
+    cors_origins.extend([origin.strip() for origin in ALLOWED_ORIGINS.split(",")])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000", 
-        "http://localhost:3002",
-        "http://localhost:3005",
-        "https://*.netlify.app",  # Allow all Netlify domains
-        "https://socal-business-intelligence.netlify.app",  # Your specific Netlify domain
-        "https://*.vercel.app",  # Allow all Vercel domains (for future use)
-        "https://*.railway.app",  # Allow all Railway domains
-    ],
+    allow_origins=cors_origins,
+    # Regex to allow all Netlify, Render, Vercel, and Railway subdomains
+    allow_origin_regex=r"https://.*\.(netlify|render|vercel|railway)\.(app|com)",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

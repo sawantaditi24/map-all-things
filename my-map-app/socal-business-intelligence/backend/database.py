@@ -9,6 +9,10 @@ load_dotenv()
 # Database configuration
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./business_intelligence.db")
 
+# Fix PostgreSQL URL if needed (Render sometimes uses postgres:// instead of postgresql://)
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # Create engine
 if DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
@@ -16,7 +20,13 @@ if DATABASE_URL.startswith("sqlite"):
         connect_args={"check_same_thread": False}
     )
 else:
-    engine = create_engine(DATABASE_URL)
+    # PostgreSQL connection with connection pooling
+    engine = create_engine(
+        DATABASE_URL,
+        pool_pre_ping=True,  # Verify connections before using
+        pool_size=5,
+        max_overflow=10
+    )
 
 # Create session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
