@@ -12,14 +12,35 @@
 1. Go to [Render Dashboard](https://dashboard.render.com)
 2. Click **"New +"** → **"Web Service"**
 3. Connect your GitHub repository: `sawantaditi24/map-all-things`
-4. Configure the service:
+4. Configure the basic settings:
    - **Name**: `socal-business-intelligence-backend` (or any name you prefer)
    - **Region**: Choose closest to your users (e.g., `Oregon (US West)`)
    - **Branch**: `main`
    - **Root Directory**: `my-map-app/socal-business-intelligence/backend`
    - **Environment**: `Python 3`
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `python run.py`
+
+5. **Finding Build and Start Commands**:
+   - You mentioned seeing **"Pre Deploy Command"** in Advanced Settings
+   - In the **Advanced Settings** section, look for:
+     - **Build Command** or **Pre Deploy Command**: Enter `pip install -r requirements.txt`
+       - (This installs dependencies before deployment)
+     - **Start Command** or **Run Command**: Enter `python run.py`
+       - (This runs your application)
+   
+   **Note**: Some Render UI versions might label them differently:
+   - "Build Command" = "Pre Deploy Command"
+   - "Start Command" = "Run Command" or "Command"
+   
+   **What to enter**:
+   - **Pre Deploy Command** (or Build Command): `pip install -r requirements.txt`
+   - **Start Command** (or Run Command): `python run.py`
+
+**Alternative**: If you still can't find Build/Start command fields, Render will auto-detect from:
+- `Procfile` (we have `web: python run.py`)
+- `requirements.txt` (for dependencies)
+- Python auto-detection (will use `python run.py`)
+
+The `render.yaml` file we created will also help Render auto-configure.
 
 ### 2. Configure Environment Variables
 
