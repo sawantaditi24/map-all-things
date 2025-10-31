@@ -2,32 +2,32 @@
 
 A comprehensive web application that combines Olympic sports venues mapping with business intelligence for Southern California, helping users find optimal business locations near Olympic venues.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project integrates two powerful mapping systems:
 - **Olympic Venues Map**: Interactive map showing LA 2028 Olympic sports venues
 - **Business Intelligence**: AI-powered location analysis for business opportunities
 
-## 🚀 Features
+## Features
 
-### 🏅 Olympic Venues Integration
+### Olympic Venues Integration
 - Interactive map of LA 2028 Olympic sports venues
 - Sport category visualization with color-coded markers
 - Detailed venue information and locations
 
-### 🏢 Business Intelligence
+### Business Intelligence
 - AI-powered semantic search for business locations
 - Advanced filtering by county, population density, business density, and transport scores
 - Real-time recommendations with scoring system
 - Heat map visualization for business metrics
 
-### 🗺️ Unified Map Experience
+### Unified Map Experience
 - Single map showing both Olympic venues and business intelligence data
 - Compact, informative legend
 - Interactive popups for both datasets
 - Responsive design for all screen sizes
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend (Professor's Base + Our Integration)
 - **React 19** - Frontend framework
@@ -43,7 +43,7 @@ This project integrates two powerful mapping systems:
 - **OpenAI API** - AI-powered search
 - **Google Places API** - Business data
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 /Applications/part-time/
@@ -63,7 +63,7 @@ This project integrates two powerful mapping systems:
     └── frontend/                 # Original Next.js frontend
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Start the Backend API
 ```bash
@@ -87,7 +87,7 @@ npm start
 - **Professor's Website**: http://localhost:3000
 - **Backend API**: http://localhost:8000
 
-## 🎨 User Interface
+## User Interface
 
 ### Layout Structure
 - **Left Panel (25%)**: Search interface and advanced filters
@@ -98,7 +98,7 @@ npm start
 1. **🏅 LA 2028 Olympics**: Iframe integration (backup approach)
 2. **🏢 Business Intelligence**: Component integration (unified map)
 
-## 🔧 Configuration
+## Configuration
 
 ### Required Environment Variables
 
@@ -116,7 +116,7 @@ MAPBOX_ACCESS_TOKEN=your_mapbox_token
 DATABASE_URL=sqlite:///./business_intelligence.db
 ```
 
-## 📊 Data Sources
+## Data Sources
 
 - **Olympic Venues**: LA 2028 Olympic sports venues data
 - **Business Intelligence**: 
@@ -125,7 +125,7 @@ DATABASE_URL=sqlite:///./business_intelligence.db
   - LA Metro API (transportation scores)
   - OpenAI API (AI-powered recommendations)
 
-## 🎯 Integration Approaches
+## Integration Approaches
 
 ### Approach 1: Iframe Integration
 - Embeds your business intelligence website
@@ -137,18 +137,18 @@ DATABASE_URL=sqlite:///./business_intelligence.db
 - Single interface for both datasets
 - Better user experience and performance
 
-## 🤝 Contributing
+## Contributing
 
 This project combines:
 - Professor's Olympic venues mapping system
 - Your business intelligence platform
 - Integrated user experience
 
-## 📝 License
+## License
 
 This project integrates multiple components with their respective licenses.
 
-## 🆘 Support
+## Support
 
 For issues or questions:
 - Check the browser console for errors
