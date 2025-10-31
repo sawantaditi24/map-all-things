@@ -1,55 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import ReactSlider from 'react-slider';
 
 const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
-  const [counties, setCounties] = useState([]);
   const [filters, setFilters] = useState({
-    counties: [],
-    populationDensityMin: null,
-    populationDensityMax: null,
-    businessDensityMin: null,
-    businessDensityMax: null,
-    transportScoreMin: null,
-    transportScoreMax: null,
+    populationDensityMin: 0,
+    populationDensityMax: 20000,
+    businessDensityMin: 0,
+    businessDensityMax: 150,
+    transportScoreMin: 0,
+    transportScoreMax: 10,
   });
   const [expandedSections, setExpandedSections] = useState({
-    county: true,
     population: true,
     business: true,
     transport: true,
   });
 
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
-
-  useEffect(() => {
-    // Fetch available counties
-    const fetchCounties = async () => {
-      try {
-        const response = await fetch(`${apiUrl.replace(/\/$/, '')}/counties`);
-        const data = await response.json();
-        if (data.success) {
-          setCounties(data.data.counties);
-        }
-      } catch (error) {
-        console.error('Failed to fetch counties:', error);
-      }
-    };
-    fetchCounties();
-  }, [apiUrl]);
-
-  const handleCountyChange = (county, checked) => {
+  const handleDualRangeChange = (fieldPrefix, values) => {
     setFilters(prev => ({
       ...prev,
-      counties: checked 
-        ? [...prev.counties, county]
-        : prev.counties.filter(c => c !== county)
-    }));
-  };
-
-  const handleRangeChange = (field, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [field]: value
+      [`${fieldPrefix}Min`]: values[0],
+      [`${fieldPrefix}Max`]: values[1]
     }));
   };
 
@@ -66,49 +38,18 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
 
   const handleClear = () => {
     setFilters({
-      counties: [],
-      populationDensityMin: null,
-      populationDensityMax: null,
-      businessDensityMin: null,
-      businessDensityMax: null,
-      transportScoreMin: null,
-      transportScoreMax: null,
+      populationDensityMin: 0,
+      populationDensityMax: 20000,
+      businessDensityMin: 0,
+      businessDensityMax: 150,
+      transportScoreMin: 0,
+      transportScoreMax: 10,
     });
     onClearFilters();
   };
 
   return (
     <div className="space-y-6">
-      {/* County Filter */}
-      <div className="border border-gray-200 rounded-lg">
-        <button
-          onClick={() => toggleSection('county')}
-          className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50"
-        >
-          <h3 className="text-lg font-semibold text-gray-900">County</h3>
-          {expandedSections.county ? (
-            <ChevronUp className="h-5 w-5 text-gray-500" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-500" />
-          )}
-        </button>
-        {expandedSections.county && (
-          <div className="px-4 pb-4 space-y-2">
-            {counties.map((county) => (
-              <label key={county} className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  checked={filters.counties.includes(county)}
-                  onChange={(e) => handleCountyChange(county, e.target.checked)}
-                  className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                />
-                <span className="text-sm text-gray-700">{county}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-
       {/* Population Density Filter */}
       <div className="border border-gray-200 rounded-lg">
         <button
@@ -124,27 +65,32 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
         </button>
         {expandedSections.population && (
           <div className="px-4 pb-4 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Minimum</label>
-                <input
-                  type="number"
-                  value={filters.populationDensityMin || ''}
-                  onChange={(e) => handleRangeChange('populationDensityMin', e.target.value ? parseInt(e.target.value) : null)}
-                  placeholder="e.g., 5000"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
+            <div className="space-y-3">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium text-gray-700">Range</label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.populationDensityMin.toLocaleString()}
+                  </span>
+                  <span className="text-sm text-gray-400">-</span>
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.populationDensityMax.toLocaleString()}
+                  </span>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Maximum</label>
-                <input
-                  type="number"
-                  value={filters.populationDensityMax || ''}
-                  onChange={(e) => handleRangeChange('populationDensityMax', e.target.value ? parseInt(e.target.value) : null)}
-                  placeholder="e.g., 15000"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
-              </div>
+              <ReactSlider
+                className="horizontal-slider"
+                thumbClassName="slider-thumb"
+                trackClassName="slider-track"
+                min={0}
+                max={20000}
+                step={100}
+                value={[filters.populationDensityMin, filters.populationDensityMax]}
+                onChange={(values) => handleDualRangeChange('populationDensity', values)}
+                ariaLabel={['Minimum population density', 'Maximum population density']}
+                pearling
+                minDistance={100}
+              />
             </div>
             <div className="text-xs text-gray-500">
               Typical range: 2,000 - 20,000 people per square mile
@@ -168,30 +114,35 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
         </button>
         {expandedSections.business && (
           <div className="px-4 pb-4 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Minimum</label>
-                <input
-                  type="number"
-                  value={filters.businessDensityMin || ''}
-                  onChange={(e) => handleRangeChange('businessDensityMin', e.target.value ? parseInt(e.target.value) : null)}
-                  placeholder="e.g., 50"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
+            <div className="space-y-3">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium text-gray-700">Range</label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.businessDensityMin}
+                  </span>
+                  <span className="text-sm text-gray-400">-</span>
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.businessDensityMax}
+                  </span>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Maximum</label>
-                <input
-                  type="number"
-                  value={filters.businessDensityMax || ''}
-                  onChange={(e) => handleRangeChange('businessDensityMax', e.target.value ? parseInt(e.target.value) : null)}
-                  placeholder="e.g., 100"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
-              </div>
+              <ReactSlider
+                className="horizontal-slider"
+                thumbClassName="slider-thumb"
+                trackClassName="slider-track"
+                min={0}
+                max={150}
+                step={1}
+                value={[filters.businessDensityMin, filters.businessDensityMax]}
+                onChange={(values) => handleDualRangeChange('businessDensity', values)}
+                ariaLabel={['Minimum business density', 'Maximum business density']}
+                pearling
+                minDistance={1}
+              />
             </div>
             <div className="text-xs text-gray-500">
-              Scale: 0-100 (higher = more businesses per area)
+              Scale: 0-150 (higher = more businesses per area)
             </div>
           </div>
         )}
@@ -212,29 +163,32 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
         </button>
         {expandedSections.transport && (
           <div className="px-4 pb-4 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Minimum</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={filters.transportScoreMin || ''}
-                  onChange={(e) => handleRangeChange('transportScoreMin', e.target.value ? parseFloat(e.target.value) : null)}
-                  placeholder="e.g., 5.0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
+            <div className="space-y-3">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium text-gray-700">Range</label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.transportScoreMin.toFixed(1)}
+                  </span>
+                  <span className="text-sm text-gray-400">-</span>
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.transportScoreMax.toFixed(1)}
+                  </span>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Maximum</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={filters.transportScoreMax || ''}
-                  onChange={(e) => handleRangeChange('transportScoreMax', e.target.value ? parseFloat(e.target.value) : null)}
-                  placeholder="e.g., 10.0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-pink-500 focus:border-pink-500"
-                />
-              </div>
+              <ReactSlider
+                className="horizontal-slider"
+                thumbClassName="slider-thumb"
+                trackClassName="slider-track"
+                min={0}
+                max={10}
+                step={0.1}
+                value={[filters.transportScoreMin, filters.transportScoreMax]}
+                onChange={(values) => handleDualRangeChange('transportScore', values)}
+                ariaLabel={['Minimum transport score', 'Maximum transport score']}
+                pearling
+                minDistance={0.1}
+              />
             </div>
             <div className="text-xs text-gray-500">
               Scale: 0-10 (higher = better public transportation)

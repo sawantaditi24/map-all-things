@@ -7,7 +7,6 @@ import StudentHousingCostMap from '../components/StudentHousingCostMap';
 import SalesTaxMap from '../components/SalesTaxMap';
 import TransitStopsMap from '../components/TransitStopsMap';
 import TransitSavingsInfo from '../components/TransitSavingsInfo';
-import SportsVenuesMap from '../components/SportsVenuesMap';
 import AIUniversitiesMap from '../components/AIUniversitiesMap';
 import BusinessIntegration from './BusinessIntegration';
 
@@ -65,16 +64,10 @@ export default function Home() {
       inactiveClass: 'bg-white border border-purple-300 text-purple-600 hover:bg-purple-50',
     },
     {
-      key: 'sports',
+      key: 'business',
       label: '🏅 LA 2028 Olympics',
       activeClass: 'bg-red-600 text-white',
       inactiveClass: 'bg-white border border-red-300 text-red-600 hover:bg-red-50',
-    },
-    {
-      key: 'business',
-      label: '🏢 Business Intelligence',
-      activeClass: 'bg-orange-600 text-white',
-      inactiveClass: 'bg-white border border-orange-300 text-orange-600 hover:bg-orange-50',
     },
 
   ];
@@ -157,36 +150,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Sports */}
-        {activeTab === 'sports' && (
-          <div>
-            <h3 className="text-xl font-semibold mb-4">
-              🏅 LA 2028 Olympic Sports Venues
-              <Tooltip text="Map of California Olympic event sites with the official logo." />
-            </h3>
-            <SportsVenuesMap />
-            
-            {/* Business Intelligence Integration */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold mb-4">
-                🏢 Business Intelligence for Olympic Venue Areas
-                <Tooltip text="Find the perfect business locations near Olympic venues using AI-powered search and recommendations." />
-              </h3>
-              <div className="bg-white rounded-2xl shadow-md p-4">
-                <iframe 
-                  src="https://socal-business-intelligence.netlify.app/" 
-                  width="100%" 
-                  height="800px"
-                  frameBorder="0"
-                  title="SoCal Business Intelligence"
-                  className="rounded-lg"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Business Intelligence - Component Integration */}
+        {/* LA 2028 Olympics - Business Intelligence Integration */}
         {activeTab === 'business' && (
           <BusinessIntegration />
         )}

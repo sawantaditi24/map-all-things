@@ -51,6 +51,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", 
         "http://localhost:3002",
+        "http://localhost:3005",
         "https://*.netlify.app",  # Allow all Netlify domains
         "https://socal-business-intelligence.netlify.app",  # Your specific Netlify domain
         "https://*.vercel.app",  # Allow all Vercel domains (for future use)
@@ -145,7 +146,7 @@ class APIResponse(BaseModel):
 # Root endpoint
 @app.get("/")
 async def root():
-    return {"message": "Southern California Business Intelligence API", "status": "running"}
+    return {"message": "Southern California Business Intelligence API", "status": "running", "version": "1.0.1"}
 
 # Health check
 @app.get("/health")

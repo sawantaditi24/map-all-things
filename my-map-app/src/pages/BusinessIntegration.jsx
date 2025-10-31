@@ -40,13 +40,12 @@ const BusinessIntegration = () => {
             business_type: businessType 
           },
           filters: {
-            counties: activeFilters.counties.length > 0 ? activeFilters.counties : null,
-            population_density_min: activeFilters.populationDensityMin,
-            population_density_max: activeFilters.populationDensityMax,
-            business_density_min: activeFilters.businessDensityMin,
-            business_density_max: activeFilters.businessDensityMax,
-            transport_score_min: activeFilters.transportScoreMin,
-            transport_score_max: activeFilters.transportScoreMax,
+            population_density_min: activeFilters.populationDensityMin === 0 ? null : activeFilters.populationDensityMin,
+            population_density_max: activeFilters.populationDensityMax === 20000 ? null : activeFilters.populationDensityMax,
+            business_density_min: activeFilters.businessDensityMin === 0 ? null : activeFilters.businessDensityMin,
+            business_density_max: activeFilters.businessDensityMax === 150 ? null : activeFilters.businessDensityMax,
+            transport_score_min: activeFilters.transportScoreMin === 0 ? null : activeFilters.transportScoreMin,
+            transport_score_max: activeFilters.transportScoreMax === 10 ? null : activeFilters.transportScoreMax,
           }
         };
       } else {
@@ -65,8 +64,25 @@ const BusinessIntegration = () => {
         },
         body: JSON.stringify(body)
       });
+
+      if (!resp.ok) {
+        const errorText = await resp.text();
+        console.error(`Search request failed with status ${resp.status}:`, errorText);
+        setLocations([]);
+        return;
+      }
+
       const data = await resp.json();
+      console.log('Search response:', data);
+      
+      if (!data.success) {
+        console.error('Search response indicates failure:', data);
+        setLocations([]);
+        return;
+      }
+
       const recs = (data?.data?.recommendations || []);
+      console.log('Found recommendations:', recs.length);
       setLocations(recs);
       if (recs.length > 0) setSelectedLocation(recs[0]);
       
@@ -78,6 +94,7 @@ const BusinessIntegration = () => {
       }
     } catch (e) {
       console.error('Failed to fetch recommendations', e);
+      setLocations([]);
     } finally {
       setLoading(false);
     }
@@ -129,8 +146,8 @@ const BusinessIntegration = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-pink-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="w-full max-w-none mx-auto px-0 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Left Panel - Search & Filters */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
