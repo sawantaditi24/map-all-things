@@ -19,21 +19,20 @@
    - **Root Directory**: `my-map-app/socal-business-intelligence/backend`
    - **Environment**: `Python 3`
 
-5. **Finding Build and Start Commands**:
-   - You mentioned seeing **"Pre Deploy Command"** in Advanced Settings
-   - In the **Advanced Settings** section, look for:
-     - **Build Command** or **Pre Deploy Command**: Enter `pip install -r requirements.txt`
-       - (This installs dependencies before deployment)
-     - **Start Command** or **Run Command**: Enter `python run.py`
-       - (This runs your application)
+5. **Build and Start Commands**:
+   - **Good News**: You don't need a Pre Deploy Command! (It's only for paid plans)
+   - Render will **auto-detect** everything you need:
+     - **Build**: Automatically runs `pip install -r requirements.txt` (detects from `requirements.txt`)
+     - **Start**: Automatically uses `python run.py` (detects from `Procfile` or Python auto-detection)
    
-   **Note**: Some Render UI versions might label them differently:
-   - "Build Command" = "Pre Deploy Command"
-   - "Start Command" = "Run Command" or "Command"
+   **Database Setup**: Happens automatically on first startup:
+   - Tables are created automatically via `Base.metadata.create_all()` in `database.py`
+   - Initial data is seeded automatically via `seed()` function in `main.py`
+   - No migrations needed - everything is automatic!
    
-   **What to enter**:
-   - **Pre Deploy Command** (or Build Command): `pip install -r requirements.txt`
-   - **Start Command** (or Run Command): `python run.py`
+   **Static Assets**: Not needed - this is a FastAPI API backend, no static files to serve
+   
+   **You can leave the Pre Deploy Command field empty** - the free tier will work perfectly!
 
 **Alternative**: If you still can't find Build/Start command fields, Render will auto-detect from:
 - `Procfile` (we have `web: python run.py`)
