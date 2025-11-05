@@ -48,8 +48,8 @@ app = FastAPI(
 # CORS middleware
 # Specific origins for development and production
 cors_origins = [
-    "http://localhost:3000",
-    "http://localhost:3002",
+        "http://localhost:3000", 
+        "http://localhost:3002",
     "http://localhost:3005",
     "https://socal-business-intelligence.netlify.app",
     "https://mapallthings.com",
@@ -72,6 +72,57 @@ app.add_middleware(
 
 # Security
 security = HTTPBearer()
+
+# Load Olympic venues data
+def load_olympic_venues():
+    """Load Olympic venues from JSON file."""
+    try:
+        json_path = os.path.join(os.path.dirname(__file__), 'olympic_sports_venues.json')
+        with open(json_path, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Failed to load Olympic venues: {e}")
+        return []
+
+# Haversine distance calculation (km)
+def calculate_distance_km(lat1, lon1, lat2, lon2):
+    """Calculate distance between two points using Haversine formula."""
+    import math
+    R = 6371  # Earth's radius in km
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R * c
+
+def is_within_radius_range(lat, lon, radius_min, radius_max, venues):
+    """Check if a location is within the radius range [radius_min, radius_max] of any Olympic venue."""
+    if not venues:
+        return True  # No filter if no venues
+    
+    # If no radius specified, don't filter
+    if radius_min is None and radius_max is None:
+        return True
+    
+    for venue in venues:
+        if not venue.get('Latitude') or not venue.get('Longitude'):
+            continue
+        distance = calculate_distance_km(lat, lon, venue['Latitude'], venue['Longitude'])
+        
+        # Check if distance is within range
+        if radius_min is not None and radius_max is not None:
+            # Both min and max specified: check if distance is in range
+            if radius_min <= distance <= radius_max:
+                return True
+        elif radius_max is not None:
+            # Only max specified: check if distance <= max
+            if distance <= radius_max:
+                return True
+        elif radius_min is not None:
+            # Only min specified: check if distance >= min
+            if distance >= radius_min:
+                return True
+    return False
 
 # County mapping for SoCal cities
 COUNTY_MAPPING = {
@@ -133,6 +184,8 @@ class AdvancedFilters(BaseModel):
     business_density_max: Optional[int] = None
     transport_score_min: Optional[float] = None
     transport_score_max: Optional[float] = None
+    radius_km_min: Optional[float] = None  # Minimum radius from Olympic venues
+    radius_km_max: Optional[float] = None  # Maximum radius from Olympic venues
     map_bounds: Optional[dict] = None  # {north, south, east, west}
 
 class LocationRecommendation(BaseModel):
@@ -613,9 +666,16 @@ async def advanced_search_locations(
     - Population density range
     - Business density range  
     - Transport score range
+    - Radius from Olympic venues
     - Map bounds filtering
     """
     try:
+        # Load Olympic venues if radius filter is specified
+        venues = []
+        if filters.radius_km_min is not None or filters.radius_km_max is not None:
+            venues = load_olympic_venues()
+            logger.info(f"Radius filter active: min={filters.radius_km_min} km, max={filters.radius_km_max} km, loaded {len(venues)} Olympic venues")
+        
         # Get all areas with their metrics
         areas_with_metrics = (
             db.query(Area, AreaMetric)
@@ -625,6 +685,9 @@ async def advanced_search_locations(
         
         recs: List[LocationRecommendation] = []
         query_lower = search_query.query.lower()
+        
+        filtered_by_radius = 0
+        total_checked = 0
         
         for area, metric in areas_with_metrics:
             # If no metric exists, create default values
@@ -639,6 +702,15 @@ async def advanced_search_locations(
             # Apply filters
             if not _passes_filters(area, metric, filters):
                 continue
+            
+            # Check radius filter (distance from Olympic venues)
+            if (filters.radius_km_min is not None or filters.radius_km_max is not None) and venues:
+                total_checked += 1
+                is_within = is_within_radius_range(float(area.latitude), float(area.longitude), filters.radius_km_min, filters.radius_km_max, venues)
+                if not is_within:
+                    filtered_by_radius += 1
+                    continue
+                logger.debug(f"Area {area.name} ({area.latitude}, {area.longitude}) passed radius filter range [{filters.radius_km_min}, {filters.radius_km_max}] km")
             
             # Compute base score using metrics
             base_score = _score_from_metrics(metric)
@@ -672,6 +744,9 @@ async def advanced_search_locations(
         
         # Limit results to top 20 for performance
         recs = recs[:20]
+        
+        if filters.radius_km_min is not None or filters.radius_km_max is not None:
+            logger.info(f"Radius filter: {filtered_by_radius} locations filtered out, {len(recs)} locations within range [{filters.radius_km_min}, {filters.radius_km_max}] km")
         
         return APIResponse(
             success=True,

@@ -78,55 +78,76 @@ const findNearestVenue = (businessLat, businessLon, venues) => {
 };
 
 // Business Intelligence Helper Functions
+// Use pink shades: darker pink for high scores, lighter pink for low scores
 const getBusinessScoreColor = (score) => {
-  if (score >= 9) return '#ec4899'; // Bright pink
-  if (score >= 8) return '#f472b6'; // Pink
-  if (score >= 7) return '#fb7185'; // Light pink
-  if (score >= 6) return '#6b7280'; // Gray
-  if (score >= 5) return '#9ca3af'; // Light gray
-  if (score >= 4) return '#d1d5db'; // Very light gray
-  return '#ef4444'; // Red for low scores
+  if (score >= 9) return '#be185d';      // Dark pink (brightest/darkest)
+  if (score >= 8) return '#ec4899';       // Medium-dark pink
+  if (score >= 7) return '#f472b6';       // Medium pink
+  if (score >= 6) return '#fb7185';       // Light-medium pink
+  if (score >= 5) return '#f9a8d4';       // Light pink
+  if (score >= 4) return '#fbcfe8';       // Very light pink
+  return '#fce7f3';                       // Faintest pink for lowest scores
 };
 
-const getBusinessMarkerSize = (score, distanceToVenue = null) => {
-  const baseSize = 8;
-  let sizeMultiplier = 0.5 + (score / 10) * 1.5; // Base size based on score (0.5x to 2x)
+// Marker size based on radius filter value (larger radius = larger markers)
+const getBusinessMarkerSize = (score, radiusKm = null) => {
+  const baseSize = 8; // Base size
   
-  // Adjust size based on proximity to Olympic venues
-  if (distanceToVenue !== null) {
-    if (distanceToVenue <= 2) {
-      // Very close (0-2km): Make it 2x larger
-      sizeMultiplier *= 2.0;
-    } else if (distanceToVenue <= 5) {
-      // Close (2-5km): Make it 1.3x larger
-      sizeMultiplier *= 1.3;
-    } else if (distanceToVenue <= 10) {
-      // Medium (5-10km): Keep base size
-      sizeMultiplier *= 1.0;
-    } else {
-      // Far (10km+): Make it smaller and faded
-      sizeMultiplier *= 0.6;
-    }
+  // If radius filter is applied, scale marker size based on radius
+  // Check for both null and undefined, and ensure it's a valid number
+  if (radiusKm != null && !isNaN(radiusKm) && radiusKm > 0) {
+    // Scale size proportionally to radius
+    // Formula: baseSize * (1 + radiusKm / 10)
+    // Examples: 
+    //   5km = 8 * (1 + 5/10) = 8 * 1.5 = 12px
+    //   10km = 8 * (1 + 10/10) = 8 * 2 = 16px
+    //   20km = 8 * (1 + 20/10) = 8 * 3 = 24px
+    const radiusMultiplier = 1 + (radiusKm / 10);
+    const calculatedSize = Math.max(8, Math.round(baseSize * radiusMultiplier)); // Ensure minimum 8px
+    return calculatedSize;
   }
   
-  return Math.round(baseSize * sizeMultiplier);
+  // Default size when no radius filter is applied
+  return baseSize;
 };
 
-const getMarkerOpacity = (distanceToVenue) => {
-  if (distanceToVenue === null) return 0.8;
-  
-  if (distanceToVenue <= 2) return 1.0;      // Very close: Full opacity
-  if (distanceToVenue <= 5) return 0.9;       // Close: High opacity
-  if (distanceToVenue <= 10) return 0.8;     // Medium: Normal opacity
-  return 0.5;                                 // Far: Low opacity
+// Get texture pattern based on business score (dashArray for stroke pattern)
+// dashArray in Leaflet should be a string like "5,2" or null for solid
+const getMarkerTexture = (score) => {
+  // Higher score = more solid (shorter dashes or solid)
+  // Lower score = more dashed (longer dashes)
+  if (score >= 9) {
+    return null; // Solid line for high scores (null = no dash)
+  } else if (score >= 8) {
+    return '5,2'; // Small dashes
+  } else if (score >= 7) {
+    return '8,3'; // Medium dashes
+  } else if (score >= 6) {
+    return '10,5'; // Larger dashes
+  } else if (score >= 5) {
+    return '12,6'; // Even larger dashes
+  } else {
+    return '15,8'; // Very large dashes for low scores
+  }
 };
 
-const getMarkerBorderWeight = (distanceToVenue) => {
-  if (distanceToVenue === null) return 2;
-  
-  if (distanceToVenue <= 2) return 3;        // Very close: Thicker border
-  if (distanceToVenue <= 5) return 2.5;     // Close: Medium border
-  return 2;                                   // Others: Normal border
+// Get fill opacity based on score (higher score = more opaque)
+const getMarkerFillOpacity = (score) => {
+  if (score >= 9) return 0.3;      // High score: more visible
+  if (score >= 8) return 0.25;
+  if (score >= 7) return 0.2;
+  if (score >= 6) return 0.15;
+  if (score >= 5) return 0.1;
+  return 0.08;                      // Low score: less visible
+};
+
+// Get border weight based on score (higher score = thicker border)
+const getMarkerBorderWeight = (score) => {
+  if (score >= 9) return 4;        // High score: thick border
+  if (score >= 8) return 3.5;
+  if (score >= 7) return 3;
+  if (score >= 6) return 2.5;
+  return 2;                         // Lower score: thinner border
 };
 
 // Enhanced Legend component
@@ -159,20 +180,27 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
       }
       
       if (showBusinessData) {
-        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Scores (Rings)</b>`;
-        // Ring style: thick border (3px) with low fill opacity (0.2) for hollow look
+        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Scores (Pink Shades + Textures)</b>`;
+        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Marker size scales with radius filter. Darker pink + solid = higher score</div>`;
+        // Pink shades + texture visualization: darker pink + solid for high scores, lighter pink + dashed for low
         div.innerHTML += `
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <div style="width: 10px; height: 10px; background: #ec4899; margin-right: 4px; border: 3px solid #ec4899; border-radius: 50%; flex-shrink: 0; opacity: 0.2; background-color: rgba(236, 72, 153, 0.2);"></div>
-            <span style="font-size: 9px;">High (8-10)</span>
+            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
+              <circle cx="6" cy="6" r="5" fill="none" stroke="#be185d" stroke-width="4" stroke-dasharray="0" opacity="1"/>
+            </svg>
+            <span style="font-size: 9px;">High (8-10) - Dark Pink, Solid</span>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <div style="width: 10px; height: 10px; background: #6b7280; margin-right: 4px; border: 3px solid #6b7280; border-radius: 50%; flex-shrink: 0; opacity: 0.2; background-color: rgba(107, 114, 128, 0.2);"></div>
-            <span style="font-size: 9px;">Med (6-7)</span>
+            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
+              <circle cx="6" cy="6" r="5" fill="none" stroke="#f472b6" stroke-width="3" stroke-dasharray="8,3" opacity="1"/>
+            </svg>
+            <span style="font-size: 9px;">Med (6-7) - Medium Pink, Dashed</span>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <div style="width: 10px; height: 10px; background: #ef4444; margin-right: 4px; border: 3px solid #ef4444; border-radius: 50%; flex-shrink: 0; opacity: 0.2; background-color: rgba(239, 68, 68, 0.2);"></div>
-            <span style="font-size: 9px;">Low (1-5)</span>
+            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
+              <circle cx="6" cy="6" r="5" fill="none" stroke="#f9a8d4" stroke-width="2" stroke-dasharray="15,8" opacity="1"/>
+            </svg>
+            <span style="font-size: 9px;">Low (1-5) - Light Pink, Dotted</span>
           </div>
         `;
       }
@@ -205,11 +233,19 @@ export default function SportsVenuesMap({
       .catch((err) => console.error("Error loading JSON:", err));
   }, []);
 
+  // Debug: Log activeFilters changes
+  useEffect(() => {
+    if (activeFilters) {
+      console.log('📍 ActiveFilters changed:', activeFilters);
+      console.log('📍 RadiusKmMax:', activeFilters.radiusKmMax);
+    }
+  }, [activeFilters]);
+
   return (
     <div className="bg-white rounded-2xl shadow-md p-4">
       <div className="flex justify-center mb-3">
         <img src="/LA28.png" alt="LA28 Olympics" className="h-20" />
-      </div>
+</div>
 
       <MapContainer center={[34.05, -118.25]} zoom={9} style={{ height: "100%", width: "100%", minHeight: "500px" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
@@ -245,22 +281,23 @@ export default function SportsVenuesMap({
           
           if (!coordinates || coordinates.length !== 2) return null;
           
-          // Calculate distance to nearest Olympic venue
+          // Calculate distance to nearest Olympic venue (for display only)
           const businessLat = coordinates[1];
           const businessLon = coordinates[0];
           const nearestVenueInfo = findNearestVenue(businessLat, businessLon, venues);
           const distanceToVenue = nearestVenueInfo ? nearestVenueInfo.distance : null;
           const nearestVenue = nearestVenueInfo ? nearestVenueInfo.venue : null;
           
-          // Get marker size and opacity based on proximity
-          const size = getBusinessMarkerSize(score, distanceToVenue);
-          const opacity = getMarkerOpacity(distanceToVenue);
-          const borderWeight = getMarkerBorderWeight(distanceToVenue);
+          // Get radius filter max value from activeFilters (use max for marker size scaling)
+          const radiusKmMax = activeFilters?.radiusKmMax ?? null;
           
-          // Ring/hollow style: thick border with low fill opacity
-          // Thicker border (3-4px) for ring effect, low fill opacity (0.2) for hollow look
-          const ringBorderWeight = Math.max(3, borderWeight + 1); // At least 3px for ring effect
-          const ringFillOpacity = Math.min(0.2, opacity * 0.3); // Very low fill for hollow effect
+          // Get marker properties based on score (not distance)
+          // Marker size scales with maximum radius filter value (larger radius = larger markers)
+          // Textures vary by score
+          const size = getBusinessMarkerSize(score, radiusKmMax);
+          const dashArray = getMarkerTexture(score);
+          const fillOpacity = getMarkerFillOpacity(score);
+          const borderWeight = getMarkerBorderWeight(score);
 
           return (
             <CircleMarker
@@ -268,10 +305,12 @@ export default function SportsVenuesMap({
               center={[coordinates[1], coordinates[0]]} // Leaflet uses [lat, lng]
               radius={size}
               pathOptions={{ 
-                color: color, // Use business color for border (not black)
+                color: color, // Use business color for border
                 fillColor: color, 
-                fillOpacity: ringFillOpacity, // Low opacity for hollow/ring effect
-                weight: ringBorderWeight // Thick border for ring appearance
+                fillOpacity: fillOpacity, // Fill opacity based on score
+                weight: borderWeight, // Border weight based on score
+                ...(dashArray && { dashArray: dashArray }), // Texture pattern based on score (solid for high, dashed for low)
+                opacity: 1.0 // Full border opacity
               }}
               eventHandlers={{
                 click: () => onBusinessLocationClick && onBusinessLocationClick(location)

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import ReactSlider from 'react-slider';
 
-const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
+const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange }) => {
   const [filters, setFilters] = useState({
     populationDensityMin: 0,
     populationDensityMax: 20000,
@@ -10,19 +10,29 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
     businessDensityMax: 150,
     transportScoreMin: 0,
     transportScoreMax: 10,
+    radiusKmMin: 0, // Minimum radius in km
+    radiusKmMax: 20, // Maximum radius in km
   });
   const [expandedSections, setExpandedSections] = useState({
     population: true,
     business: true,
     transport: true,
+    radius: true,
   });
 
   const handleDualRangeChange = (fieldPrefix, values) => {
-    setFilters(prev => ({
-      ...prev,
-      [`${fieldPrefix}Min`]: values[0],
-      [`${fieldPrefix}Max`]: values[1]
-    }));
+    setFilters(prev => {
+      const newFilters = {
+        ...prev,
+        [`${fieldPrefix}Min`]: values[0],
+        [`${fieldPrefix}Max`]: values[1]
+      };
+      // Notify parent of filter changes in real-time
+      if (onFilterChange) {
+        onFilterChange(newFilters);
+      }
+      return newFilters;
+    });
   };
 
   const toggleSection = (section) => {
@@ -44,12 +54,63 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters }) => {
       businessDensityMax: 150,
       transportScoreMin: 0,
       transportScoreMax: 10,
+      radiusKmMin: 0,
+      radiusKmMax: 20,
     });
     onClearFilters();
   };
 
   return (
     <div className="space-y-6">
+      {/* Radius from Olympic Venues Filter */}
+      <div className="border border-gray-200 rounded-lg">
+        <button
+          onClick={() => toggleSection('radius')}
+          className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50"
+        >
+          <h3 className="text-lg font-semibold text-gray-900">Distance from Olympic Venues (km)</h3>
+          {expandedSections.radius ? (
+            <ChevronUp className="h-5 w-5 text-gray-500" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-500" />
+          )}
+        </button>
+        {expandedSections.radius && (
+          <div className="px-4 pb-4 space-y-4">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-medium text-gray-700">Range</label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.radiusKmMin.toFixed(1)}
+                  </span>
+                  <span className="text-sm text-gray-400">-</span>
+                  <span className="text-sm font-semibold text-pink-600">
+                    {filters.radiusKmMax.toFixed(1)} km
+                  </span>
+                </div>
+              </div>
+              <ReactSlider
+                className="horizontal-slider"
+                thumbClassName="slider-thumb"
+                trackClassName="slider-track"
+                min={0}
+                max={20}
+                step={0.5}
+                value={[filters.radiusKmMin, filters.radiusKmMax]}
+                onChange={(values) => handleDualRangeChange('radiusKm', values)}
+                ariaLabel={['Minimum radius', 'Maximum radius']}
+                pearling
+                minDistance={0.5}
+              />
+            </div>
+            <div className="text-xs text-gray-500">
+              Show locations within {filters.radiusKmMin.toFixed(1)} - {filters.radiusKmMax.toFixed(1)} km of Olympic venues. Marker size scales with maximum radius. Darker pink + solid = higher score.
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Population Density Filter */}
       <div className="border border-gray-200 rounded-lg">
         <button

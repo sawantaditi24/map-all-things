@@ -10,16 +10,32 @@ const BusinessIntegration = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeFilters, setActiveFilters] = useState(null);
+  const [currentFilters, setCurrentFilters] = useState(null); // For real-time updates
   const [useAISearch, setUseAISearch] = useState(false);
   const [aiInsights, setAiInsights] = useState(null);
   const [showHeatMap, setShowHeatMap] = useState(false);
   const [heatMapMetric, setHeatMapMetric] = useState('business_density');
   const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState(null);
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+  
+  // Debug: Log API URL (remove in production)
+  useEffect(() => {
+    console.log('🔍 API URL being used:', apiUrl);
+    console.log('🔍 Environment variable REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+    
+    // Warn if using localhost in production
+    if (apiUrl.includes('localhost') && window.location.hostname !== 'localhost') {
+      console.error('⚠️ WARNING: Using localhost API URL on deployed site!');
+      console.error('⚠️ Set REACT_APP_API_URL in Netlify environment variables to your Render backend URL');
+      setError('⚠️ API URL not configured correctly. Using localhost. Please set REACT_APP_API_URL in Netlify environment variables.');
+    }
+  }, [apiUrl]);
 
   const fetchRecommendations = async () => {
     setLoading(true);
+    setError(null); // Clear previous errors
     try {
       let endpoint = '/search';
       let body;
@@ -34,6 +50,9 @@ const BusinessIntegration = () => {
       } else if (activeFilters) {
         // Use advanced search if filters are active
         endpoint = '/search/advanced';
+        const radiusMinValue = activeFilters.radiusKmMin !== undefined && activeFilters.radiusKmMin !== null ? activeFilters.radiusKmMin : null;
+        const radiusMaxValue = activeFilters.radiusKmMax !== undefined && activeFilters.radiusKmMax !== null ? activeFilters.radiusKmMax : null;
+        console.log('🔍 Applying filters with radius_km_min:', radiusMinValue, 'radius_km_max:', radiusMaxValue);
         body = {
           search_query: { 
             query: searchQuery || 'show best areas', 
@@ -46,6 +65,8 @@ const BusinessIntegration = () => {
             business_density_max: activeFilters.businessDensityMax === 150 ? null : activeFilters.businessDensityMax,
             transport_score_min: activeFilters.transportScoreMin === 0 ? null : activeFilters.transportScoreMin,
             transport_score_max: activeFilters.transportScoreMax === 10 ? null : activeFilters.transportScoreMax,
+            radius_km_min: radiusMinValue,
+            radius_km_max: radiusMaxValue,
           }
         };
       } else {
@@ -68,7 +89,9 @@ const BusinessIntegration = () => {
       if (!resp.ok) {
         const errorText = await resp.text();
         console.error(`Search request failed with status ${resp.status}:`, errorText);
+        setError(`API Error (${resp.status}): ${errorText || 'Unknown error'}`);
         setLocations([]);
+        setLoading(false);
         return;
       }
 
@@ -77,7 +100,9 @@ const BusinessIntegration = () => {
       
       if (!data.success) {
         console.error('Search response indicates failure:', data);
+        setError(data.message || 'Search failed - no recommendations found');
         setLocations([]);
+        setLoading(false);
         return;
       }
 
@@ -94,6 +119,7 @@ const BusinessIntegration = () => {
       }
     } catch (e) {
       console.error('Failed to fetch recommendations', e);
+      setError(`Network Error: ${e.message || 'Failed to connect to backend. Check console for details.'}`);
       setLocations([]);
     } finally {
       setLoading(false);
@@ -102,10 +128,17 @@ const BusinessIntegration = () => {
 
   const handleApplyFilters = (filters) => {
     setActiveFilters(filters);
+    setCurrentFilters(filters); // Also update current filters
+  };
+
+  const handleFilterChange = (filters) => {
+    // Update current filters in real-time for dynamic marker size
+    setCurrentFilters(filters);
   };
 
   const handleClearFilters = () => {
     setActiveFilters(null);
+    setCurrentFilters(null); // Also clear current filters for real-time updates
   };
 
   useEffect(() => {
@@ -276,14 +309,15 @@ const BusinessIntegration = () => {
                   <AdvancedFiltersContent
                     onApplyFilters={handleApplyFilters}
                     onClearFilters={handleClearFilters}
+                    onFilterChange={handleFilterChange}
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Center Panel - Unified Map */}
-          <div className="lg:col-span-2">
+          {/* Center-Right Panel - Unified Map (expanded) */}
+          <div className="lg:col-span-3">
             <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
               {/* Map Controls */}
               <div className="mb-4 flex flex-wrap gap-3">
@@ -325,126 +359,81 @@ const BusinessIntegration = () => {
               </div>
               
               {/* Unified Map with Olympic Venues + Business Intelligence */}
-              <div className="h-[500px] lg:h-[700px] xl:h-[800px] rounded-lg overflow-hidden">
+              <div className="h-[600px] lg:h-[900px] xl:h-[1000px] rounded-lg overflow-hidden">
                 <SportsVenuesMap 
                   businessLocations={locations}
                   onBusinessLocationClick={handleLocationClick}
                   showBusinessHeatMap={showHeatMap}
                   businessHeatMapMetric={heatMapMetric}
-                  activeFilters={activeFilters}
+                  activeFilters={currentFilters || activeFilters} // Use currentFilters for real-time updates
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Panel - Recommendations */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <div className="w-1 h-6 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-3"></div>
-                Recommended Locations
-              </h3>
-              
-              <div className="space-y-3 max-h-[600px] overflow-y-auto">
-                {locations.map((location, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleLocationClick(location)}
-                    className={`p-4 rounded-xl border cursor-pointer hover:shadow-md transition-all duration-200 transform hover:scale-105 ${
-                      selectedLocation?.area === location.area 
-                        ? 'border-pink-300 bg-gradient-to-r from-pink-50 to-pink-100 shadow-lg' 
-                        : 'border-gray-200 hover:border-pink-200'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{location.area}</h4>
-                        <p className="text-sm text-gray-600">
-                          {location.business_density} businesses • {location.population_density} people/sq mi
-                        </p>
-                      </div>
-                      <div className={`px-3 py-1 rounded-full text-sm font-bold ${getScoreBgColor(location.score)} ${getScoreColor(location.score)}`}>
-                        {location.score}/10
-                      </div>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Location Details Panel */}
-        {selectedLocation && (
-          <div className="mt-6 bg-white rounded-xl shadow-lg border border-pink-100 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900 flex items-center">
-                <div className="w-2 h-8 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-3"></div>
-                {selectedLocation.area} - Business Analysis
-              </h3>
-              <div className={`px-4 py-2 rounded-full text-sm font-bold shadow-lg ${getScoreBgColor(selectedLocation.score)} ${getScoreColor(selectedLocation.score)}`}>
-                Score: {selectedLocation.score}/10
+        {/* Recommended Locations Panel - Below Map */}
+        <div className="mt-4">
+          <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <div className="w-1 h-6 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-3"></div>
+              Recommended Locations
+            </h3>
+            
+            {/* Error Display */}
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-800 font-medium">⚠️ Error</p>
+                <p className="text-xs text-red-600 mt-1">{error}</p>
+                <p className="text-xs text-red-500 mt-2">
+                  Check browser console (F12) for details. Verify REACT_APP_API_URL in Netlify environment variables.
+                </p>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Key Metrics */}
-              <div className="space-y-4">
-                <h4 className="font-semibold text-gray-900 flex items-center">
-                  <div className="w-1 h-5 bg-gradient-to-b from-pink-400 to-pink-500 rounded-full mr-2"></div>
-                  Key Metrics
-                </h4>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-pink-50 to-pink-100 rounded-lg">
-                    <div className="p-2 bg-pink-500 rounded-lg">
-                      <Users className="h-5 w-5 text-white" />
-                    </div>
+            )}
+            
+            {/* Loading State */}
+            {loading && (
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                <p className="text-sm text-blue-800">Loading recommendations...</p>
+              </div>
+            )}
+            
+            {/* Empty State */}
+            {!loading && !error && locations.length === 0 && (
+              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+                <p className="text-sm text-yellow-800">No recommendations found</p>
+                <p className="text-xs text-yellow-600 mt-1">Try adjusting your search or filters</p>
+              </div>
+            )}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-h-[400px] overflow-y-auto">
+              {locations.map((location, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleLocationClick(location)}
+                  className={`p-4 rounded-xl border cursor-pointer hover:shadow-md transition-all duration-200 transform hover:scale-105 ${
+                    selectedLocation?.area === location.area 
+                      ? 'border-pink-300 bg-gradient-to-r from-pink-50 to-pink-100 shadow-lg' 
+                      : 'border-gray-200 hover:border-pink-200'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">Population Density</p>
-                      <p className="font-bold text-gray-900">{selectedLocation.population_density} people/sq mi</p>
+                      <h4 className="font-semibold text-gray-900">{location.area}</h4>
+                      <p className="text-sm text-gray-600">
+                        {location.business_density} businesses • {location.population_density} people/sq mi
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
-                    <div className="p-2 bg-gray-600 rounded-lg">
-                      <Building className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600">Business Density</p>
-                      <p className="font-bold text-gray-900">{selectedLocation.business_density} businesses</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-gradient-to-r from-black to-gray-800 rounded-lg">
-                    <div className="p-2 bg-black rounded-lg">
-                      <Car className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-300">Transport Score</p>
-                      <p className="font-bold text-white">{selectedLocation.transport_score}/10</p>
+                    <div className={`px-3 py-1 rounded-full text-sm font-bold ${getScoreBgColor(location.score)} ${getScoreColor(location.score)}`}>
+                      {location.score}/10
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Recommendations */}
-              <div className="md:col-span-2">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <div className="w-1 h-5 bg-gradient-to-b from-pink-400 to-pink-500 rounded-full mr-2"></div>
-                  Why This Area?
-                </h4>
-                <div className="space-y-3">
-                  {selectedLocation.reasons.map((reason, index) => (
-                    <div key={index} className="flex items-start space-x-3 p-3 bg-gradient-to-r from-pink-50 to-pink-100 rounded-lg">
-                      <div className="p-1 bg-pink-500 rounded-full mt-0.5 flex-shrink-0">
-                        <Star className="h-3 w-3 text-white" />
-                      </div>
-                      <p className="text-sm text-gray-700 font-medium">{reason}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
+
       </div>
 
     </div>
