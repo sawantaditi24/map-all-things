@@ -84,9 +84,9 @@ def load_olympic_venues():
         logger.warning(f"Failed to load Olympic venues: {e}")
         return []
 
-# Haversine distance calculation (km)
+# Haversine distance calculation (returns km, can convert to miles)
 def calculate_distance_km(lat1, lon1, lat2, lon2):
-    """Calculate distance between two points using Haversine formula."""
+    """Calculate distance between two points using Haversine formula. Returns distance in km."""
     import math
     R = 6371  # Earth's radius in km
     dlat = math.radians(lat2 - lat1)
@@ -95,32 +95,45 @@ def calculate_distance_km(lat1, lon1, lat2, lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return R * c
 
-def is_within_radius_range(lat, lon, radius_min, radius_max, venues):
-    """Check if a location is within the radius range [radius_min, radius_max] of any Olympic venue."""
+def miles_to_km(miles):
+    """Convert miles to kilometers."""
+    return miles * 1.60934
+
+def km_to_miles(km):
+    """Convert kilometers to miles."""
+    return km * 0.621371
+
+def is_within_radius_range(lat, lon, radius_min_miles, radius_max_miles, venues):
+    """Check if a location is within the radius range [radius_min, radius_max] of any Olympic venue.
+    Accepts radius in miles and converts to km for distance calculation."""
     if not venues:
         return True  # No filter if no venues
     
     # If no radius specified, don't filter
-    if radius_min is None and radius_max is None:
+    if radius_min_miles is None and radius_max_miles is None:
         return True
+    
+    # Convert miles to km for distance comparison
+    radius_min_km = miles_to_km(radius_min_miles) if radius_min_miles is not None else None
+    radius_max_km = miles_to_km(radius_max_miles) if radius_max_miles is not None else None
     
     for venue in venues:
         if not venue.get('Latitude') or not venue.get('Longitude'):
             continue
-        distance = calculate_distance_km(lat, lon, venue['Latitude'], venue['Longitude'])
+        distance_km = calculate_distance_km(lat, lon, venue['Latitude'], venue['Longitude'])
         
-        # Check if distance is within range
-        if radius_min is not None and radius_max is not None:
+        # Check if distance is within range (in km)
+        if radius_min_km is not None and radius_max_km is not None:
             # Both min and max specified: check if distance is in range
-            if radius_min <= distance <= radius_max:
+            if radius_min_km <= distance_km <= radius_max_km:
                 return True
-        elif radius_max is not None:
+        elif radius_max_km is not None:
             # Only max specified: check if distance <= max
-            if distance <= radius_max:
+            if distance_km <= radius_max_km:
                 return True
-        elif radius_min is not None:
+        elif radius_min_km is not None:
             # Only min specified: check if distance >= min
-            if distance >= radius_min:
+            if distance_km >= radius_min_km:
                 return True
     return False
 
@@ -184,8 +197,8 @@ class AdvancedFilters(BaseModel):
     business_density_max: Optional[int] = None
     transport_score_min: Optional[float] = None
     transport_score_max: Optional[float] = None
-    radius_km_min: Optional[float] = None  # Minimum radius from Olympic venues
-    radius_km_max: Optional[float] = None  # Maximum radius from Olympic venues
+    radius_miles_min: Optional[float] = None  # Minimum radius from Olympic venues (in miles)
+    radius_miles_max: Optional[float] = None  # Maximum radius from Olympic venues (in miles)
     map_bounds: Optional[dict] = None  # {north, south, east, west}
 
 class LocationRecommendation(BaseModel):
@@ -672,9 +685,9 @@ async def advanced_search_locations(
     try:
         # Load Olympic venues if radius filter is specified
         venues = []
-        if filters.radius_km_min is not None or filters.radius_km_max is not None:
+        if filters.radius_miles_min is not None or filters.radius_miles_max is not None:
             venues = load_olympic_venues()
-            logger.info(f"Radius filter active: min={filters.radius_km_min} km, max={filters.radius_km_max} km, loaded {len(venues)} Olympic venues")
+            logger.info(f"Radius filter active: min={filters.radius_miles_min} miles, max={filters.radius_miles_max} miles, loaded {len(venues)} Olympic venues")
         
         # Get all areas with their metrics
         areas_with_metrics = (
@@ -704,13 +717,13 @@ async def advanced_search_locations(
                 continue
             
             # Check radius filter (distance from Olympic venues)
-            if (filters.radius_km_min is not None or filters.radius_km_max is not None) and venues:
+            if (filters.radius_miles_min is not None or filters.radius_miles_max is not None) and venues:
                 total_checked += 1
-                is_within = is_within_radius_range(float(area.latitude), float(area.longitude), filters.radius_km_min, filters.radius_km_max, venues)
+                is_within = is_within_radius_range(float(area.latitude), float(area.longitude), filters.radius_miles_min, filters.radius_miles_max, venues)
                 if not is_within:
                     filtered_by_radius += 1
                     continue
-                logger.debug(f"Area {area.name} ({area.latitude}, {area.longitude}) passed radius filter range [{filters.radius_km_min}, {filters.radius_km_max}] km")
+                logger.debug(f"Area {area.name} ({area.latitude}, {area.longitude}) passed radius filter range [{filters.radius_miles_min}, {filters.radius_miles_max}] miles")
             
             # Compute base score using metrics
             base_score = _score_from_metrics(metric)
@@ -745,8 +758,8 @@ async def advanced_search_locations(
         # Limit results to top 20 for performance
         recs = recs[:20]
         
-        if filters.radius_km_min is not None or filters.radius_km_max is not None:
-            logger.info(f"Radius filter: {filtered_by_radius} locations filtered out, {len(recs)} locations within range [{filters.radius_km_min}, {filters.radius_km_max}] km")
+        if filters.radius_miles_min is not None or filters.radius_miles_max is not None:
+            logger.info(f"Radius filter: {filtered_by_radius} locations filtered out, {len(recs)} locations within range [{filters.radius_miles_min}, {filters.radius_miles_max}] miles")
         
         return APIResponse(
             success=True,

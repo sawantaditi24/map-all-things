@@ -50,9 +50,9 @@ const BusinessIntegration = () => {
       } else if (activeFilters) {
         // Use advanced search if filters are active
         endpoint = '/search/advanced';
-        const radiusMinValue = activeFilters.radiusKmMin !== undefined && activeFilters.radiusKmMin !== null ? activeFilters.radiusKmMin : null;
-        const radiusMaxValue = activeFilters.radiusKmMax !== undefined && activeFilters.radiusKmMax !== null ? activeFilters.radiusKmMax : null;
-        console.log('🔍 Applying filters with radius_km_min:', radiusMinValue, 'radius_km_max:', radiusMaxValue);
+        const radiusMinValue = activeFilters.radiusMilesMin !== undefined && activeFilters.radiusMilesMin !== null ? activeFilters.radiusMilesMin : null;
+        const radiusMaxValue = activeFilters.radiusMilesMax !== undefined && activeFilters.radiusMilesMax !== null ? activeFilters.radiusMilesMax : null;
+        console.log('🔍 Applying filters with radius_miles_min:', radiusMinValue, 'radius_miles_max:', radiusMaxValue);
         body = {
           search_query: { 
             query: searchQuery || 'show best areas', 
@@ -65,8 +65,8 @@ const BusinessIntegration = () => {
             business_density_max: activeFilters.businessDensityMax === 150 ? null : activeFilters.businessDensityMax,
             transport_score_min: activeFilters.transportScoreMin === 0 ? null : activeFilters.transportScoreMin,
             transport_score_max: activeFilters.transportScoreMax === 10 ? null : activeFilters.transportScoreMax,
-            radius_km_min: radiusMinValue,
-            radius_km_max: radiusMaxValue,
+            radius_miles_min: radiusMinValue,
+            radius_miles_max: radiusMaxValue,
           }
         };
       } else {

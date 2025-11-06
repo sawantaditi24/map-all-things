@@ -10,8 +10,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     businessDensityMax: 150,
     transportScoreMin: 0,
     transportScoreMax: 10,
-    radiusKmMin: 0, // Minimum radius in km
-    radiusKmMax: 20, // Maximum radius in km
+    radiusMilesMin: 0, // Minimum radius in miles
+    radiusMilesMax: 100, // Maximum radius in miles
   });
   const [expandedSections, setExpandedSections] = useState({
     population: true,
@@ -54,8 +54,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       businessDensityMax: 150,
       transportScoreMin: 0,
       transportScoreMax: 10,
-      radiusKmMin: 0,
-      radiusKmMax: 20,
+      radiusMilesMin: 0,
+      radiusMilesMax: 100,
     });
     onClearFilters();
   };
@@ -68,7 +68,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
           onClick={() => toggleSection('radius')}
           className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50"
         >
-          <h3 className="text-lg font-semibold text-gray-900">Distance from Olympic Venues (km)</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Distance from Olympic Venues (miles)</h3>
           {expandedSections.radius ? (
             <ChevronUp className="h-5 w-5 text-gray-500" />
           ) : (
@@ -82,11 +82,11 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 <label className="text-sm font-medium text-gray-700">Range</label>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm font-semibold text-pink-600">
-                    {filters.radiusKmMin.toFixed(1)}
+                    {filters.radiusMilesMin.toFixed(1)}
                   </span>
                   <span className="text-sm text-gray-400">-</span>
                   <span className="text-sm font-semibold text-pink-600">
-                    {filters.radiusKmMax.toFixed(1)} km
+                    {filters.radiusMilesMax.toFixed(1)} miles
                   </span>
                 </div>
               </div>
@@ -95,17 +95,17 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 thumbClassName="slider-thumb"
                 trackClassName="slider-track"
                 min={0}
-                max={20}
-                step={0.5}
-                value={[filters.radiusKmMin, filters.radiusKmMax]}
-                onChange={(values) => handleDualRangeChange('radiusKm', values)}
+                max={100}
+                step={1}
+                value={[filters.radiusMilesMin, filters.radiusMilesMax]}
+                onChange={(values) => handleDualRangeChange('radiusMiles', values)}
                 ariaLabel={['Minimum radius', 'Maximum radius']}
                 pearling
                 minDistance={0.5}
               />
             </div>
             <div className="text-xs text-gray-500">
-              Show locations within {filters.radiusKmMin.toFixed(1)} - {filters.radiusKmMax.toFixed(1)} km of Olympic venues. Marker size scales with maximum radius. Darker pink + solid = higher score.
+              Show locations within {filters.radiusMilesMin.toFixed(1)} - {filters.radiusMilesMax.toFixed(1)} miles of Olympic venues. Marker size scales with maximum radius. Darker pink + solid = higher score.
             </div>
           </div>
         )}

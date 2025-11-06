@@ -90,20 +90,21 @@ const getBusinessScoreColor = (score) => {
 };
 
 // Marker size based on radius filter value (larger radius = larger markers)
-const getBusinessMarkerSize = (score, radiusKm = null) => {
-  const baseSize = 8; // Base size
+// Note: CircleMarker uses pixel radius, which stays constant regardless of zoom level
+const getBusinessMarkerSize = (score, radiusMiles = null) => {
+  const baseSize = 10; // Base size in pixels (fixed, doesn't scale with zoom)
   
   // If radius filter is applied, scale marker size based on radius
   // Check for both null and undefined, and ensure it's a valid number
-  if (radiusKm != null && !isNaN(radiusKm) && radiusKm > 0) {
-    // Scale size proportionally to radius
-    // Formula: baseSize * (1 + radiusKm / 10)
+  if (radiusMiles != null && !isNaN(radiusMiles) && radiusMiles > 0) {
+    // Scale size proportionally to radius (in miles)
+    // Formula: baseSize * (1 + radiusMiles / 50)
     // Examples: 
-    //   5km = 8 * (1 + 5/10) = 8 * 1.5 = 12px
-    //   10km = 8 * (1 + 10/10) = 8 * 2 = 16px
-    //   20km = 8 * (1 + 20/10) = 8 * 3 = 24px
-    const radiusMultiplier = 1 + (radiusKm / 10);
-    const calculatedSize = Math.max(8, Math.round(baseSize * radiusMultiplier)); // Ensure minimum 8px
+    //   25 miles = 10 * (1 + 25/50) = 10 * 1.5 = 15px
+    //   50 miles = 10 * (1 + 50/50) = 10 * 2 = 20px
+    //   100 miles = 10 * (1 + 100/50) = 10 * 3 = 30px
+    const radiusMultiplier = 1 + (radiusMiles / 50);
+    const calculatedSize = Math.max(10, Math.round(baseSize * radiusMultiplier)); // Ensure minimum 10px
     return calculatedSize;
   }
   
@@ -237,7 +238,7 @@ export default function SportsVenuesMap({
   useEffect(() => {
     if (activeFilters) {
       console.log('📍 ActiveFilters changed:', activeFilters);
-      console.log('📍 RadiusKmMax:', activeFilters.radiusKmMax);
+      console.log('📍 RadiusMilesMax:', activeFilters.radiusMilesMax);
     }
   }, [activeFilters]);
 
@@ -289,12 +290,13 @@ export default function SportsVenuesMap({
           const nearestVenue = nearestVenueInfo ? nearestVenueInfo.venue : null;
           
           // Get radius filter max value from activeFilters (use max for marker size scaling)
-          const radiusKmMax = activeFilters?.radiusKmMax ?? null;
+          const radiusMilesMax = activeFilters?.radiusMilesMax ?? null;
           
           // Get marker properties based on score (not distance)
           // Marker size scales with maximum radius filter value (larger radius = larger markers)
           // Textures vary by score
-          const size = getBusinessMarkerSize(score, radiusKmMax);
+          // CircleMarker uses pixel radius - stays fixed size regardless of zoom level
+          const size = getBusinessMarkerSize(score, radiusMilesMax);
           const dashArray = getMarkerTexture(score);
           const fillOpacity = getMarkerFillOpacity(score);
           const borderWeight = getMarkerBorderWeight(score);
@@ -357,7 +359,7 @@ export default function SportsVenuesMap({
                         {nearestVenue.Location}
                       </div>
                       <div style={{ fontSize: '12px', color: '#ec4899', fontWeight: '600', marginTop: '4px' }}>
-                        📍 {distanceToVenue.toFixed(1)} km away
+                        📍 {distanceToVenue ? (distanceToVenue * 0.621371).toFixed(1) : '0'} miles away
                       </div>
                     </div>
                   )}
