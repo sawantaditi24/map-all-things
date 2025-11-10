@@ -200,10 +200,10 @@ const BusinessIntegration = () => {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="e.g., Find areas good for coffee shops"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      placeholder="e.g. areas for cake shops"
+                      className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     />
-                    <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+                    <Search className="absolute right-3 top-3 h-4 w-4 text-gray-400" />
                   </div>
                 </div>
 
@@ -368,68 +368,68 @@ const BusinessIntegration = () => {
                   activeFilters={currentFilters || activeFilters} // Use currentFilters for real-time updates
                 />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Recommended Locations Panel - Below Map */}
-        <div className="mt-4">
-          <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-              <div className="w-1 h-6 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-3"></div>
-              Recommended Locations
-            </h3>
-            
-            {/* Error Display */}
-            {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-800 font-medium">⚠️ Error</p>
-                <p className="text-xs text-red-600 mt-1">{error}</p>
-                <p className="text-xs text-red-500 mt-2">
-                  Check browser console (F12) for details. Verify REACT_APP_API_URL in Netlify environment variables.
-                </p>
-              </div>
-            )}
-            
-            {/* Loading State */}
-            {loading && (
-              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
-                <p className="text-sm text-blue-800">Loading recommendations...</p>
-              </div>
-            )}
-            
-            {/* Empty State */}
-            {!loading && !error && locations.length === 0 && (
-              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
-                <p className="text-sm text-yellow-800">No recommendations found</p>
-                <p className="text-xs text-yellow-600 mt-1">Try adjusting your search or filters</p>
-              </div>
-            )}
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-h-[400px] overflow-y-auto">
-              {locations.map((location, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleLocationClick(location)}
-                  className={`p-4 rounded-xl border cursor-pointer hover:shadow-md transition-all duration-200 transform hover:scale-105 ${
-                    selectedLocation?.area === location.area 
-                      ? 'border-pink-300 bg-gradient-to-r from-pink-50 to-pink-100 shadow-lg' 
-                      : 'border-gray-200 hover:border-pink-200'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{location.area}</h4>
-                      <p className="text-sm text-gray-600">
-                        {location.business_density} businesses • {location.population_density} people/sq mi
+              
+              {/* Recommended Locations Panel - Directly Below Map */}
+              <div className="mt-6">
+                <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <div className="w-1 h-6 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-3"></div>
+                    Recommended Locations
+                  </h3>
+                  
+                  {/* Error Display */}
+                  {error && (
+                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-800 font-medium">⚠️ Error</p>
+                      <p className="text-xs text-red-600 mt-1">{error}</p>
+                      <p className="text-xs text-red-500 mt-2">
+                        Check browser console (F12) for details. Verify REACT_APP_API_URL in Netlify environment variables.
                       </p>
                     </div>
-                    <div className={`px-3 py-1 rounded-full text-sm font-bold ${getScoreBgColor(location.score)} ${getScoreColor(location.score)}`}>
-                      {location.score}/10
+                  )}
+                  
+                  {/* Loading State */}
+                  {loading && (
+                    <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                      <p className="text-sm text-blue-800">Loading recommendations...</p>
                     </div>
+                  )}
+                  
+                  {/* Empty State */}
+                  {!loading && !error && locations.length === 0 && (
+                    <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+                      <p className="text-sm text-yellow-800">No recommendations found</p>
+                      <p className="text-xs text-yellow-600 mt-1">Try adjusting your search or filters</p>
+                    </div>
+                  )}
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-h-[400px] overflow-y-auto">
+                    {locations.map((location, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleLocationClick(location)}
+                        className={`p-4 rounded-xl border cursor-pointer hover:shadow-md transition-all duration-200 transform hover:scale-105 ${
+                          selectedLocation?.area === location.area 
+                            ? 'border-pink-300 bg-gradient-to-r from-pink-50 to-pink-100 shadow-lg' 
+                            : 'border-gray-200 hover:border-pink-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-semibold text-gray-900">{location.area}</h4>
+                            <p className="text-sm text-gray-600">
+                              {location.business_density} businesses • {location.population_density} people/sq mi
+                            </p>
+                          </div>
+                          <div className={`px-3 py-1 rounded-full text-sm font-bold ${getScoreBgColor(location.score)} ${getScoreColor(location.score)}`}>
+                            {location.score}/10
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>

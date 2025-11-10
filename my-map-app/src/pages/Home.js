@@ -1,5 +1,6 @@
 // src/pages/Home.js
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import MapByFinalDate from '../components/MapByFinalDate';
 import SpringBreakRangeMap from '../components/SpringBreakRangeMap';
@@ -22,9 +23,16 @@ const Tooltip = ({ text }) => (
 );
 
 export default function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [universities, setUniversities] = useState([]);
   const [aiUniversities, setAIUniversities] = useState([]);
-  const [activeTab, setActiveTab] = useState('semester');
+  
+  // Get active tab from URL, default to 'semester' if not present
+  const activeTab = searchParams.get('tab') || 'semester';
+  
+  const setActiveTab = (tab) => {
+    setSearchParams({ tab });
+  };
 
   useEffect(() => {
     fetch('/University_Long_Lat2_rev3.json')
