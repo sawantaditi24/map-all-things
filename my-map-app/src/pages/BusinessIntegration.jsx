@@ -112,7 +112,16 @@ const BusinessIntegration = () => {
       
       // Capture AI insights if available
       if (data?.data?.ai_insights) {
+        console.log('🤖 AI Insights received:', data.data.ai_insights);
+        console.log('🤖 AI Available:', data.data.ai_insights.ai_available);
         setAiInsights(data.data.ai_insights);
+        
+        // Log warning if AI is not available
+        if (!data.data.ai_insights.ai_available) {
+          console.warn('⚠️ AI Fallback Mode: OpenAI API key not configured on backend');
+        } else {
+          console.log('✅ AI Analysis Active: OpenAI is working correctly');
+        }
       } else {
         setAiInsights(null);
       }
