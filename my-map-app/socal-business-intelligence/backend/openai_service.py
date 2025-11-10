@@ -41,7 +41,10 @@ class OpenAIService:
         self.client = None
         self.api_key = os.getenv("OPENAI_API_KEY")
         
+        logger.info(f"OpenAI service initialization started. API key present: {self.api_key is not None}")
+        
         if self.api_key:
+            logger.info(f"OpenAI API key found (length: {len(self.api_key)}, starts with 'sk-': {self.api_key.startswith('sk-')})")
             # Check if API key looks valid (starts with sk-)
             if not self.api_key.startswith("sk-"):
                 logger.warning(f"OpenAI API key found but doesn't look valid (should start with 'sk-'): {self.api_key[:10]}...")
@@ -51,8 +54,9 @@ class OpenAIService:
                 self.client = openai  # Use the module directly
                 logger.info("OpenAI service initialized successfully")
                 logger.info(f"OpenAI API key loaded (length: {len(self.api_key)})")
+                logger.info(f"OpenAI client set: {self.client is not None}")
             except Exception as e:
-                logger.error(f"Failed to initialize OpenAI service: {e}")
+                logger.error(f"Failed to initialize OpenAI service: {e}", exc_info=True)
                 self.client = None
         else:
             logger.warning("OpenAI API key not found. Using fallback semantic search.")
