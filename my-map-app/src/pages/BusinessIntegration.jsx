@@ -11,7 +11,7 @@ const BusinessIntegration = () => {
   const [loading, setLoading] = useState(false);
   const [activeFilters, setActiveFilters] = useState(null);
   const [currentFilters, setCurrentFilters] = useState(null); // For real-time updates
-  const [useAISearch, setUseAISearch] = useState(true); // AI search enabled by default
+  const useAISearch = true; // AI search always enabled
   const [aiInsights, setAiInsights] = useState(null);
   const [showHeatMap, setShowHeatMap] = useState(false);
   const [heatMapMetric, setHeatMapMetric] = useState('business_density');
