@@ -42,11 +42,15 @@ class OpenAIService:
         self.api_key = os.getenv("OPENAI_API_KEY")
         
         if self.api_key:
+            # Check if API key looks valid (starts with sk-)
+            if not self.api_key.startswith("sk-"):
+                logger.warning(f"OpenAI API key found but doesn't look valid (should start with 'sk-'): {self.api_key[:10]}...")
             try:
                 # Use global API key method to avoid proxy issues
                 openai.api_key = self.api_key
                 self.client = openai  # Use the module directly
                 logger.info("OpenAI service initialized successfully")
+                logger.info(f"OpenAI API key loaded (length: {len(self.api_key)})")
             except Exception as e:
                 logger.error(f"Failed to initialize OpenAI service: {e}")
                 self.client = None
@@ -55,7 +59,9 @@ class OpenAIService:
     
     def is_available(self) -> bool:
         """Check if OpenAI service is available."""
-        return self.client is not None
+        is_avail = self.client is not None
+        logger.info(f"OpenAI is_available() check: {is_avail} (client is {'not ' if self.client is None else ''}None)")
+        return is_avail
     
     async def analyze_search_intent(self, query: str, business_type: str) -> SearchContext:
         """Analyze user search intent using AI."""
