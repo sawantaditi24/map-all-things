@@ -104,7 +104,21 @@ class OpenAIService:
                 temperature=0.3
             )
             
-            result = json.loads(response.choices[0].message.content)
+            # Check if response is valid
+            if not response or not hasattr(response, 'choices') or len(response.choices) == 0:
+                logger.error("OpenAI response is empty or invalid for intent analysis")
+                return self._fallback_intent_analysis(query, business_type)
+            
+            content = response.choices[0].message.content
+            if not content:
+                logger.error("OpenAI response content is empty for intent analysis")
+                return self._fallback_intent_analysis(query, business_type)
+            
+            try:
+                result = json.loads(content)
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse OpenAI JSON response for intent: {e}. Content: {content[:200]}")
+                return self._fallback_intent_analysis(query, business_type)
             
             return SearchContext(
                 query=query,
@@ -115,7 +129,10 @@ class OpenAIService:
             )
             
         except Exception as e:
-            logger.error(f"OpenAI intent analysis failed: {e}")
+            logger.error(f"OpenAI intent analysis failed: {e}", exc_info=True)
+            logger.error(f"Error type: {type(e).__name__}")
+            if hasattr(e, 'response'):
+                logger.error(f"OpenAI API response: {e.response}")
             return self._fallback_intent_analysis(query, business_type)
     
     def _fallback_intent_analysis(self, query: str, business_type: str) -> SearchContext:
@@ -210,7 +227,21 @@ class OpenAIService:
                 temperature=0.4
             )
             
-            result = json.loads(response.choices[0].message.content)
+            # Check if response is valid
+            if not response or not hasattr(response, 'choices') or len(response.choices) == 0:
+                logger.error("OpenAI response is empty or invalid")
+                return self._fallback_recommendations(areas_data, search_context)
+            
+            content = response.choices[0].message.content
+            if not content:
+                logger.error("OpenAI response content is empty")
+                return self._fallback_recommendations(areas_data, search_context)
+            
+            try:
+                result = json.loads(content)
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse OpenAI JSON response: {e}. Content: {content[:200]}")
+                return self._fallback_recommendations(areas_data, search_context)
             
             recommendations = []
             for rec in result.get("recommendations", []):
@@ -225,7 +256,10 @@ class OpenAIService:
             return recommendations
             
         except Exception as e:
-            logger.error(f"OpenAI recommendation generation failed: {e}")
+            logger.error(f"OpenAI recommendation generation failed: {e}", exc_info=True)
+            logger.error(f"Error type: {type(e).__name__}")
+            if hasattr(e, 'response'):
+                logger.error(f"OpenAI API response: {e.response}")
             return self._fallback_recommendations(areas_data, search_context)
     
     def _fallback_recommendations(
@@ -236,7 +270,7 @@ class OpenAIService:
         """Fallback recommendations when OpenAI is not available."""
         recommendations = []
         
-        for area in areas_data[:5]:  # Top 5 areas
+        for area in areas_data[:15]:  # Top 15 areas (same as AI search limit)
             area_name = area.get("area", "")
             score = area.get("score", 0)
             
@@ -299,13 +333,25 @@ class OpenAIService:
                 temperature=0.5
             )
             
+            # Check if response is valid
+            if not response or not hasattr(response, 'choices') or len(response.choices) == 0:
+                logger.error("OpenAI response is empty or invalid for reason enhancement")
+                return self._fallback_reasons(area_name, metrics, search_context)
+            
             reasons_text = response.choices[0].message.content
+            if not reasons_text:
+                logger.error("OpenAI response content is empty for reason enhancement")
+                return self._fallback_reasons(area_name, metrics, search_context)
+            
             # Split by lines and clean up
             reasons = [reason.strip("- ").strip() for reason in reasons_text.split('\n') if reason.strip()]
             return reasons[:4]  # Limit to 4 reasons
             
         except Exception as e:
-            logger.error(f"OpenAI reason enhancement failed: {e}")
+            logger.error(f"OpenAI reason enhancement failed: {e}", exc_info=True)
+            logger.error(f"Error type: {type(e).__name__}")
+            if hasattr(e, 'response'):
+                logger.error(f"OpenAI API response: {e.response}")
             return self._fallback_reasons(area_name, metrics, search_context)
     
     def _fallback_reasons(

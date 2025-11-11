@@ -1,6 +1,6 @@
 // src/components/SportsVenuesMap.jsx
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -89,27 +89,23 @@ const getBusinessScoreColor = (score) => {
   return '#fce7f3';                       // Faintest pink for lowest scores
 };
 
-// Marker size based on radius filter value (larger radius = larger markers)
-// Note: CircleMarker uses pixel radius, which stays constant regardless of zoom level
-const getBusinessMarkerSize = (score, radiusMiles = null) => {
-  const baseSize = 10; // Base size in pixels (fixed, doesn't scale with zoom)
-  
-  // If radius filter is applied, scale marker size based on radius
-  // Check for both null and undefined, and ensure it's a valid number
-  if (radiusMiles != null && !isNaN(radiusMiles) && radiusMiles > 0) {
-    // Scale size proportionally to radius (in miles)
-    // Formula: baseSize * (1 + radiusMiles / 50)
-    // Examples: 
-    //   25 miles = 10 * (1 + 25/50) = 10 * 1.5 = 15px
-    //   50 miles = 10 * (1 + 50/50) = 10 * 2 = 20px
-    //   100 miles = 10 * (1 + 100/50) = 10 * 3 = 30px
-    const radiusMultiplier = 1 + (radiusMiles / 50);
-    const calculatedSize = Math.max(10, Math.round(baseSize * radiusMultiplier)); // Ensure minimum 10px
-    return calculatedSize;
+// Convert miles to meters for geographic radius
+const milesToMeters = (miles) => {
+  return miles * 1609.34; // 1 mile = 1609.34 meters
+};
+
+// Get circle radius in meters based on actual distance from Olympic venue
+// This represents the actual geographic distance from the nearest Olympic venue
+// and will scale with zoom to maintain geographic accuracy
+const getBusinessCircleRadius = (distanceToVenueKm = null) => {
+  // If we have the actual distance to venue, use that (convert km to miles, then to meters)
+  if (distanceToVenueKm != null && !isNaN(distanceToVenueKm) && distanceToVenueKm > 0) {
+    const distanceMiles = distanceToVenueKm * 0.621371; // Convert km to miles
+    return milesToMeters(distanceMiles); // Convert miles to meters
   }
   
-  // Default size when no radius filter is applied
-  return baseSize;
+  // Default: use a small fixed radius (e.g., 2 miles) when distance is unknown
+  return milesToMeters(2); // Default to 2 miles radius
 };
 
 // Get texture pattern based on business score (dashArray for stroke pattern)
@@ -182,7 +178,7 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
       
       if (showBusinessData) {
         div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Scores (Pink Shades + Textures)</b>`;
-        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Marker size scales with radius filter. Darker pink + solid = higher score</div>`;
+        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Circle radius = distance from nearest Olympic venue (scales with zoom). Darker pink + solid = higher score</div>`;
         // Pink shades + texture visualization: darker pink + solid for high scores, lighter pink + dashed for low
         div.innerHTML += `
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
@@ -282,30 +278,28 @@ export default function SportsVenuesMap({
           
           if (!coordinates || coordinates.length !== 2) return null;
           
-          // Calculate distance to nearest Olympic venue (for display only)
+          // Calculate distance to nearest Olympic venue
           const businessLat = coordinates[1];
           const businessLon = coordinates[0];
           const nearestVenueInfo = findNearestVenue(businessLat, businessLon, venues);
-          const distanceToVenue = nearestVenueInfo ? nearestVenueInfo.distance : null;
+          const distanceToVenue = nearestVenueInfo ? nearestVenueInfo.distance : null; // Distance in km
           const nearestVenue = nearestVenueInfo ? nearestVenueInfo.venue : null;
           
-          // Get radius filter max value from activeFilters (use max for marker size scaling)
-          const radiusMilesMax = activeFilters?.radiusMilesMax ?? null;
+          // Get circle radius in meters based on ACTUAL distance from Olympic venue
+          // The circle represents the actual distance, not the filter value
+          const circleRadiusMeters = getBusinessCircleRadius(distanceToVenue);
           
-          // Get marker properties based on score (not distance)
-          // Marker size scales with maximum radius filter value (larger radius = larger markers)
-          // Textures vary by score
-          // CircleMarker uses pixel radius - stays fixed size regardless of zoom level
-          const size = getBusinessMarkerSize(score, radiusMilesMax);
+          // Get marker properties based on score (color, texture, opacity)
+          // Circle radius represents actual geographic distance and scales with zoom
           const dashArray = getMarkerTexture(score);
           const fillOpacity = getMarkerFillOpacity(score);
           const borderWeight = getMarkerBorderWeight(score);
 
           return (
-            <CircleMarker
+            <Circle
               key={`business-${idx}`}
               center={[coordinates[1], coordinates[0]]} // Leaflet uses [lat, lng]
-              radius={size}
+              radius={circleRadiusMeters} // Radius in meters (geographic distance)
               pathOptions={{ 
                 color: color, // Use business color for border
                 fillColor: color, 
@@ -368,7 +362,7 @@ export default function SportsVenuesMap({
                   </div>
                 </div>
               </Popup>
-            </CircleMarker>
+            </Circle>
           );
         })}
 

@@ -104,7 +104,7 @@ def km_to_miles(km):
     return km * 0.621371
 
 def is_within_radius_range(lat, lon, radius_min_miles, radius_max_miles, venues):
-    """Check if a location is within the radius range [radius_min, radius_max] of any Olympic venue.
+    """Check if a location is within the radius range [radius_min, radius_max] of the NEAREST Olympic venue.
     Accepts radius in miles and converts to km for distance calculation."""
     if not venues:
         return True  # No filter if no venues
@@ -117,24 +117,37 @@ def is_within_radius_range(lat, lon, radius_min_miles, radius_max_miles, venues)
     radius_min_km = miles_to_km(radius_min_miles) if radius_min_miles is not None else None
     radius_max_km = miles_to_km(radius_max_miles) if radius_max_miles is not None else None
     
+    # Find the NEAREST Olympic venue (not just any venue)
+    nearest_distance_km = None
     for venue in venues:
         if not venue.get('Latitude') or not venue.get('Longitude'):
             continue
         distance_km = calculate_distance_km(lat, lon, venue['Latitude'], venue['Longitude'])
-        
-        # Check if distance is within range (in km)
-        if radius_min_km is not None and radius_max_km is not None:
-            # Both min and max specified: check if distance is in range
-            if radius_min_km <= distance_km <= radius_max_km:
-                return True
-        elif radius_max_km is not None:
-            # Only max specified: check if distance <= max
-            if distance_km <= radius_max_km:
-                return True
-        elif radius_min_km is not None:
-            # Only min specified: check if distance >= min
-            if distance_km >= radius_min_km:
-                return True
+        if nearest_distance_km is None or distance_km < nearest_distance_km:
+            nearest_distance_km = distance_km
+    
+    # If no valid venue found, don't filter
+    if nearest_distance_km is None:
+        return True
+    
+    # Check if nearest distance is within range (in km)
+    # Note: radius_min_km can be 0.0, which is valid
+    if radius_min_km is not None and radius_max_km is not None:
+        # Both min and max specified: check if distance is in range
+        result = radius_min_km <= nearest_distance_km <= radius_max_km
+        logger.debug(f"Radius filter check: distance={nearest_distance_km:.2f}km ({nearest_distance_km*0.621371:.2f}mi), range=[{radius_min_km:.2f}km, {radius_max_km:.2f}km] ([{radius_min_km*0.621371:.2f}mi, {radius_max_km*0.621371:.2f}mi]), result={result}")
+        return result
+    elif radius_max_km is not None:
+        # Only max specified: check if distance <= max
+        result = nearest_distance_km <= radius_max_km
+        logger.debug(f"Radius filter check (max only): distance={nearest_distance_km:.2f}km ({nearest_distance_km*0.621371:.2f}mi), max={radius_max_km:.2f}km ({radius_max_km*0.621371:.2f}mi), result={result}")
+        return result
+    elif radius_min_km is not None:
+        # Only min specified: check if distance >= min
+        result = nearest_distance_km >= radius_min_km
+        logger.debug(f"Radius filter check (min only): distance={nearest_distance_km:.2f}km ({nearest_distance_km*0.621371:.2f}mi), min={radius_min_km:.2f}km ({radius_min_km*0.621371:.2f}mi), result={result}")
+        return result
+    
     return False
 
 # County mapping for SoCal cities
@@ -237,6 +250,56 @@ async def seed_database(db: Session = Depends(get_db)):
         return {"message": "Database seeded successfully", "status": "success"}
     except Exception as e:
         return {"message": f"Failed to seed database: {str(e)}", "status": "error"}
+
+# Test OpenAI endpoint
+@app.get("/test/openai")
+async def test_openai():
+    """Test endpoint to verify OpenAI is working."""
+    try:
+        is_available = openai_service.is_available()
+        api_key_present = os.getenv("OPENAI_API_KEY") is not None
+        api_key_length = len(os.getenv("OPENAI_API_KEY", ""))
+        api_key_starts_with_sk = os.getenv("OPENAI_API_KEY", "").startswith("sk-")
+        
+        result = {
+            "openai_available": is_available,
+            "api_key_present": api_key_present,
+            "api_key_length": api_key_length,
+            "api_key_starts_with_sk": api_key_starts_with_sk,
+            "client_is_none": openai_service.client is None
+        }
+        
+        # Try a simple OpenAI call if available
+        if is_available:
+            try:
+                test_response = openai_service.client.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "user", "content": "Say 'OpenAI is working' if you can read this."}
+                    ],
+                    max_tokens=20
+                )
+                result["test_call_successful"] = True
+                result["test_response"] = test_response.choices[0].message.content
+            except Exception as e:
+                result["test_call_successful"] = False
+                result["test_call_error"] = str(e)
+                result["test_call_error_type"] = type(e).__name__
+                if hasattr(e, 'response'):
+                    result["test_call_error_response"] = str(e.response)
+                logger.error(f"OpenAI test call failed: {e}", exc_info=True)
+        
+        return {
+            "success": True,
+            "data": result,
+            "message": "OpenAI test completed"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "message": "OpenAI test failed"
+        }
 
 # Areas list
 @app.get("/areas", response_model=APIResponse)
@@ -611,27 +674,43 @@ async def ai_search_locations(
         )
         
         # Create enhanced recommendations
+        # Use the reasoning from AI recommendations directly (already includes detailed reasons)
+        # This avoids making 10+ additional sequential OpenAI API calls
         recs: List[LocationRecommendation] = []
         for ai_rec in ai_recommendations:
             # Find the corresponding area data
             area_data = next((a for a in areas_data if a["area"] == ai_rec.area_name), None)
             if area_data:
-                # Enhance reasons using AI
-                enhanced_reasons = await openai_service.enhance_search_reasons(
-                    ai_rec.area_name,
-                    {
-                        "population_density": area_data["population_density"],
-                        "business_density": area_data["business_density"],
-                        "transport_score": area_data["transport_score"]
-                    },
-                    search_context
-                )
+                # Use AI-generated reasoning directly (already includes detailed analysis)
+                # Convert key_factors and reasoning into reasons list
+                reasons = []
+                if ai_rec.reasoning:
+                    reasons.append(ai_rec.reasoning)
+                if ai_rec.key_factors:
+                    reasons.extend([f"{factor}" for factor in ai_rec.key_factors[:3]])  # Limit to top 3 factors
+                if ai_rec.business_insights:
+                    reasons.append(ai_rec.business_insights)
+                
+                # Fallback to basic reasons if AI didn't provide enough
+                if len(reasons) < 2:
+                    # Create a temporary AreaMetric-like object for fallback reasons
+                    temp_metric = AreaMetric(
+                        area_id=0,  # Not used
+                        population_density=area_data["population_density"],
+                        business_density=area_data["business_density"],
+                        transport_score=area_data["transport_score"]
+                    )
+                    reasons = _generate_search_reasons(
+                        search_query.query.lower(),
+                        ai_rec.area_name,
+                        temp_metric
+                    )
                 
                 recs.append(
                     LocationRecommendation(
                         area=ai_rec.area_name,
                         score=float(ai_rec.confidence_score),
-                        reasons=enhanced_reasons,
+                        reasons=reasons[:4],  # Limit to 4 reasons
                         coordinates=area_data["coordinates"],
                         business_density=area_data["business_density"],
                         population_density=area_data["population_density"],
@@ -688,6 +767,8 @@ async def advanced_search_locations(
         if filters.radius_miles_min is not None or filters.radius_miles_max is not None:
             venues = load_olympic_venues()
             logger.info(f"Radius filter active: min={filters.radius_miles_min} miles, max={filters.radius_miles_max} miles, loaded {len(venues)} Olympic venues")
+            if not venues:
+                logger.warning("⚠️ No Olympic venues loaded! Radius filter will not work.")
         
         # Get all areas with their metrics
         areas_with_metrics = (
@@ -722,8 +803,27 @@ async def advanced_search_locations(
                 is_within = is_within_radius_range(float(area.latitude), float(area.longitude), filters.radius_miles_min, filters.radius_miles_max, venues)
                 if not is_within:
                     filtered_by_radius += 1
+                    # Calculate nearest distance for logging
+                    nearest_km = None
+                    for venue in venues:
+                        if venue.get('Latitude') and venue.get('Longitude'):
+                            dist = calculate_distance_km(float(area.latitude), float(area.longitude), venue['Latitude'], venue['Longitude'])
+                            if nearest_km is None or dist < nearest_km:
+                                nearest_km = dist
+                    if nearest_km:
+                        nearest_miles = km_to_miles(nearest_km)
+                        logger.debug(f"Area {area.name} filtered out: {nearest_miles:.1f} miles from nearest venue (filter: max={filters.radius_miles_max} miles)")
                     continue
-                logger.debug(f"Area {area.name} ({area.latitude}, {area.longitude}) passed radius filter range [{filters.radius_miles_min}, {filters.radius_miles_max}] miles")
+                # Log successful pass for debugging
+                nearest_km = None
+                for venue in venues:
+                    if venue.get('Latitude') and venue.get('Longitude'):
+                        dist = calculate_distance_km(float(area.latitude), float(area.longitude), venue['Latitude'], venue['Longitude'])
+                        if nearest_km is None or dist < nearest_km:
+                            nearest_km = dist
+                if nearest_km:
+                    nearest_miles = km_to_miles(nearest_km)
+                    logger.debug(f"Area {area.name} passed radius filter: {nearest_miles:.1f} miles from nearest venue (filter: max={filters.radius_miles_max} miles)")
             
             # Compute base score using metrics
             base_score = _score_from_metrics(metric)

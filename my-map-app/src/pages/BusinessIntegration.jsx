@@ -39,11 +39,16 @@ const BusinessIntegration = () => {
       let endpoint = '/search';
       let body;
 
-      // Use AI search if enabled and no advanced filters
-      if (useAISearch && !activeFilters) {
+      // Use AI search only if:
+      // 1. AI search is enabled
+      // 2. No advanced filters are active
+      // 3. User has provided an actual search query (not just default)
+      const hasUserQuery = searchQuery && searchQuery.trim() && searchQuery !== 'show best areas';
+      
+      if (useAISearch && !activeFilters && hasUserQuery) {
         endpoint = '/search/ai';
         body = {
-          query: searchQuery || 'show best areas',
+          query: searchQuery,
           business_type: businessType
         };
       } else if (activeFilters) {
