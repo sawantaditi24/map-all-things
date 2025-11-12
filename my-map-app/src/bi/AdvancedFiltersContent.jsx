@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import ReactSlider from 'react-slider';
 
 const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange }) => {
@@ -13,19 +12,6 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     radiusMilesMin: 0, // Minimum radius in miles
     radiusMilesMax: 100, // Maximum radius in miles
   });
-  const [expandedSections, setExpandedSections] = useState({
-    population: false,
-    business: false,
-    transport: false,
-    radius: false,
-  });
-
-  const toggleSection = (section) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
 
   const handleApply = () => {
     onApplyFilters(filters);
@@ -49,206 +35,158 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     <div className="space-y-2">
       {/* Radius from Olympic Venues Filter */}
       <div className="border border-gray-200 rounded-lg">
-        <button
-          onClick={() => toggleSection('radius')}
-          className="w-full flex items-center justify-between p-2.5 text-left hover:bg-gray-50"
-        >
-          <h3 className="text-sm font-semibold text-gray-900">Distance from Olympic Venues</h3>
-          {expandedSections.radius ? (
-            <ChevronUp className="h-4 w-4 text-gray-500" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-gray-500" />
-          )}
-        </button>
-        {expandedSections.radius && (
-          <div className="px-2.5 pb-2.5">
-            <div className="flex justify-between items-center mb-1.5">
-              <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.radiusMilesMax.toFixed(1)} miles</label>
-            </div>
-            <ReactSlider
-              className="horizontal-slider single-value-slider"
-              thumbClassName="slider-thumb"
-              trackClassName="slider-track"
-              min={0}
-              max={100}
-              step={1}
-              value={filters.radiusMilesMax}
-              onChange={(value) => {
-                setFilters(prev => {
-                  const newFilters = {
-                    ...prev,
-                    radiusMilesMin: 0,
-                    radiusMilesMax: value
-                  };
-                  if (onFilterChange) {
-                    onFilterChange(newFilters);
-                  }
-                  return newFilters;
-                });
-              }}
-              ariaLabel="Maximum radius"
-            />
+        <div className="p-2.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Distance from Olympic Venues</h3>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.radiusMilesMax.toFixed(1)} miles</label>
             <button
               onClick={handleApply}
-              className="w-full mt-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
+              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
             >
-              Apply Filter
+              Apply
             </button>
           </div>
-        )}
+          <ReactSlider
+            className="horizontal-slider single-value-slider"
+            thumbClassName="slider-thumb"
+            trackClassName="slider-track"
+            min={0}
+            max={100}
+            step={1}
+            value={filters.radiusMilesMax}
+            onChange={(value) => {
+              setFilters(prev => {
+                const newFilters = {
+                  ...prev,
+                  radiusMilesMin: 0,
+                  radiusMilesMax: value
+                };
+                if (onFilterChange) {
+                  onFilterChange(newFilters);
+                }
+                return newFilters;
+              });
+            }}
+            ariaLabel="Maximum radius"
+          />
+        </div>
       </div>
 
       {/* Population Density Filter */}
       <div className="border border-gray-200 rounded-lg">
-        <button
-          onClick={() => toggleSection('population')}
-          className="w-full flex items-center justify-between p-2.5 text-left hover:bg-gray-50"
-        >
-          <h3 className="text-sm font-semibold text-gray-900">Population Density</h3>
-          {expandedSections.population ? (
-            <ChevronUp className="h-4 w-4 text-gray-500" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-gray-500" />
-          )}
-        </button>
-        {expandedSections.population && (
-          <div className="px-2.5 pb-2.5">
-            <div className="flex justify-between items-center mb-1.5">
-              <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.populationDensityMax.toLocaleString()} per sq mi</label>
-            </div>
-            <ReactSlider
-              className="horizontal-slider single-value-slider"
-              thumbClassName="slider-thumb"
-              trackClassName="slider-track"
-              min={0}
-              max={20000}
-              step={100}
-              value={filters.populationDensityMax}
-              onChange={(value) => {
-                setFilters(prev => {
-                  const newFilters = {
-                    ...prev,
-                    populationDensityMin: 0,
-                    populationDensityMax: value
-                  };
-                  if (onFilterChange) {
-                    onFilterChange(newFilters);
-                  }
-                  return newFilters;
-                });
-              }}
-              ariaLabel="Maximum population density"
-            />
+        <div className="p-2.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Population Density</h3>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.populationDensityMax.toLocaleString()} per sq mi</label>
             <button
               onClick={handleApply}
-              className="w-full mt-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
+              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
             >
-              Apply Filter
+              Apply
             </button>
           </div>
-        )}
+          <ReactSlider
+            className="horizontal-slider single-value-slider"
+            thumbClassName="slider-thumb"
+            trackClassName="slider-track"
+            min={0}
+            max={20000}
+            step={100}
+            value={filters.populationDensityMax}
+            onChange={(value) => {
+              setFilters(prev => {
+                const newFilters = {
+                  ...prev,
+                  populationDensityMin: 0,
+                  populationDensityMax: value
+                };
+                if (onFilterChange) {
+                  onFilterChange(newFilters);
+                }
+                return newFilters;
+              });
+            }}
+            ariaLabel="Maximum population density"
+          />
+        </div>
       </div>
 
       {/* Business Density Filter */}
       <div className="border border-gray-200 rounded-lg">
-        <button
-          onClick={() => toggleSection('business')}
-          className="w-full flex items-center justify-between p-2.5 text-left hover:bg-gray-50"
-        >
-          <h3 className="text-sm font-semibold text-gray-900">Business Density</h3>
-          {expandedSections.business ? (
-            <ChevronUp className="h-4 w-4 text-gray-500" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-gray-500" />
-          )}
-        </button>
-        {expandedSections.business && (
-          <div className="px-2.5 pb-2.5">
-            <div className="flex justify-between items-center mb-1.5">
-              <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.businessDensityMax}</label>
-            </div>
-            <ReactSlider
-              className="horizontal-slider single-value-slider"
-              thumbClassName="slider-thumb"
-              trackClassName="slider-track"
-              min={0}
-              max={150}
-              step={1}
-              value={filters.businessDensityMax}
-              onChange={(value) => {
-                setFilters(prev => {
-                  const newFilters = {
-                    ...prev,
-                    businessDensityMin: 0,
-                    businessDensityMax: value
-                  };
-                  if (onFilterChange) {
-                    onFilterChange(newFilters);
-                  }
-                  return newFilters;
-                });
-              }}
-              ariaLabel="Maximum business density"
-            />
+        <div className="p-2.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Business Density</h3>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.businessDensityMax}</label>
             <button
               onClick={handleApply}
-              className="w-full mt-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
+              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
             >
-              Apply Filter
+              Apply
             </button>
           </div>
-        )}
+          <ReactSlider
+            className="horizontal-slider single-value-slider"
+            thumbClassName="slider-thumb"
+            trackClassName="slider-track"
+            min={0}
+            max={150}
+            step={1}
+            value={filters.businessDensityMax}
+            onChange={(value) => {
+              setFilters(prev => {
+                const newFilters = {
+                  ...prev,
+                  businessDensityMin: 0,
+                  businessDensityMax: value
+                };
+                if (onFilterChange) {
+                  onFilterChange(newFilters);
+                }
+                return newFilters;
+              });
+            }}
+            ariaLabel="Maximum business density"
+          />
+        </div>
       </div>
 
       {/* Transport Score Filter */}
       <div className="border border-gray-200 rounded-lg">
-        <button
-          onClick={() => toggleSection('transport')}
-          className="w-full flex items-center justify-between p-2.5 text-left hover:bg-gray-50"
-        >
-          <h3 className="text-sm font-semibold text-gray-900">Transportation</h3>
-          {expandedSections.transport ? (
-            <ChevronUp className="h-4 w-4 text-gray-500" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-gray-500" />
-          )}
-        </button>
-        {expandedSections.transport && (
-          <div className="px-2.5 pb-2.5">
-            <div className="flex justify-between items-center mb-1.5">
-              <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.transportScoreMax.toFixed(1)}</label>
-            </div>
-            <ReactSlider
-              className="horizontal-slider single-value-slider"
-              thumbClassName="slider-thumb"
-              trackClassName="slider-track"
-              min={0}
-              max={10}
-              step={0.1}
-              value={filters.transportScoreMax}
-              onChange={(value) => {
-                setFilters(prev => {
-                  const newFilters = {
-                    ...prev,
-                    transportScoreMin: 0,
-                    transportScoreMax: value
-                  };
-                  if (onFilterChange) {
-                    onFilterChange(newFilters);
-                  }
-                  return newFilters;
-                });
-              }}
-              ariaLabel="Maximum transport score"
-            />
+        <div className="p-2.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Transportation</h3>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.transportScoreMax.toFixed(1)}</label>
             <button
               onClick={handleApply}
-              className="w-full mt-2 px-3 py-1.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
+              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
             >
-              Apply Filter
+              Apply
             </button>
           </div>
-        )}
+          <ReactSlider
+            className="horizontal-slider single-value-slider"
+            thumbClassName="slider-thumb"
+            trackClassName="slider-track"
+            min={0}
+            max={10}
+            step={0.1}
+            value={filters.transportScoreMax}
+            onChange={(value) => {
+              setFilters(prev => {
+                const newFilters = {
+                  ...prev,
+                  transportScoreMin: 0,
+                  transportScoreMax: value
+                };
+                if (onFilterChange) {
+                  onFilterChange(newFilters);
+                }
+                return newFilters;
+              });
+            }}
+            ariaLabel="Maximum transport score"
+          />
+        </div>
       </div>
 
       {/* Action Buttons */}
