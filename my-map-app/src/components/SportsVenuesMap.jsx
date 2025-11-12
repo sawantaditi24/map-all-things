@@ -240,10 +240,6 @@ export default function SportsVenuesMap({
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-4">
-      <div className="flex justify-center mb-3">
-        <img src="/LA28.png" alt="LA28 Olympics" className="h-20" />
-</div>
-
       <MapContainer center={[34.05, -118.25]} zoom={9} style={{ height: "100%", width: "100%", minHeight: "500px" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
         
