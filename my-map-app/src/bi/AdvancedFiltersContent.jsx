@@ -20,21 +20,6 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     radius: false,
   });
 
-  const handleDualRangeChange = (fieldPrefix, values) => {
-    setFilters(prev => {
-      const newFilters = {
-        ...prev,
-        [`${fieldPrefix}Min`]: values[0],
-        [`${fieldPrefix}Max`]: values[1]
-      };
-      // Notify parent of filter changes in real-time
-      if (onFilterChange) {
-        onFilterChange(newFilters);
-      }
-      return newFilters;
-    });
-  };
-
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
       ...prev,
