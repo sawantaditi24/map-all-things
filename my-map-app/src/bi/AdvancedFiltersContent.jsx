@@ -13,10 +13,6 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     radiusMilesMax: 100, // Maximum radius in miles
   });
 
-  const handleApply = () => {
-    onApplyFilters(filters);
-  };
-
   const handleClear = () => {
     setFilters({
       populationDensityMin: 0,
@@ -37,14 +33,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       <div className="border border-gray-200 rounded-lg">
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Distance from Olympic Venues</h3>
-          <div className="flex justify-between items-center mb-1.5">
+          <div className="mb-1.5">
             <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.radiusMilesMax.toFixed(1)} miles</label>
-            <button
-              onClick={handleApply}
-              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
-            >
-              Apply
-            </button>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -64,6 +54,10 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 if (onFilterChange) {
                   onFilterChange(newFilters);
                 }
+                // Apply filters dynamically
+                if (onApplyFilters) {
+                  onApplyFilters(newFilters);
+                }
                 return newFilters;
               });
             }}
@@ -76,14 +70,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       <div className="border border-gray-200 rounded-lg">
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Population Density</h3>
-          <div className="flex justify-between items-center mb-1.5">
+          <div className="mb-1.5">
             <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.populationDensityMax.toLocaleString()} per sq mi</label>
-            <button
-              onClick={handleApply}
-              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
-            >
-              Apply
-            </button>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -103,6 +91,10 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 if (onFilterChange) {
                   onFilterChange(newFilters);
                 }
+                // Apply filters dynamically
+                if (onApplyFilters) {
+                  onApplyFilters(newFilters);
+                }
                 return newFilters;
               });
             }}
@@ -115,14 +107,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       <div className="border border-gray-200 rounded-lg">
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Business Density</h3>
-          <div className="flex justify-between items-center mb-1.5">
+          <div className="mb-1.5">
             <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.businessDensityMax}</label>
-            <button
-              onClick={handleApply}
-              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
-            >
-              Apply
-            </button>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -142,6 +128,10 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 if (onFilterChange) {
                   onFilterChange(newFilters);
                 }
+                // Apply filters dynamically
+                if (onApplyFilters) {
+                  onApplyFilters(newFilters);
+                }
                 return newFilters;
               });
             }}
@@ -154,14 +144,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       <div className="border border-gray-200 rounded-lg">
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Transportation</h3>
-          <div className="flex justify-between items-center mb-1.5">
+          <div className="mb-1.5">
             <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.transportScoreMax.toFixed(1)}</label>
-            <button
-              onClick={handleApply}
-              className="px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded hover:from-pink-600 hover:to-pink-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 shadow-sm"
-            >
-              Apply
-            </button>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -181,6 +165,10 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
                 if (onFilterChange) {
                   onFilterChange(newFilters);
                 }
+                // Apply filters dynamically
+                if (onApplyFilters) {
+                  onApplyFilters(newFilters);
+                }
                 return newFilters;
               });
             }}
@@ -190,21 +178,13 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-200 mt-3">
+      <div className="flex items-center justify-start pt-3 border-t border-gray-200 mt-3">
         <button
           onClick={handleClear}
           className="px-4 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-pink-500 transition-colors duration-200"
         >
           Clear All
         </button>
-        <div className="flex space-x-2">
-          <button
-            onClick={handleApply}
-            className="px-4 py-2 text-xs font-medium text-white bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg hover:from-pink-700 hover:to-purple-700 focus:ring-2 focus:ring-pink-500 transition-all duration-200 transform hover:scale-105 shadow-lg"
-          >
-            Apply Filters
-          </button>
-        </div>
       </div>
     </div>
   );

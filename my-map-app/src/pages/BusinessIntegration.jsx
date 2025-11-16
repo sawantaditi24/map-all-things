@@ -190,7 +190,8 @@ const BusinessIntegration = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Left Panel - Search & Filters */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-3">
+            {/* Search Locations Section - Hidden from UI but code preserved for future use */}
+            <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-3 hidden">
               <h2 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
                 <div className="w-1 h-4 bg-gradient-to-b from-pink-500 to-pink-600 rounded-full mr-2"></div>
                 Search Locations
@@ -294,26 +295,21 @@ const BusinessIntegration = () => {
                   </div>
                 </div>
               )}
-
-              {/* Advanced Filters - Always Visible */}
-              <div className="mt-3">
-                <h3 className="text-xs font-medium text-gray-700 mb-2 flex items-center">
-                  <div className="w-1 h-3 bg-gradient-to-b from-pink-400 to-pink-500 rounded-full mr-2"></div>
-                  Advanced Filters
-                </h3>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <AdvancedFiltersContent
-                    onApplyFilters={handleApplyFilters}
-                    onClearFilters={handleClearFilters}
-                    onFilterChange={handleFilterChange}
-                  />
-                </div>
-              </div>
             </div>
             
-            {/* LA28 Olympic Image */}
-            <div className="mt-4 bg-white rounded-xl shadow-lg border border-pink-100 p-4 flex justify-center">
-              <img src="/LA28.png" alt="LA28 Olympics" className="h-16" />
+            {/* Advanced Filters - Visible Section */}
+            <div className="bg-white rounded-xl shadow-lg border border-pink-100 p-3 mt-4">
+              <h3 className="text-xs font-medium text-gray-700 mb-2 flex items-center">
+                <div className="w-1 h-3 bg-gradient-to-b from-pink-400 to-pink-500 rounded-full mr-2"></div>
+                Advanced Filters
+              </h3>
+              <div className="max-h-[400px] overflow-y-auto">
+                <AdvancedFiltersContent
+                  onApplyFilters={handleApplyFilters}
+                  onClearFilters={handleClearFilters}
+                  onFilterChange={handleFilterChange}
+                />
+              </div>
             </div>
           </div>
 
