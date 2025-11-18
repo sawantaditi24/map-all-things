@@ -159,6 +159,7 @@ class LocationRecommendation(BaseModel):
     business_density: int
     population_density: int
     transport_score: int
+    apartment_count: Optional[int] = None
 
 class AdvancedSearchFilters(BaseModel):
     counties: Optional[list] = None
@@ -168,6 +169,8 @@ class AdvancedSearchFilters(BaseModel):
     business_density_max: Optional[int] = None
     transport_score_min: Optional[float] = None
     transport_score_max: Optional[float] = None
+    apartment_count_min: Optional[int] = None
+    apartment_count_max: Optional[int] = None
 
 class AdvancedSearchRequest(BaseModel):
     search_query: SearchQuery

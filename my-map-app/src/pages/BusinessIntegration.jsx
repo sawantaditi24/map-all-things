@@ -55,6 +55,9 @@ const BusinessIntegration = () => {
         const radiusMinValue = activeFilters.radiusMilesMin !== undefined && activeFilters.radiusMilesMin !== null ? activeFilters.radiusMilesMin : null;
         const radiusMaxValue = activeFilters.radiusMilesMax !== undefined && activeFilters.radiusMilesMax !== null ? activeFilters.radiusMilesMax : null;
         console.log('🔍 Applying filters with radius_miles_min:', radiusMinValue, 'radius_miles_max:', radiusMaxValue);
+        const apartmentCountMin = activeFilters.apartmentCountMin === 0 ? null : activeFilters.apartmentCountMin;
+        const apartmentCountMax = activeFilters.apartmentCountMax === 500000 ? null : activeFilters.apartmentCountMax;
+        console.log('🏠 Apartment filter - min:', apartmentCountMin, 'max:', apartmentCountMax, 'raw:', activeFilters.apartmentCountMax);
         body = {
           search_query: { 
             query: searchQuery || 'show best areas', 
@@ -67,6 +70,8 @@ const BusinessIntegration = () => {
             business_density_max: activeFilters.businessDensityMax === 150 ? null : activeFilters.businessDensityMax,
             transport_score_min: activeFilters.transportScoreMin === 0 ? null : activeFilters.transportScoreMin,
             transport_score_max: activeFilters.transportScoreMax === 10 ? null : activeFilters.transportScoreMax,
+            apartment_count_min: apartmentCountMin,
+            apartment_count_max: apartmentCountMax,
             radius_miles_min: radiusMinValue,
             radius_miles_max: radiusMaxValue,
           }
@@ -138,6 +143,8 @@ const BusinessIntegration = () => {
   };
 
   const handleApplyFilters = (filters) => {
+    console.log('📋 Filters applied:', filters);
+    console.log('🏠 Apartment count in filters:', filters.apartmentCountMax);
     setActiveFilters(filters);
     setCurrentFilters(filters); // Also update current filters
   };

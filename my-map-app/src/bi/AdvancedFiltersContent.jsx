@@ -9,6 +9,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     businessDensityMax: 150,
     transportScoreMin: 0,
     transportScoreMax: 10,
+    apartmentCountMin: 0,
+    apartmentCountMax: 500000,
     radiusMilesMin: 0, // Minimum radius in miles
     radiusMilesMax: 100, // Maximum radius in miles
   });
@@ -21,6 +23,8 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       businessDensityMax: 150,
       transportScoreMin: 0,
       transportScoreMax: 10,
+      apartmentCountMin: 0,
+      apartmentCountMax: 500000,
       radiusMilesMin: 0,
       radiusMilesMax: 100,
     });
@@ -173,6 +177,43 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
               });
             }}
             ariaLabel="Maximum transport score"
+          />
+        </div>
+      </div>
+
+      {/* Apartment Count Filter */}
+      <div className="border border-gray-200 rounded-lg">
+        <div className="p-2.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Number of Apartments</h3>
+          <div className="mb-1.5">
+            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.apartmentCountMax.toLocaleString()} units</label>
+          </div>
+          <ReactSlider
+            className="horizontal-slider single-value-slider"
+            thumbClassName="slider-thumb"
+            trackClassName="slider-track"
+            min={0}
+            max={500000}
+            step={1000}
+            value={filters.apartmentCountMax}
+            onChange={(value) => {
+              setFilters(prev => {
+                const newFilters = {
+                  ...prev,
+                  apartmentCountMin: 0,
+                  apartmentCountMax: value
+                };
+                if (onFilterChange) {
+                  onFilterChange(newFilters);
+                }
+                // Apply filters dynamically
+                if (onApplyFilters) {
+                  onApplyFilters(newFilters);
+                }
+                return newFilters;
+              });
+            }}
+            ariaLabel="Maximum apartment count"
           />
         </div>
       </div>

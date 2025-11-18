@@ -101,6 +101,7 @@ class AreaMetric(Base):
     population_density = Column(Integer, nullable=False)
     business_density = Column(Integer, nullable=False)
     transport_score = Column(Integer, nullable=False)
+    apartment_count = Column(Integer, nullable=True)  # Number of apartment units
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     

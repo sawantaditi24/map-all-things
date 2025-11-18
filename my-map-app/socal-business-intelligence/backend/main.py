@@ -17,6 +17,7 @@ from seed import seed
 from sqlalchemy import func
 from transportation import TransportationCalculator
 from openai_service import openai_service, SearchContext, AIRecommendation
+from census_service import census_service
 
 # Import authentication modules
 from auth_service import auth_service
@@ -210,6 +211,8 @@ class AdvancedFilters(BaseModel):
     business_density_max: Optional[int] = None
     transport_score_min: Optional[float] = None
     transport_score_max: Optional[float] = None
+    apartment_count_min: Optional[int] = None
+    apartment_count_max: Optional[int] = None
     radius_miles_min: Optional[float] = None  # Minimum radius from Olympic venues (in miles)
     radius_miles_max: Optional[float] = None  # Maximum radius from Olympic venues (in miles)
     map_bounds: Optional[dict] = None  # {north, south, east, west}
@@ -222,6 +225,7 @@ class LocationRecommendation(BaseModel):
     business_density: int
     population_density: int
     transport_score: float
+    apartment_count: Optional[int] = None
 
 class APIResponse(BaseModel):
     success: bool
@@ -526,6 +530,58 @@ async def etl_transportation_scores(db: Session = Depends(get_db)):
             detail=f"Failed to update transportation scores: {str(e)}"
         )
 
+# --- ETL: Apartment Count Data from Census ---
+@app.post("/etl/census/apartments", response_model=APIResponse)
+async def etl_census_apartments(db: Session = Depends(get_db)):
+    """
+    Update apartment count metrics for all areas using US Census Bureau data.
+    """
+    try:
+        updated_count = 0
+        
+        # Get all areas
+        areas = db.query(Area).all()
+        
+        for area in areas:
+            # Fetch apartment count from Census service
+            apartment_count = await census_service.get_apartment_count_by_city(area.name)
+            
+            if apartment_count is not None:
+                # Update or create AreaMetric
+                metric = db.query(AreaMetric).filter(AreaMetric.area_id == area.id).first()
+                if metric:
+                    metric.apartment_count = apartment_count
+                    updated_count += 1
+                    logger.info(f"Updated apartment count for {area.name}: {apartment_count:,} units")
+                else:
+                    # Create new metric if it doesn't exist
+                    metric = AreaMetric(
+                        area_id=area.id,
+                        population_density=5000,  # Default value
+                        business_density=50,      # Default value
+                        transport_score=6.5,      # Default value
+                        apartment_count=apartment_count
+                    )
+                    db.add(metric)
+                    updated_count += 1
+                    logger.info(f"Created apartment count metric for {area.name}: {apartment_count:,} units")
+        
+        db.commit()
+        
+        return APIResponse(
+            success=True,
+            data={"updated": updated_count, "total_areas": len(areas)},
+            message=f"Updated apartment count metrics for {updated_count} areas"
+        )
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Failed to update apartment count metrics: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update apartment count metrics: {str(e)}"
+        )
+
 
 def _score_from_metrics(metric: AreaMetric) -> float:
     # Normalize population density to 0..10 scale (assume 0..15000 people/sq mi)
@@ -586,6 +642,7 @@ async def search_locations(
                         business_density=int(metric.business_density),
                         population_density=int(metric.population_density),
                         transport_score=float(metric.transport_score),
+                        apartment_count=int(metric.apartment_count) if metric.apartment_count else None,
                     )
                 )
         
@@ -660,6 +717,7 @@ async def ai_search_locations(
                     "population_density": int(metric.population_density),
                     "business_density": int(metric.business_density),
                     "transport_score": float(metric.transport_score),
+                    "apartment_count": int(metric.apartment_count) if metric.apartment_count else None,
                     "coordinates": [float(area.longitude), float(area.latitude)]
                 })
         
@@ -715,6 +773,7 @@ async def ai_search_locations(
                         business_density=area_data["business_density"],
                         population_density=area_data["population_density"],
                         transport_score=area_data["transport_score"],
+                        apartment_count=area_data.get("apartment_count"),
                     )
                 )
         
@@ -849,6 +908,7 @@ async def advanced_search_locations(
                         business_density=int(metric.business_density),
                         population_density=int(metric.population_density),
                         transport_score=float(metric.transport_score),
+                        apartment_count=int(metric.apartment_count) if metric.apartment_count else None,
                     )
                 )
         
@@ -907,6 +967,16 @@ def _passes_filters(area: Area, metric: AreaMetric, filters: AdvancedFilters) ->
     
     if filters.transport_score_max is not None:
         if metric.transport_score > filters.transport_score_max:
+            return False
+    
+    # Apartment count range
+    # Only apply filter if apartment_count data exists (don't filter out None values)
+    if filters.apartment_count_min is not None:
+        if metric.apartment_count is not None and metric.apartment_count < filters.apartment_count_min:
+            return False
+    
+    if filters.apartment_count_max is not None:
+        if metric.apartment_count is not None and metric.apartment_count > filters.apartment_count_max:
             return False
     
     # Map bounds filter
