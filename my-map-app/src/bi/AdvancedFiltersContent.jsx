@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactSlider from 'react-slider';
 
 const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange }) => {
@@ -12,8 +12,19 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
     apartmentCountMin: 0,
     apartmentCountMax: 500000,
     radiusMilesMin: 0, // Minimum radius in miles
-    radiusMilesMax: 100, // Maximum radius in miles
+    radiusMilesMax: 10, // Default to 10 miles
   });
+
+  // Apply default 10-mile radius filter on initial load
+  useEffect(() => {
+    if (onApplyFilters) {
+      onApplyFilters(filters);
+    }
+    if (onFilterChange) {
+      onFilterChange(filters);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
 
   const handleClear = () => {
     setFilters({
@@ -26,7 +37,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
       apartmentCountMin: 0,
       apartmentCountMax: 500000,
       radiusMilesMin: 0,
-      radiusMilesMax: 100,
+      radiusMilesMax: 10,
     });
     onClearFilters();
   };
@@ -38,7 +49,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Distance from Olympic Venues</h3>
           <div className="mb-1.5">
-            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.radiusMilesMax.toFixed(1)} miles</label>
+            <label className="text-xs font-medium text-gray-700">Range: 0 - {filters.radiusMilesMax.toFixed(1)} miles</label>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -75,7 +86,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Population Density</h3>
           <div className="mb-1.5">
-            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.populationDensityMax.toLocaleString()} per sq mi</label>
+            <label className="text-xs font-medium text-gray-700">Range: 0 - {filters.populationDensityMax.toLocaleString()} per sq mi</label>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -112,7 +123,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Business Density</h3>
           <div className="mb-1.5">
-            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.businessDensityMax}</label>
+            <label className="text-xs font-medium text-gray-700">Range: 0 - {filters.businessDensityMax} businesses</label>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -149,7 +160,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Transportation</h3>
           <div className="mb-1.5">
-            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.transportScoreMax.toFixed(1)}</label>
+            <label className="text-xs font-medium text-gray-700">Range: 0 - {filters.transportScoreMax.toFixed(1)} rating</label>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"
@@ -186,7 +197,7 @@ const AdvancedFiltersContent = ({ onApplyFilters, onClearFilters, onFilterChange
         <div className="p-2.5">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Number of Apartments</h3>
           <div className="mb-1.5">
-            <label className="text-xs font-medium text-gray-700">Max: 0 - {filters.apartmentCountMax.toLocaleString()} units</label>
+            <label className="text-xs font-medium text-gray-700">Range: 0 - {filters.apartmentCountMax.toLocaleString()} units</label>
           </div>
           <ReactSlider
             className="horizontal-slider single-value-slider"

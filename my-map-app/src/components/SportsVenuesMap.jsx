@@ -1,6 +1,6 @@
 // src/components/SportsVenuesMap.jsx
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Circle, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Circle, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -78,15 +78,52 @@ const findNearestVenue = (businessLat, businessLon, venues) => {
 };
 
 // Business Intelligence Helper Functions
-// Use pink shades: darker pink for high scores, lighter pink for low scores
-const getBusinessScoreColor = (score) => {
-  if (score >= 9) return '#be185d';      // Dark pink (brightest/darkest)
-  if (score >= 8) return '#ec4899';       // Medium-dark pink
-  if (score >= 7) return '#f472b6';       // Medium pink
-  if (score >= 6) return '#fb7185';       // Light-medium pink
-  if (score >= 5) return '#f9a8d4';       // Light pink
-  if (score >= 4) return '#fbcfe8';       // Very light pink
-  return '#fce7f3';                       // Faintest pink for lowest scores
+// Color based on distance to nearest Olympic venue (darker blue = closer to venue)
+// Using blue to contrast with pink venue rings
+const getBusinessDistanceColor = (distanceKm) => {
+  if (distanceKm === null || distanceKm === undefined) return '#3b82f6'; // Default medium blue
+  
+  const distanceMiles = distanceKm * 0.621371;
+  
+  // Closer to venue = darker blue, farther = lighter blue
+  if (distanceMiles <= 2) return '#1e40af';      // Very close: Darkest blue
+  if (distanceMiles <= 5) return '#2563eb';       // Close: Dark blue
+  if (distanceMiles <= 10) return '#3b82f6';     // Medium: Medium blue
+  if (distanceMiles <= 15) return '#60a5fa';      // Medium-far: Light blue
+  if (distanceMiles <= 20) return '#93c5fd';      // Far: Lighter blue
+  return '#bfdbfe';                                // Very far: Lightest blue
+};
+
+// Size based on business score (larger = higher score)
+const getBusinessMarkerSize = (score) => {
+  if (score >= 9) return 28;      // High score: large marker
+  if (score >= 8) return 24;      // Medium-high: medium-large
+  if (score >= 7) return 20;     // Medium: medium
+  if (score >= 6) return 18;      // Medium-low: small-medium
+  if (score >= 5) return 16;     // Low: small
+  return 14;                       // Very low: smallest
+};
+
+// Create custom teardrop/pushpin marker icon
+const createBusinessMarkerIcon = (color, size, score) => {
+  // Create SVG for teardrop/pushpin shape
+  const svg = `
+    <svg width="${size}" height="${size * 1.2}" viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C7.58 0 4 3.58 4 8c0 4.42 8 14 8 14s8-9.58 8-14c0-4.42-3.58-8-8-8z" 
+            fill="${color}" 
+            stroke="#ffffff" 
+            stroke-width="2"/>
+      <circle cx="12" cy="8" r="3" fill="#ffffff" opacity="0.9"/>
+    </svg>
+  `;
+  
+  return L.divIcon({
+    html: svg,
+    className: 'business-marker-icon',
+    iconSize: [size, size * 1.2],
+    iconAnchor: [size / 2, size * 1.2], // Anchor at bottom point
+    popupAnchor: [0, -size * 1.2]
+  });
 };
 
 // Convert miles to meters for geographic radius
@@ -94,22 +131,9 @@ const milesToMeters = (miles) => {
   return miles * 1609.34; // 1 mile = 1609.34 meters
 };
 
-// Get circle radius in meters based on actual distance from Olympic venue
-// This represents the actual geographic distance from the nearest Olympic venue
-// and will scale with zoom to maintain geographic accuracy
-const getBusinessCircleRadius = (distanceToVenueKm = null) => {
-  // If we have the actual distance to venue, use that (convert km to miles, then to meters)
-  if (distanceToVenueKm != null && !isNaN(distanceToVenueKm) && distanceToVenueKm > 0) {
-    const distanceMiles = distanceToVenueKm * 0.621371; // Convert km to miles
-    return milesToMeters(distanceMiles); // Convert miles to meters
-  }
-  
-  // Default: use a small fixed radius (e.g., 2 miles) when distance is unknown
-  return milesToMeters(2); // Default to 2 miles radius
-};
-
 // Get texture pattern based on business score (dashArray for stroke pattern)
 // dashArray in Leaflet should be a string like "5,2" or null for solid
+// Higher score = solid line, lower score = dashed line
 const getMarkerTexture = (score) => {
   // Higher score = more solid (shorter dashes or solid)
   // Lower score = more dashed (longer dashes)
@@ -128,24 +152,6 @@ const getMarkerTexture = (score) => {
   }
 };
 
-// Get fill opacity based on score (higher score = more opaque)
-const getMarkerFillOpacity = (score) => {
-  if (score >= 9) return 0.3;      // High score: more visible
-  if (score >= 8) return 0.25;
-  if (score >= 7) return 0.2;
-  if (score >= 6) return 0.15;
-  if (score >= 5) return 0.1;
-  return 0.08;                      // Low score: less visible
-};
-
-// Get border weight based on score (higher score = thicker border)
-const getMarkerBorderWeight = (score) => {
-  if (score >= 9) return 4;        // High score: thick border
-  if (score >= 8) return 3.5;
-  if (score >= 7) return 3;
-  if (score >= 6) return 2.5;
-  return 2;                         // Lower score: thinner border
-};
 
 // Enhanced Legend component
 const EnhancedLegendControl = ({ showBusinessData }) => {
@@ -177,27 +183,33 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
       }
       
       if (showBusinessData) {
-        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Scores (Pink Shades + Textures)</b>`;
-        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Circle radius = distance from nearest Olympic venue (scales with zoom). Darker pink + solid = higher score</div>`;
-        // Pink shades + texture visualization: darker pink + solid for high scores, lighter pink + dashed for low
+        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Locations</b>`;
+        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Rings = filter radius around venues. Marker color = distance (darker blue = closer). Size = business score (larger = higher)</div>`;
+        // Color = distance (blue), size = score
         div.innerHTML += `
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
-              <circle cx="6" cy="6" r="5" fill="none" stroke="#be185d" stroke-width="4" stroke-dasharray="0" opacity="1"/>
+            <svg width="16" height="20" style="margin-right: 4px; flex-shrink: 0;">
+              <path d="M8 0C5.79 0 4 1.79 4 4c0 2.94 4 9.33 4 9.33s4-6.39 4-9.33c0-2.21-1.79-4-4-4z" fill="#1e40af" stroke="#ffffff" stroke-width="1"/>
+              <circle cx="8" cy="4" r="2" fill="#ffffff" opacity="0.9"/>
             </svg>
-            <span style="font-size: 9px;">High (8-10) - Dark Pink, Solid</span>
+            <span style="font-size: 9px;">Close to venue (≤2mi) - Dark Blue</span>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
-              <circle cx="6" cy="6" r="5" fill="none" stroke="#f472b6" stroke-width="3" stroke-dasharray="8,3" opacity="1"/>
+            <svg width="14" height="18" style="margin-right: 4px; flex-shrink: 0;">
+              <path d="M7 0C5.35 0 3.5 1.35 3.5 3c0 2.57 3.5 8.17 3.5 8.17s3.5-5.6 3.5-8.17c0-1.65-1.15-3-3.5-3z" fill="#3b82f6" stroke="#ffffff" stroke-width="1"/>
+              <circle cx="7" cy="3" r="1.5" fill="#ffffff" opacity="0.9"/>
             </svg>
-            <span style="font-size: 9px;">Med (6-7) - Medium Pink, Dashed</span>
+            <span style="font-size: 9px;">Medium distance (5-10mi) - Blue</span>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="12" height="12" style="margin-right: 4px; flex-shrink: 0;">
-              <circle cx="6" cy="6" r="5" fill="none" stroke="#f9a8d4" stroke-width="2" stroke-dasharray="15,8" opacity="1"/>
+            <svg width="12" height="16" style="margin-right: 4px; flex-shrink: 0;">
+              <path d="M6 0C4.24 0 3 1.24 3 2.5c0 2.1 3 6.68 3 6.68s3-4.58 3-6.68c0-1.26-1.24-2.5-3-2.5z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
+              <circle cx="6" cy="2.5" r="1.2" fill="#ffffff" opacity="0.9"/>
             </svg>
-            <span style="font-size: 9px;">Low (1-5) - Light Pink, Dotted</span>
+            <span style="font-size: 9px;">Far from venue (>15mi) - Light Blue</span>
+          </div>
+          <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e7eb;">
+            <div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Score: Larger marker = higher business score</div>
           </div>
         `;
       }
@@ -243,7 +255,7 @@ export default function SportsVenuesMap({
       <MapContainer center={[34.05, -118.25]} zoom={9} style={{ height: "100%", width: "100%", minHeight: "500px" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
         
-        {/* Olympic Venues Markers */}
+        {/* Olympic Venues with Radius Rings */}
         {venues.map((venue, idx) => {
           const { Latitude, Longitude, Sport, Location } = venue;
           const category = getCategory(Sport);
@@ -251,26 +263,48 @@ export default function SportsVenuesMap({
 
           if (!Latitude || !Longitude) return null;
 
+          // Get filter radius in meters (use max radius from filters, default to 20 miles if not set)
+          const radiusMiles = activeFilters?.radiusMilesMax || 20;
+          const radiusMeters = milesToMeters(radiusMiles);
+
           return (
-            <CircleMarker
-              key={`olympic-${idx}`}
-              center={[Latitude, Longitude]}
-              radius={10}
-              pathOptions={{ color: "#333", fillColor: color, fillOpacity: 0.9, weight: 1 }}
-            >
-              <Popup>
-                <strong>{Sport}</strong>
-                <br />
-                {Location}
-              </Popup>
-            </CircleMarker>
+            <React.Fragment key={`olympic-${idx}`}>
+              {/* Radius Ring around Olympic Venue */}
+              <Circle
+                center={[Latitude, Longitude]}
+                radius={radiusMeters}
+                pathOptions={{
+                  color: '#ec4899',        // Pink color for venue rings
+                  fillColor: '#ec4899',
+                  fillOpacity: 0.1,        // Very light fill
+                  weight: 2,              // Border thickness
+                  dashArray: '10, 5',     // Dashed pattern
+                  opacity: 0.6
+                }}
+              />
+              {/* Olympic Venue Marker */}
+              <CircleMarker
+                center={[Latitude, Longitude]}
+                radius={10}
+                pathOptions={{ color: "#333", fillColor: color, fillOpacity: 0.9, weight: 1 }}
+              >
+                <Popup>
+                  <strong>{Sport}</strong>
+                  <br />
+                  {Location}
+                  <br />
+                  <span style={{ fontSize: '11px', color: '#6b7280' }}>
+                    Radius: {radiusMiles} miles
+                  </span>
+                </Popup>
+              </CircleMarker>
+            </React.Fragment>
           );
         })}
 
         {/* Business Intelligence Markers */}
         {businessLocations.map((location, idx) => {
           const { area, score, coordinates, business_density, population_density, transport_score } = location;
-          const color = getBusinessScoreColor(score);
           
           if (!coordinates || coordinates.length !== 2) return null;
           
@@ -281,29 +315,20 @@ export default function SportsVenuesMap({
           const distanceToVenue = nearestVenueInfo ? nearestVenueInfo.distance : null; // Distance in km
           const nearestVenue = nearestVenueInfo ? nearestVenueInfo.venue : null;
           
-          // Get circle radius in meters based on ACTUAL distance from Olympic venue
-          // The circle represents the actual distance, not the filter value
-          const circleRadiusMeters = getBusinessCircleRadius(distanceToVenue);
+          // Color based on distance to venue (darker blue = closer)
+          const color = getBusinessDistanceColor(distanceToVenue);
           
-          // Get marker properties based on score (color, texture, opacity)
-          // Circle radius represents actual geographic distance and scales with zoom
-          const dashArray = getMarkerTexture(score);
-          const fillOpacity = getMarkerFillOpacity(score);
-          const borderWeight = getMarkerBorderWeight(score);
+          // Size based on business score (larger = higher score)
+          const markerSize = getBusinessMarkerSize(score);
+          
+          // Create custom teardrop marker icon
+          const markerIcon = createBusinessMarkerIcon(color, markerSize, score);
 
           return (
-            <Circle
+            <Marker
               key={`business-${idx}`}
-              center={[coordinates[1], coordinates[0]]} // Leaflet uses [lat, lng]
-              radius={circleRadiusMeters} // Radius in meters (geographic distance)
-              pathOptions={{ 
-                color: color, // Use business color for border
-                fillColor: color, 
-                fillOpacity: fillOpacity, // Fill opacity based on score
-                weight: borderWeight, // Border weight based on score
-                ...(dashArray && { dashArray: dashArray }), // Texture pattern based on score (solid for high, dashed for low)
-                opacity: 1.0 // Full border opacity
-              }}
+              position={[coordinates[1], coordinates[0]]} // Leaflet uses [lat, lng]
+              icon={markerIcon}
               eventHandlers={{
                 click: () => onBusinessLocationClick && onBusinessLocationClick(location)
               }}
@@ -354,11 +379,11 @@ export default function SportsVenuesMap({
                     </div>
                   )}
                   <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e5e7eb' }}>
-                    <p style={{ fontSize: '12px', color: '#ec4899', fontWeight: '500' }}>Click for detailed analysis</p>
+                    <p style={{ fontSize: '12px', color: '#3b82f6', fontWeight: '500' }}>Click for detailed analysis</p>
                   </div>
                 </div>
               </Popup>
-            </Circle>
+            </Marker>
           );
         })}
 
