@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import AdvancedFiltersContent from '../bi/AdvancedFiltersContent';
 import SportsVenuesMap from '../components/SportsVenuesMap';
@@ -14,6 +14,8 @@ const BusinessIntegration = () => {
   const useAISearch = true; // AI search always enabled
   const [aiInsights, setAiInsights] = useState(null);
   const [error, setError] = useState(null);
+  const [focusLocation, setFocusLocation] = useState(null);
+  const mapRef = useRef(null);
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
   
@@ -177,6 +179,14 @@ const BusinessIntegration = () => {
 
   const handleLocationClick = (location) => {
     setSelectedLocation(location);
+    // Focus map on this location and open popup
+    setFocusLocation(location);
+    // Use ref to open popup after a short delay to allow map to focus first
+    setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.focusOnLocation(location);
+      }
+    }, 600); // After map animation completes
   };
 
   const getScoreColor = (score) => {
@@ -189,6 +199,26 @@ const BusinessIntegration = () => {
     if (score >= 8) return 'bg-green-100';
     if (score >= 6) return 'bg-yellow-100';
     return 'bg-red-100';
+  };
+
+  // Get sport category from sport name
+  const getSportCategory = (sport) => {
+    if (!sport) return null;
+    
+    const sportCategories = {
+      "Water Sports": ["Artistic Swimming", "Canoe Sprint", "Rowing", "Sailing", "Diving", "Open Water Swimming", "Coastal Rowing"],
+      "Ball Sports": ["Football (Soccer)", "Basketball", "3x3 Basketball", "Handball", "Baseball", "Softball", "Badminton", "Volleyball", "Beach Volleyball", "Cricket", "Rugby Sevens", "Lacrosse Sixes"],
+      "Combat Sports": ["Boxing", "Judo", "Fencing", "Wrestling"],
+      "Cycling & Racing": ["Cycling Road", "Cycling Track", "BMX Racing", "BMX Freestyle", "Skateboarding"],
+      "Athletics & Gymnastics": ["Athletics", "Artistic Gymnastics", "Rhythmic Gymnastics", "Modern Pentathlon"],
+      "Shooting Sports": ["Shooting", "Shooting (Shotgun)"],
+      "Equestrian": ["Equestrian"],
+    };
+    
+    for (const [category, sports] of Object.entries(sportCategories)) {
+      if (sports.includes(sport)) return category;
+    }
+    return "Other";
   };
 
   return (
@@ -332,11 +362,13 @@ const BusinessIntegration = () => {
               {/* Unified Map with Olympic Venues + Business Intelligence */}
               <div className="h-[600px] lg:h-[900px] xl:h-[1000px] rounded-lg overflow-hidden">
                 <SportsVenuesMap 
+                  ref={mapRef}
                   businessLocations={locations}
                   onBusinessLocationClick={handleLocationClick}
                   showBusinessHeatMap={false}
                   businessHeatMapMetric={null}
                   activeFilters={currentFilters || activeFilters} // Use currentFilters for real-time updates
+                  focusLocation={focusLocation}
                 />
               </div>
               
@@ -385,16 +417,29 @@ const BusinessIntegration = () => {
                             : 'border-gray-200 hover:border-pink-200'
                         }`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h4 className="font-semibold text-gray-900">{location.area}</h4>
-                            <p className="text-sm text-gray-600">
-                              {location.business_density} businesses • {location.population_density} people/sq mi
-                            </p>
-                          </div>
-                          <div className={`px-3 py-1 rounded-full text-sm font-bold ${getScoreBgColor(location.score)} ${getScoreColor(location.score)}`}>
-                            {location.score}/10
-                          </div>
+                        <div>
+                          {/* Venue Name */}
+                          <h4 className="font-semibold text-gray-900 mb-1">{location.area || 'Olympic Venue'}</h4>
+                          
+                          {/* Full Location Address */}
+                          {location.venue_location && (
+                            <p className="text-xs text-gray-500 mb-2 italic">{location.venue_location}</p>
+                          )}
+                          
+                          {/* Sport Category and Specific Sport */}
+                          {location.sport && (
+                            <div className="mb-2">
+                              <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded-full bg-pink-100 text-pink-700 mr-2">
+                                {getSportCategory(location.sport) || 'Olympic Sport'}
+                              </span>
+                              <span className="text-xs text-gray-600">{location.sport}</span>
+                            </div>
+                          )}
+                          
+                          {/* Business Metrics */}
+                          <p className="text-sm text-gray-600 mt-2">
+                            {location.business_density} businesses • {location.population_density.toLocaleString()} people/sq mi
+                          </p>
                         </div>
                       </div>
                     ))}

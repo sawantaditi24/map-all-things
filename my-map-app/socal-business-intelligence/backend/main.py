@@ -104,6 +104,49 @@ def km_to_miles(km):
     """Convert kilometers to miles."""
     return km * 0.621371
 
+def find_nearest_city_metrics(venue_lat: float, venue_lon: float, db: Session):
+    """
+    Find the nearest city (Area) to an Olympic venue and return its metrics.
+    Returns (Area, AreaMetric) tuple, or (None, None) if no city found.
+    """
+    # Get all areas with their metrics
+    areas_with_metrics = (
+        db.query(Area, AreaMetric)
+        .outerjoin(AreaMetric, Area.id == AreaMetric.area_id)
+        .all()
+    )
+    
+    if not areas_with_metrics:
+        return None, None
+    
+    nearest_area = None
+    nearest_metric = None
+    min_distance = None
+    
+    for area, metric in areas_with_metrics:
+        try:
+            area_lat = float(area.latitude)
+            area_lon = float(area.longitude)
+            distance = calculate_distance_km(venue_lat, venue_lon, area_lat, area_lon)
+            
+            if min_distance is None or distance < min_distance:
+                min_distance = distance
+                nearest_area = area
+                nearest_metric = metric
+        except (ValueError, TypeError):
+            continue
+    
+    # If no metric exists, create default values
+    if nearest_area and not nearest_metric:
+        nearest_metric = AreaMetric(
+            area_id=nearest_area.id,
+            population_density=5000,
+            business_density=50,
+            transport_score=7.0
+        )
+    
+    return nearest_area, nearest_metric
+
 def is_within_radius_range(lat, lon, radius_min_miles, radius_max_miles, venues):
     """Check if a location is within the radius range [radius_min, radius_max] of the NEAREST Olympic venue.
     Accepts radius in miles and converts to km for distance calculation."""
@@ -218,7 +261,9 @@ class AdvancedFilters(BaseModel):
     map_bounds: Optional[dict] = None  # {north, south, east, west}
 
 class LocationRecommendation(BaseModel):
-    area: str
+    area: str  # Will contain venue location name (e.g., "Kia Forum/YouTube Theater")
+    sport: Optional[str] = None  # Olympic sport name (e.g., "Basketball")
+    venue_location: Optional[str] = None  # Full location string (e.g., "Arena, Inglewood, CA (Kia Forum/YouTube Theater)")
     score: float
     reasons: List[str]
     coordinates: List[float]
@@ -598,51 +643,76 @@ async def search_locations(
     db: Session = Depends(get_db)
 ):
     try:
-        # Get all areas with their metrics (LEFT JOIN to include all areas)
-        areas_with_metrics = (
-            db.query(Area, AreaMetric)
-            .outerjoin(AreaMetric, Area.id == AreaMetric.area_id)
-            .all()
-        )
+        # Load Olympic venues
+        venues = load_olympic_venues()
+        if not venues:
+            return APIResponse(
+                success=False,
+                data={"recommendations": []},
+                message="No Olympic venues found"
+            )
         
         recs: List[LocationRecommendation] = []
         query_lower = search_query.query.lower()
         
-        for area, metric in areas_with_metrics:
-            # If no metric exists, create default values
-            if not metric:
-                metric = AreaMetric(
-                    area_id=area.id,
-                    population_density=5000,  # Default
-                    business_density=50,      # Default
-                    transport_score=7.0       # Default
+        for venue in venues:
+            if not venue.get('Latitude') or not venue.get('Longitude'):
+                continue
+            
+            venue_lat = venue['Latitude']
+            venue_lon = venue['Longitude']
+            sport = venue.get('Sport', '')
+            location = venue.get('Location', '')
+            
+            # Find nearest city and get its metrics
+            nearest_area, nearest_metric = find_nearest_city_metrics(venue_lat, venue_lon, db)
+            
+            if not nearest_area or not nearest_metric:
+                # Use default metrics if no city found
+                nearest_metric = AreaMetric(
+                    area_id=0,
+                    population_density=5000,
+                    business_density=50,
+                    transport_score=7.0
                 )
             
             # Compute base score using metrics
-            base_score = _score_from_metrics(metric)
+            base_score = _score_from_metrics(nearest_metric)
             
             # Apply semantic search filtering and boosting
+            # Search in sport name, location, and nearest city name
             search_score = _calculate_search_score(
-                query_lower, 
-                area.name, 
-                area.city, 
+                query_lower,
+                location,  # Use venue location instead of area name
+                nearest_area.name if nearest_area else location,  # Use nearest city as fallback
                 search_query.business_type,
                 base_score,
-                metric
+                nearest_metric
             )
             
             # Only include results that match the search criteria
             if search_score > 0:
+                # Extract venue name from location (e.g., "Kia Forum/YouTube Theater" from "Arena, Inglewood, CA (Kia Forum/YouTube Theater)")
+                venue_name = location
+                if '(' in location and ')' in location:
+                    # Extract text in parentheses
+                    venue_name = location[location.find('(')+1:location.find(')')]
+                elif ',' in location:
+                    # Use first part before comma
+                    venue_name = location.split(',')[0].strip()
+                
                 recs.append(
                     LocationRecommendation(
-                        area=area.name,
+                        area=venue_name,
+                        sport=sport,
+                        venue_location=location,
                         score=float(search_score),
-                        reasons=_generate_search_reasons(query_lower, area.name, metric),
-                        coordinates=[float(area.longitude), float(area.latitude)],
-                        business_density=int(metric.business_density),
-                        population_density=int(metric.population_density),
-                        transport_score=float(metric.transport_score),
-                        apartment_count=int(metric.apartment_count) if metric.apartment_count else None,
+                        reasons=_generate_search_reasons(query_lower, location, nearest_metric),
+                        coordinates=[venue_lon, venue_lat],
+                        business_density=int(nearest_metric.business_density),
+                        population_density=int(nearest_metric.population_density),
+                        transport_score=float(nearest_metric.transport_score),
+                        apartment_count=int(nearest_metric.apartment_count) if nearest_metric.apartment_count else None,
                     )
                 )
         
@@ -655,7 +725,7 @@ async def search_locations(
         return APIResponse(
             success=True,
             data={"recommendations": [r.model_dump() for r in recs]},
-            message=f"Found {len(recs)} locations matching '{search_query.query}'"
+            message=f"Found {len(recs)} Olympic venues matching '{search_query.query}'"
         )
     except Exception as e:
         raise HTTPException(
@@ -767,6 +837,8 @@ async def ai_search_locations(
                 recs.append(
                     LocationRecommendation(
                         area=ai_rec.area_name,
+                        sport=None,  # AI search still uses cities, will be updated later
+                        venue_location=None,
                         score=float(ai_rec.confidence_score),
                         reasons=reasons[:4],  # Limit to 4 reasons
                         coordinates=area_data["coordinates"],
@@ -821,94 +893,79 @@ async def advanced_search_locations(
     - Map bounds filtering
     """
     try:
-        # Load Olympic venues if radius filter is specified
-        venues = []
-        if filters.radius_miles_min is not None or filters.radius_miles_max is not None:
-            venues = load_olympic_venues()
-            logger.info(f"Radius filter active: min={filters.radius_miles_min} miles, max={filters.radius_miles_max} miles, loaded {len(venues)} Olympic venues")
-            if not venues:
-                logger.warning("⚠️ No Olympic venues loaded! Radius filter will not work.")
-        
-        # Get all areas with their metrics
-        areas_with_metrics = (
-            db.query(Area, AreaMetric)
-            .outerjoin(AreaMetric, Area.id == AreaMetric.area_id)
-            .all()
-        )
+        # Load Olympic venues
+        venues = load_olympic_venues()
+        if not venues:
+            return APIResponse(
+                success=False,
+                data={"recommendations": []},
+                message="No Olympic venues found"
+            )
         
         recs: List[LocationRecommendation] = []
         query_lower = search_query.query.lower()
         
-        filtered_by_radius = 0
-        total_checked = 0
-        
-        for area, metric in areas_with_metrics:
-            # If no metric exists, create default values
-            if not metric:
-                metric = AreaMetric(
-                    area_id=area.id,
+        for venue in venues:
+            if not venue.get('Latitude') or not venue.get('Longitude'):
+                continue
+            
+            venue_lat = venue['Latitude']
+            venue_lon = venue['Longitude']
+            sport = venue.get('Sport', '')
+            location = venue.get('Location', '')
+            
+            # Find nearest city and get its metrics
+            nearest_area, nearest_metric = find_nearest_city_metrics(venue_lat, venue_lon, db)
+            
+            if not nearest_area or not nearest_metric:
+                # Use default metrics if no city found
+                nearest_metric = AreaMetric(
+                    area_id=0,
                     population_density=5000,
                     business_density=50,
                     transport_score=7.0
                 )
+                nearest_area = None
             
-            # Apply filters
-            if not _passes_filters(area, metric, filters):
+            # Apply filters using nearest city's metrics
+            # Note: We use nearest_area for county filter, but metric for other filters
+            if nearest_area and not _passes_filters(nearest_area, nearest_metric, filters):
                 continue
             
-            # Check radius filter (distance from Olympic venues)
-            if (filters.radius_miles_min is not None or filters.radius_miles_max is not None) and venues:
-                total_checked += 1
-                is_within = is_within_radius_range(float(area.latitude), float(area.longitude), filters.radius_miles_min, filters.radius_miles_max, venues)
-                if not is_within:
-                    filtered_by_radius += 1
-                    # Calculate nearest distance for logging
-                    nearest_km = None
-                    for venue in venues:
-                        if venue.get('Latitude') and venue.get('Longitude'):
-                            dist = calculate_distance_km(float(area.latitude), float(area.longitude), venue['Latitude'], venue['Longitude'])
-                            if nearest_km is None or dist < nearest_km:
-                                nearest_km = dist
-                    if nearest_km:
-                        nearest_miles = km_to_miles(nearest_km)
-                        logger.debug(f"Area {area.name} filtered out: {nearest_miles:.1f} miles from nearest venue (filter: max={filters.radius_miles_max} miles)")
-                    continue
-                # Log successful pass for debugging
-                nearest_km = None
-                for venue in venues:
-                    if venue.get('Latitude') and venue.get('Longitude'):
-                        dist = calculate_distance_km(float(area.latitude), float(area.longitude), venue['Latitude'], venue['Longitude'])
-                        if nearest_km is None or dist < nearest_km:
-                            nearest_km = dist
-                if nearest_km:
-                    nearest_miles = km_to_miles(nearest_km)
-                    logger.debug(f"Area {area.name} passed radius filter: {nearest_miles:.1f} miles from nearest venue (filter: max={filters.radius_miles_max} miles)")
-            
             # Compute base score using metrics
-            base_score = _score_from_metrics(metric)
+            base_score = _score_from_metrics(nearest_metric)
             
             # Apply semantic search filtering and boosting
             search_score = _calculate_search_score(
-                query_lower, 
-                area.name, 
-                area.city, 
+                query_lower,
+                location,
+                nearest_area.name if nearest_area else location,
                 search_query.business_type,
                 base_score,
-                metric
+                nearest_metric
             )
             
             # Only include results that match the search criteria
             if search_score > 0:
+                # Extract venue name from location
+                venue_name = location
+                if '(' in location and ')' in location:
+                    venue_name = location[location.find('(')+1:location.find(')')]
+                elif ',' in location:
+                    venue_name = location.split(',')[0].strip()
+                
                 recs.append(
                     LocationRecommendation(
-                        area=area.name,
+                        area=venue_name,
+                        sport=sport,
+                        venue_location=location,
                         score=float(search_score),
-                        reasons=_generate_search_reasons(query_lower, area.name, metric),
-                        coordinates=[float(area.longitude), float(area.latitude)],
-                        business_density=int(metric.business_density),
-                        population_density=int(metric.population_density),
-                        transport_score=float(metric.transport_score),
-                        apartment_count=int(metric.apartment_count) if metric.apartment_count else None,
+                        reasons=_generate_search_reasons(query_lower, location, nearest_metric),
+                        coordinates=[venue_lon, venue_lat],
+                        business_density=int(nearest_metric.business_density),
+                        population_density=int(nearest_metric.population_density),
+                        transport_score=float(nearest_metric.transport_score),
+                        apartment_count=int(nearest_metric.apartment_count) if nearest_metric.apartment_count else None,
                     )
                 )
         
@@ -918,13 +975,10 @@ async def advanced_search_locations(
         # Limit results to top 20 for performance
         recs = recs[:20]
         
-        if filters.radius_miles_min is not None or filters.radius_miles_max is not None:
-            logger.info(f"Radius filter: {filtered_by_radius} locations filtered out, {len(recs)} locations within range [{filters.radius_miles_min}, {filters.radius_miles_max}] miles")
-        
         return APIResponse(
             success=True,
             data={"recommendations": [r.model_dump() for r in recs]},
-            message=f"Found {len(recs)} locations matching '{search_query.query}' with applied filters"
+            message=f"Found {len(recs)} Olympic venues matching '{search_query.query}' with applied filters"
         )
     except Exception as e:
         raise HTTPException(

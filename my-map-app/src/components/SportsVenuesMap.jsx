@@ -1,5 +1,5 @@
 // src/components/SportsVenuesMap.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useImperativeHandle, forwardRef } from "react";
 import { MapContainer, TileLayer, CircleMarker, Circle, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -132,6 +132,25 @@ const milesToMeters = (miles) => {
 };
 
 
+// Component to control map view and focus on coordinates
+const MapController = ({ focusLocation, onFocusComplete }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (focusLocation && focusLocation.coordinates && focusLocation.coordinates.length === 2) {
+      const [lon, lat] = focusLocation.coordinates;
+      // Just pan to the location without changing zoom level (or minimal zoom change)
+      const currentZoom = map.getZoom();
+      map.setView([lat, lon], currentZoom, { animate: true, duration: 0.3 });
+      if (onFocusComplete) {
+        setTimeout(() => onFocusComplete(), 400); // After animation completes
+      }
+    }
+  }, [focusLocation, map, onFocusComplete]);
+  
+  return null;
+};
+
 // Enhanced Legend component
 const EnhancedLegendControl = ({ showBusinessData }) => {
   const map = useMap();
@@ -162,35 +181,8 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
       }
       
       if (showBusinessData) {
-        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Business Locations</b>`;
-        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Rings = filter radius around venues. Marker color = distance (darker blue = closer). Size = business score (larger = higher)</div>`;
-        // Color = distance (blue), size = score
-        div.innerHTML += `
-          <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="16" height="20" style="margin-right: 4px; flex-shrink: 0;">
-              <path d="M8 0C5.79 0 4 1.79 4 4c0 2.94 4 9.33 4 9.33s4-6.39 4-9.33c0-2.21-1.79-4-4-4z" fill="#1e40af" stroke="#ffffff" stroke-width="1"/>
-              <circle cx="8" cy="4" r="2" fill="#ffffff" opacity="0.9"/>
-            </svg>
-            <span style="font-size: 9px;">Close to venue (≤2mi) - Dark Blue</span>
-          </div>
-          <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="14" height="18" style="margin-right: 4px; flex-shrink: 0;">
-              <path d="M7 0C5.35 0 3.5 1.35 3.5 3c0 2.57 3.5 8.17 3.5 8.17s3.5-5.6 3.5-8.17c0-1.65-1.15-3-3.5-3z" fill="#3b82f6" stroke="#ffffff" stroke-width="1"/>
-              <circle cx="7" cy="3" r="1.5" fill="#ffffff" opacity="0.9"/>
-            </svg>
-            <span style="font-size: 9px;">Medium distance (5-10mi) - Blue</span>
-          </div>
-          <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <svg width="12" height="16" style="margin-right: 4px; flex-shrink: 0;">
-              <path d="M6 0C4.24 0 3 1.24 3 2.5c0 2.1 3 6.68 3 6.68s3-4.58 3-6.68c0-1.26-1.24-2.5-3-2.5z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
-              <circle cx="6" cy="2.5" r="1.2" fill="#ffffff" opacity="0.9"/>
-            </svg>
-            <span style="font-size: 9px;">Far from venue (>15mi) - Light Blue</span>
-          </div>
-          <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e7eb;">
-            <div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Score: Larger marker = higher business score</div>
-          </div>
-        `;
+        div.innerHTML += `<br/><b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Venue Rings</b>`;
+        div.innerHTML += `<div style="font-size: 8px; color: #6b7280; margin-bottom: 4px;">Pink rings show the filter radius around each Olympic venue</div>`;
       }
       
       return div;
@@ -205,14 +197,16 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
   return null;
 };
 
-export default function SportsVenuesMap({ 
+const SportsVenuesMap = forwardRef(({ 
   businessLocations = [], 
   onBusinessLocationClick,
   showBusinessHeatMap = false,
   businessHeatMapMetric = 'business_density',
-  activeFilters = null
-}) {
+  activeFilters = null,
+  focusLocation = null
+}, ref) => {
   const [venues, setVenues] = useState([]);
+  const [openPopupIndex, setOpenPopupIndex] = useState(null);
 
   useEffect(() => {
     fetch("/olympic_sports_venues.json")
@@ -220,6 +214,76 @@ export default function SportsVenuesMap({
       .then((data) => setVenues(data))
       .catch((err) => console.error("Error loading JSON:", err));
   }, []);
+
+  // Find matching recommended location for a clicked venue
+  const findMatchingLocation = (venue) => {
+    if (!businessLocations || businessLocations.length === 0) return null;
+    
+    const venueLat = venue.Latitude;
+    const venueLon = venue.Longitude;
+    const venueLocation = venue.Location;
+    const venueSport = venue.Sport;
+    
+    // Try to match by coordinates (most accurate)
+    const matchingByCoords = businessLocations.find(loc => {
+      if (!loc.coordinates || loc.coordinates.length !== 2) return false;
+      const locLon = loc.coordinates[0];
+      const locLat = loc.coordinates[1];
+      
+      // Check if coordinates are very close (within ~10 meters)
+      const distance = calculateDistance(venueLat, venueLon, locLat, locLon);
+      return distance < 0.01; // Less than 10 meters
+    });
+    
+    if (matchingByCoords) return matchingByCoords;
+    
+    // Fallback: match by venue_location string or sport
+    const matchingByLocation = businessLocations.find(loc => {
+      if (loc.venue_location && loc.venue_location === venueLocation) return true;
+      if (loc.sport && loc.sport === venueSport && loc.area) {
+        // Check if area name appears in venue location
+        return venueLocation.toLowerCase().includes(loc.area.toLowerCase()) ||
+               loc.area.toLowerCase().includes(venueLocation.toLowerCase());
+      }
+      return false;
+    });
+    
+    return matchingByLocation || null;
+  };
+
+  // Handle Olympic venue click
+  const handleVenueClick = (venue) => {
+    const matchingLocation = findMatchingLocation(venue);
+    if (matchingLocation && onBusinessLocationClick) {
+      onBusinessLocationClick(matchingLocation);
+    }
+  };
+
+  // Find venue marker by location and open its popup
+  const focusOnLocation = (location) => {
+    if (!location || !location.coordinates || location.coordinates.length !== 2) return;
+    
+    const [lon, lat] = location.coordinates;
+    
+    // Find the matching venue marker
+    const venueIndex = venues.findIndex(v => {
+      if (!v.Latitude || !v.Longitude) return false;
+      const distance = calculateDistance(lat, lon, v.Latitude, v.Longitude);
+      return distance < 0.01; // Within 10 meters
+    });
+    
+    if (venueIndex !== -1) {
+      // Set the index to open popup
+      setOpenPopupIndex(venueIndex);
+      // Reset after a delay to allow re-opening
+      setTimeout(() => setOpenPopupIndex(null), 100);
+    }
+  };
+
+  // Expose focusOnLocation method to parent via ref
+  useImperativeHandle(ref, () => ({
+    focusOnLocation
+  }));
 
   // Debug: Log activeFilters changes
   useEffect(() => {
@@ -233,6 +297,7 @@ export default function SportsVenuesMap({
     <div className="bg-white rounded-2xl shadow-md p-4">
       <MapContainer center={[34.05, -118.25]} zoom={9} style={{ height: "100%", width: "100%", minHeight: "500px" }}>
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
+        <MapController focusLocation={focusLocation} />
         
         {/* Olympic Venues with Radius Rings */}
         {venues.map((venue, idx) => {
@@ -262,112 +327,88 @@ export default function SportsVenuesMap({
                 }}
               />
               {/* Olympic Venue Marker */}
-              <CircleMarker
+              <VenueMarker
                 center={[Latitude, Longitude]}
-                radius={10}
-                pathOptions={{ color: "#333", fillColor: color, fillOpacity: 0.9, weight: 1 }}
-              >
-                <Popup>
-                  <strong>{Sport}</strong>
-                  <br />
-                  {Location}
-                  <br />
-                  <span style={{ fontSize: '11px', color: '#6b7280' }}>
-                    Radius: {radiusMiles} miles
-                  </span>
-                </Popup>
-              </CircleMarker>
+                sport={Sport}
+                location={Location}
+                radiusMiles={radiusMiles}
+                color={color}
+                onVenueClick={() => handleVenueClick(venue)}
+                markerIndex={idx}
+                openPopup={openPopupIndex === idx}
+              />
             </React.Fragment>
           );
         })}
 
-        {/* Business Intelligence Markers */}
-        {businessLocations.map((location, idx) => {
-          const { area, score, coordinates, business_density, population_density, transport_score } = location;
-          
-          if (!coordinates || coordinates.length !== 2) return null;
-          
-          // Calculate distance to nearest Olympic venue
-          const businessLat = coordinates[1];
-          const businessLon = coordinates[0];
-          const nearestVenueInfo = findNearestVenue(businessLat, businessLon, venues);
-          const distanceToVenue = nearestVenueInfo ? nearestVenueInfo.distance : null; // Distance in km
-          const nearestVenue = nearestVenueInfo ? nearestVenueInfo.venue : null;
-          
-          // Color based on distance to venue (darker blue = closer)
-          const color = getBusinessDistanceColor(distanceToVenue);
-          
-          // Size based on business score (larger = higher score)
-          const markerSize = getBusinessMarkerSize(score);
-          
-          // Create custom teardrop marker icon
-          const markerIcon = createBusinessMarkerIcon(color, markerSize, score);
-
-          return (
-            <Marker
-              key={`business-${idx}`}
-              position={[coordinates[1], coordinates[0]]} // Leaflet uses [lat, lng]
-              icon={markerIcon}
-              eventHandlers={{
-                click: () => onBusinessLocationClick && onBusinessLocationClick(location)
-              }}
-            >
-              <Popup>
-                <div style={{ minWidth: '200px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <h3 style={{ fontWeight: 'bold', fontSize: '16px', color: '#1f2937' }}>{area}</h3>
-                    <div style={{ 
-                      padding: '4px 8px', 
-                      borderRadius: '12px', 
-                      fontSize: '12px', 
-                      fontWeight: 'bold',
-                      backgroundColor: score >= 8 ? '#fce7f3' : score >= 6 ? '#f3f4f6' : '#fee2e2',
-                      color: score >= 8 ? '#be185d' : score >= 6 ? '#374151' : '#dc2626'
-                    }}>
-                      {score}/10
-                    </div>
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#6b7280' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                      <span>Population:</span>
-                      <span style={{ fontWeight: '500' }}>{population_density.toLocaleString()}/mi²</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                      <span>Businesses:</span>
-                      <span style={{ fontWeight: '500' }}>{business_density}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span>Transport:</span>
-                      <span style={{ fontWeight: '500' }}>{transport_score}/10</span>
-                    </div>
-                  </div>
-                  {nearestVenue && (
-                    <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e5e7eb' }}>
-                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
-                        <strong style={{ color: '#374151' }}>Nearest Olympic Venue:</strong>
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '2px' }}>
-                        <span style={{ fontWeight: '500' }}>{nearestVenue.Sport}</span>
-                      </div>
-                      <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '4px' }}>
-                        {nearestVenue.Location}
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#ec4899', fontWeight: '600', marginTop: '4px' }}>
-                        📍 {distanceToVenue ? (distanceToVenue * 0.621371).toFixed(1) : '0'} miles away
-                      </div>
-                    </div>
-                  )}
-                  <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e5e7eb' }}>
-                    <p style={{ fontSize: '12px', color: '#3b82f6', fontWeight: '500' }}>Click for detailed analysis</p>
-                  </div>
-                </div>
-              </Popup>
-            </Marker>
-          );
-        })}
+        {/* Business Intelligence Markers - Removed per professor's request */}
 
         <EnhancedLegendControl showBusinessData={true} />
       </MapContainer>
     </div>
   );
-}
+});
+
+// Component to handle popup opening via map instance
+const PopupController = ({ openPopup, center }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (openPopup && center && center.length === 2) {
+      const [targetLat, targetLon] = center;
+      setTimeout(() => {
+        // Find the marker at this center and open its popup
+        map.eachLayer((layer) => {
+          if (layer instanceof L.CircleMarker) {
+            const layerLatLng = layer.getLatLng();
+            // Check if coordinates match (within small tolerance)
+            const latDiff = Math.abs(layerLatLng.lat - targetLat);
+            const lonDiff = Math.abs(layerLatLng.lng - targetLon);
+            if (latDiff < 0.0001 && lonDiff < 0.0001) { // Very close coordinates
+              if (layer.getPopup) {
+                layer.openPopup();
+              }
+            }
+          }
+        });
+      }, 400); // Wait for map animation to complete
+    }
+  }, [openPopup, center, map]);
+  
+  return null;
+};
+
+// Venue Marker component
+const VenueMarker = ({ center, sport, location, radiusMiles, color, onVenueClick, markerIndex, openPopup }) => {
+  return (
+    <>
+      {openPopup && <PopupController openPopup={openPopup} center={center} />}
+      <CircleMarker
+        center={center}
+        radius={10}
+        pathOptions={{ color: "#333", fillColor: color, fillOpacity: 0.9, weight: 1 }}
+        eventHandlers={{
+          click: onVenueClick
+        }}
+      >
+        <Popup>
+          <strong>{sport}</strong>
+          <br />
+          {location}
+          <br />
+          <span style={{ fontSize: '11px', color: '#6b7280' }}>
+            Radius: {radiusMiles} miles
+          </span>
+          <br />
+          <span style={{ fontSize: '10px', color: '#ec4899', fontStyle: 'italic', marginTop: '4px', display: 'block' }}>
+            Click to see recommendation
+          </span>
+        </Popup>
+      </CircleMarker>
+    </>
+  );
+};
+
+VenueMarker.displayName = 'VenueMarker';
+
+export default SportsVenuesMap;
