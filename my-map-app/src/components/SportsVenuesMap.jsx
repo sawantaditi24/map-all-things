@@ -131,27 +131,6 @@ const milesToMeters = (miles) => {
   return miles * 1609.34; // 1 mile = 1609.34 meters
 };
 
-// Get texture pattern based on business score (dashArray for stroke pattern)
-// dashArray in Leaflet should be a string like "5,2" or null for solid
-// Higher score = solid line, lower score = dashed line
-const getMarkerTexture = (score) => {
-  // Higher score = more solid (shorter dashes or solid)
-  // Lower score = more dashed (longer dashes)
-  if (score >= 9) {
-    return null; // Solid line for high scores (null = no dash)
-  } else if (score >= 8) {
-    return '5,2'; // Small dashes
-  } else if (score >= 7) {
-    return '8,3'; // Medium dashes
-  } else if (score >= 6) {
-    return '10,5'; // Larger dashes
-  } else if (score >= 5) {
-    return '12,6'; // Even larger dashes
-  } else {
-    return '15,8'; // Very large dashes for low scores
-  }
-};
-
 
 // Enhanced Legend component
 const EnhancedLegendControl = ({ showBusinessData }) => {
