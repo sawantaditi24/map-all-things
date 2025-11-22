@@ -1,7 +1,11 @@
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      "./src/**/*.{js,jsx,ts,tsx}",
+      "./public/index.html",
+    ],
+  },
   safelist: [
     'bg-blue-600', 'border-blue-300', 'text-blue-600', 'hover:bg-blue-50',
     'bg-green-600', 'border-green-300', 'text-green-600', 'hover:bg-green-50',

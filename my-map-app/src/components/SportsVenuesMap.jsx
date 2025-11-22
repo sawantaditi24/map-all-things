@@ -77,55 +77,6 @@ const findNearestVenue = (businessLat, businessLon, venues) => {
   return nearestVenue ? { venue: nearestVenue, distance: minDistance } : null;
 };
 
-// Business Intelligence Helper Functions
-// Color based on distance to nearest Olympic venue (darker blue = closer to venue)
-// Using blue to contrast with pink venue rings
-const getBusinessDistanceColor = (distanceKm) => {
-  if (distanceKm === null || distanceKm === undefined) return '#3b82f6'; // Default medium blue
-  
-  const distanceMiles = distanceKm * 0.621371;
-  
-  // Closer to venue = darker blue, farther = lighter blue
-  if (distanceMiles <= 2) return '#1e40af';      // Very close: Darkest blue
-  if (distanceMiles <= 5) return '#2563eb';       // Close: Dark blue
-  if (distanceMiles <= 10) return '#3b82f6';     // Medium: Medium blue
-  if (distanceMiles <= 15) return '#60a5fa';      // Medium-far: Light blue
-  if (distanceMiles <= 20) return '#93c5fd';      // Far: Lighter blue
-  return '#bfdbfe';                                // Very far: Lightest blue
-};
-
-// Size based on business score (larger = higher score)
-const getBusinessMarkerSize = (score) => {
-  if (score >= 9) return 28;      // High score: large marker
-  if (score >= 8) return 24;      // Medium-high: medium-large
-  if (score >= 7) return 20;     // Medium: medium
-  if (score >= 6) return 18;      // Medium-low: small-medium
-  if (score >= 5) return 16;     // Low: small
-  return 14;                       // Very low: smallest
-};
-
-// Create custom teardrop/pushpin marker icon
-const createBusinessMarkerIcon = (color, size, score) => {
-  // Create SVG for teardrop/pushpin shape
-  const svg = `
-    <svg width="${size}" height="${size * 1.2}" viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 0C7.58 0 4 3.58 4 8c0 4.42 8 14 8 14s8-9.58 8-14c0-4.42-3.58-8-8-8z" 
-            fill="${color}" 
-            stroke="#ffffff" 
-            stroke-width="2"/>
-      <circle cx="12" cy="8" r="3" fill="#ffffff" opacity="0.9"/>
-    </svg>
-  `;
-  
-  return L.divIcon({
-    html: svg,
-    className: 'business-marker-icon',
-    iconSize: [size, size * 1.2],
-    iconAnchor: [size / 2, size * 1.2], // Anchor at bottom point
-    popupAnchor: [0, -size * 1.2]
-  });
-};
-
 // Convert miles to meters for geographic radius
 const milesToMeters = (miles) => {
   return miles * 1609.34; // 1 mile = 1609.34 meters
