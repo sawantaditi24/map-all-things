@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef, useImperativeHandle, forwardRef } f
 import { MapContainer, TileLayer, CircleMarker, Circle, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { calculateAllFilterScores, getShadeColor } from "../utils/filterScoring";
 
 // Define sport categories and shapes
 const sportCategories = {
@@ -34,6 +35,35 @@ const getCategory = (sport) => {
     if (sports.includes(sport)) return category;
   }
   return "Other";
+};
+
+// Helper function to create a triangle icon with black border
+const createTriangleIcon = (color) => {
+  return L.divIcon({
+    className: 'custom-triangle-marker',
+    html: `<div style="
+      position: relative;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 20px solid #333;
+    ">
+      <div style="
+        position: absolute;
+        top: 1px;
+        left: -11px;
+        width: 0;
+        height: 0;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+        border-bottom: 18px solid ${color};
+      "></div>
+    </div>`,
+    iconSize: [24, 20],
+    iconAnchor: [12, 20],
+    popupAnchor: [0, -20]
+  });
 };
 
 // Legend component removed - using EnhancedLegendControl instead
@@ -103,7 +133,7 @@ const MapController = ({ focusLocation, onFocusComplete }) => {
 };
 
 // Enhanced Legend component
-const EnhancedLegendControl = ({ showBusinessData }) => {
+const EnhancedLegendControl = ({ showBusinessData, showFilterShades }) => {
   const map = useMap();
 
   useEffect(() => {
@@ -112,20 +142,45 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
     legend.onAdd = function () {
       const div = L.DomUtil.create("div", "info legend");
       div.style.background = "rgba(255, 255, 255, 0.95)";
-      div.style.padding = "6px";
+      div.style.padding = "8px";
       div.style.borderRadius = "6px";
       div.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
-      div.style.maxWidth = "140px";
+      div.style.maxWidth = "180px";
       div.style.fontSize = "10px";
-      div.style.lineHeight = "1.2";
+      div.style.lineHeight = "1.3";
       div.style.margin = "10px";
       div.style.zIndex = "1000";
+      
+      // Add filter-based region shades if filters are active
+      if (showFilterShades) {
+        div.innerHTML += `<b style="font-size: 10px; color: #374151; display: block; margin-bottom: 6px;">Region Recommendation</b>`;
+        div.innerHTML += `<div style="font-size: 9px; color: #6b7280; margin-bottom: 6px;">Based on filter criteria:</div>`;
+        
+        const shades = [
+          { label: "Dark - Best", color: "#ec4899" },
+          { label: "Medium - Good", color: "#f472b6" },
+          { label: "Faint - Lower", color: "#6b7280" }
+        ];
+        
+        shades.forEach(({ label, color }) => {
+          div.innerHTML += `
+            <div style="display: flex; align-items: center; margin-bottom: 3px;">
+              <div style="width: 12px; height: 12px; background: ${color}; margin-right: 6px; border: 1px solid #d1d5db; border-radius: 50%; flex-shrink: 0;"></div>
+              <span style="font-size: 9px; line-height: 1.2;">${label}</span>
+            </div>
+          `;
+        });
+        
+        div.innerHTML += `<hr style="margin: 8px 0; border: none; border-top: 1px solid #e5e7eb;" />`;
+      }
       
       div.innerHTML += `<b style="font-size: 9px; color: #374151; display: block; margin-bottom: 4px;">Olympic Sports</b>`;
       for (const [category, style] of Object.entries(markerStyles)) {
         div.innerHTML += `
           <div style="display: flex; align-items: center; margin-bottom: 2px;">
-            <div style="width: 8px; height: 8px; background: ${style.color}; margin-right: 4px; border: 1px solid #333; border-radius: 50%; flex-shrink: 0;"></div>
+            <div style="position: relative; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid #333; margin-right: 4px; flex-shrink: 0;">
+              <div style="position: absolute; top: 1px; left: -5px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid ${style.color};"></div>
+            </div>
             <span style="font-size: 9px; line-height: 1.1;">${category}</span>
           </div>
         `;
@@ -143,7 +198,7 @@ const EnhancedLegendControl = ({ showBusinessData }) => {
     return () => {
       legend.remove();
     };
-  }, [map, showBusinessData]);
+  }, [map, showBusinessData, showFilterShades]);
 
   return null;
 };
@@ -158,13 +213,36 @@ const SportsVenuesMap = forwardRef(({
 }, ref) => {
   const [venues, setVenues] = useState([]);
   const [openPopupIndex, setOpenPopupIndex] = useState(null);
+  const [cities, setCities] = useState([]);
+  const [citiesWithScores, setCitiesWithScores] = useState([]);
 
+  // Load Olympic venues
   useEffect(() => {
     fetch("/olympic_sports_venues.json")
       .then((res) => res.json())
       .then((data) => setVenues(data))
       .catch((err) => console.error("Error loading JSON:", err));
   }, []);
+
+  // Load cities data
+  useEffect(() => {
+    fetch("/socal_cities_metrics.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setCities(data);
+      })
+      .catch((err) => console.error("Error loading cities metrics:", err));
+  }, []);
+
+  // Calculate filter scores when filters or cities change
+  useEffect(() => {
+    if (cities.length > 0 && activeFilters) {
+      const scored = calculateAllFilterScores(cities, activeFilters);
+      setCitiesWithScores(scored);
+    } else {
+      setCitiesWithScores([]);
+    }
+  }, [cities, activeFilters]);
 
   // Find matching recommended location for a clicked venue
   const findMatchingLocation = (venue) => {
@@ -262,24 +340,91 @@ const SportsVenuesMap = forwardRef(({
           const radiusMiles = activeFilters?.radiusMilesMax || 20;
           const radiusMeters = milesToMeters(radiusMiles);
 
+          // Find nearest city and get its filter score to determine ring shade
+          let ringColor = '#ec4899'; // Default pink (when no filters)
+          let ringOpacity = 0.6;
+          let ringFillOpacity = 0.1;
+          
+          if (activeFilters && citiesWithScores.length > 0) {
+            // Find nearest city to this venue
+            let nearestCity = null;
+            let minDistance = Infinity;
+            
+            citiesWithScores.forEach(city => {
+              if (!city.latitude || !city.longitude) return;
+              const distance = calculateDistance(
+                Latitude,
+                Longitude,
+                city.latitude,
+                city.longitude
+              );
+              if (distance < minDistance) {
+                minDistance = distance;
+                nearestCity = city;
+              }
+            });
+            
+            // Use the nearest city's shade to color the ring
+            if (nearestCity) {
+              // If shade is 'none', treat it as 'faint' (gray)
+              const shade = nearestCity.shade === 'none' ? 'faint' : nearestCity.shade;
+              ringColor = getShadeColor(shade);
+              // Adjust opacity based on shade - darker shades get more opacity
+              if (shade === 'dark') {
+                ringOpacity = 0.8;
+                ringFillOpacity = 0.15;
+              } else if (shade === 'medium') {
+                ringOpacity = 0.6;
+                ringFillOpacity = 0.1;
+              } else {
+                // faint shade - consistent opacity for all gray rings
+                ringOpacity = 0.6;
+                ringFillOpacity = 0.1;
+              }
+            } else {
+              // No nearest city found - use gray (faint) with same opacity
+              ringColor = getShadeColor('faint');
+              ringOpacity = 0.6;
+              ringFillOpacity = 0.1;
+            }
+          }
+
+          // Calculate offset for overlapping markers at the same location
+          // Find how many venues share the same coordinates (within 0.001 degrees ~ 100m)
+          const sameLocationVenues = venues.filter((v, i) => 
+            i < idx && 
+            v.Latitude && 
+            v.Longitude &&
+            Math.abs(v.Latitude - Latitude) < 0.001 &&
+            Math.abs(v.Longitude - Longitude) < 0.001
+          );
+          const offsetIndex = sameLocationVenues.length;
+          
+          // Apply small offset (about 50-100 meters) to prevent complete overlap
+          // Offset in degrees: ~0.0005 degrees ≈ 50 meters
+          const offsetLat = offsetIndex * 0.0005;
+          const offsetLon = offsetIndex * 0.0005;
+          const markerLat = Latitude + offsetLat;
+          const markerLon = Longitude + offsetLon;
+
           return (
             <React.Fragment key={`olympic-${idx}`}>
-              {/* Radius Ring around Olympic Venue */}
+              {/* Radius Ring around Olympic Venue - shade based on nearest city's filter score */}
               <Circle
                 center={[Latitude, Longitude]}
                 radius={radiusMeters}
                 pathOptions={{
-                  color: '#ec4899',        // Pink color for venue rings
-                  fillColor: '#ec4899',
-                  fillOpacity: 0.1,        // Very light fill
-                  weight: 2,              // Border thickness
-                  dashArray: '10, 5',     // Dashed pattern
-                  opacity: 0.6
+                  color: ringColor,
+                  fillColor: ringColor,
+                  fillOpacity: ringFillOpacity,
+                  weight: 2,
+                  dashArray: '10, 5',
+                  opacity: ringOpacity
                 }}
               />
-              {/* Olympic Venue Marker */}
+              {/* Olympic Venue Marker - with offset if overlapping */}
               <VenueMarker
-                center={[Latitude, Longitude]}
+                center={[markerLat, markerLon]}
                 sport={Sport}
                 location={Location}
                 radiusMiles={radiusMiles}
@@ -294,7 +439,7 @@ const SportsVenuesMap = forwardRef(({
 
         {/* Business Intelligence Markers - Removed per professor's request */}
 
-        <EnhancedLegendControl showBusinessData={true} />
+        <EnhancedLegendControl showBusinessData={true} showFilterShades={activeFilters !== null} />
       </MapContainer>
     </div>
   );
@@ -310,7 +455,7 @@ const PopupController = ({ openPopup, center }) => {
       setTimeout(() => {
         // Find the marker at this center and open its popup
         map.eachLayer((layer) => {
-          if (layer instanceof L.CircleMarker) {
+          if (layer instanceof L.Marker) {
             const layerLatLng = layer.getLatLng();
             // Check if coordinates match (within small tolerance)
             const latDiff = Math.abs(layerLatLng.lat - targetLat);
@@ -331,13 +476,14 @@ const PopupController = ({ openPopup, center }) => {
 
 // Venue Marker component
 const VenueMarker = ({ center, sport, location, radiusMiles, color, onVenueClick, markerIndex, openPopup }) => {
+  const triangleIcon = createTriangleIcon(color);
+  
   return (
     <>
       {openPopup && <PopupController openPopup={openPopup} center={center} />}
-      <CircleMarker
-        center={center}
-        radius={10}
-        pathOptions={{ color: "#333", fillColor: color, fillOpacity: 0.9, weight: 1 }}
+      <Marker
+        position={center}
+        icon={triangleIcon}
         eventHandlers={{
           click: onVenueClick
         }}
@@ -355,7 +501,7 @@ const VenueMarker = ({ center, sport, location, radiusMiles, color, onVenueClick
             Click to see recommendation
           </span>
         </Popup>
-      </CircleMarker>
+      </Marker>
     </>
   );
 };
